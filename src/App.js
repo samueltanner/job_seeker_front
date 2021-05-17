@@ -3,6 +3,9 @@ import './App.css';
 import {Switch, Route } from "react-router-dom";
 import Navigation from './components/navigation'
 import Home from './components/home'
+import Login from './components/login'
+import { withRouter } from 'react-router-dom';
+
 
 const App = () => (
   <div className="app">
@@ -11,13 +14,16 @@ const App = () => (
   </div>
 );
 
+const AppWithRouter = withRouter(App);
+
 const Main = () => (
   <Switch>
     {/* <Route exact path="/"></Route> */}
     <Route exact path="/" component={Home}></Route>
+    <Route exact path="/login" component={Login}></Route>
     {/* <Route exact path="/about" component={About}></Route>
     <Route exact path="/contact" component={Contact}></Route>
     <Route exact path="/projects" component={Projects}></Route> */}
   </Switch>
 );
-export default App;
+export default AppWithRouter;

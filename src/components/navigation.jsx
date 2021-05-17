@@ -27,6 +27,11 @@ class Navigation extends Component {
                 Logout
               </NavLink>
             </li>
+            <li>
+              <NavLink exact activeClassName="current" to="/Login">
+                Login
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>

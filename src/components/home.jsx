@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-
 class Home extends Component {
   state = {
     username: "",
@@ -10,7 +9,6 @@ class Home extends Component {
     password_confirmation: "",
   };
 
-  
   getUsers = () => {
     axios.get("http://localhost:3000/api/users").then((response) => {
       console.log(response.data);
@@ -33,6 +31,7 @@ class Home extends Component {
     };
     axios.post("http://localhost:3000/api/users", user).then((res) => {
       console.log(res.data);
+      this.props.history.push("/login");
     });
   };
 
