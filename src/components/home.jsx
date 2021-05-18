@@ -7,6 +7,11 @@ class Home extends Component {
     email: "",
     password: "",
     password_confirmation: "",
+    errors: [],
+  };
+
+  handleReset = () => {
+    document.getElementById("form").reset();
   };
 
   getUsers = () => {
@@ -29,17 +34,34 @@ class Home extends Component {
       password: this.state.password,
       password_confirmation: this.state.password_confirmation,
     };
-    axios.post("http://localhost:3000/api/users", user).then((res) => {
-      console.log(res.data);
-      this.props.history.push("/login");
-    });
+    axios
+      .post("http://localhost:3000/api/users", user)
+      .then((res) => {
+        console.log(res.data);
+        this.props.history.push("/login");
+      })
+      .catch((error) => {
+        console.log(error.response.data.errors);
+        this.setState({ errors: error.response.data.errors });
+        this.handleReset();
+        // this.setState.errors = ["Invalid email or Password"];
+        // this.setState({email: ""});
+        // this.setState.password = "";
+      });
   };
 
   render() {
     return (
       <div className="signup-form">
         {/* <form onSubmit={this.handleSubmit}> */}
-        <form onClick={this.handleSubmit}>
+        <div className="text-danger">
+          <ul>
+            {this.state.errors.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
+        <form id="form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="username">Username</label>
             <input className="input-label" type="text" name="username" id="username" onChange={this.handleChange} />
@@ -64,10 +86,9 @@ class Home extends Component {
               onChange={this.handleChange}
             />
           </div>
-
-          <input type="button" value="Submit" />
+          <button onClick={this.handleSubmit}>Create Account</button>
         </form>
-        <button onClick={this.getUsers}>Get Me</button>
+        {/* <button onClick={this.getUsers}>Get Me</button> */}
       </div>
     );
   }

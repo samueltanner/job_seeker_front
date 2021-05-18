@@ -1,11 +1,11 @@
-import React from 'react';
-import './App.css';
-import {Switch, Route } from "react-router-dom";
-import Navigation from './components/navigation'
-import Home from './components/home'
-import Login from './components/login'
-import { withRouter } from 'react-router-dom';
-
+import React from "react";
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import Navigation from "./components/navigation";
+import Home from "./components/home";
+import Login from "./components/login";
+import { withRouter } from "react-router-dom";
+import Dashboard from "./components/dashboard";
 
 const App = () => (
   <div className="app">
@@ -21,6 +21,7 @@ const Main = () => (
     {/* <Route exact path="/"></Route> */}
     <Route exact path="/" component={Home}></Route>
     <Route exact path="/login" component={Login}></Route>
+    <Route exact path="/dashboard" component={Dashboard}></Route>
     {/* <Route exact path="/about" component={About}></Route>
     <Route exact path="/contact" component={Contact}></Route>
     <Route exact path="/projects" component={Projects}></Route> */}
