@@ -13,6 +13,11 @@ class Navigation extends Component {
               </NavLink>
             </li>
             <li>
+              <NavLink exact activeClassName="current" to="/dashboard">
+                Dashboard
+              </NavLink>
+            </li>
+            <li>
               <NavLink exact activeClassName="current" to="/about">
                 About
               </NavLink>

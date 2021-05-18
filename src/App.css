@@ -50,3 +50,7 @@ p {
 .input-label {
   margin-left: 5px;
 }
+
+.text-danger {
+  color: red;
+}
