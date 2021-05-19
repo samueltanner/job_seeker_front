@@ -54,3 +54,22 @@ p {
 .text-danger {
   color: red;
 }
+
+.metric-zone {
+  justify-content: center;
+  display: flex;
+  flex: wrap;
+  gap: 15px;
+}
+
+.job-zone {
+  justify-content: center;
+  display: flex;
+  flex: wrap;
+  gap: 15px;
+  /* border-radius: 5px; */
+}
+.job-board {
+  border: 3px solid black;
+  margin: 10px;
+}
