@@ -6,14 +6,24 @@ import axios from "axios";
 class Dashboard extends Component {
   state = {
     jobs: [],
+    statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
   };
+
+  componentDidMount() {
+    this.getUserJobs();
+  }
 
   getUserJobs = () => {
     axios.get("http://localhost:3000/api/users/1").then((response) => {
-      this.setState({jobs: response.data.jobs});
-      console.log(response);
+      this.setState({ jobs: response.data.jobs });
+      // console.log(response.data.jobs);
+      console.log(this.state.jobs);
     });
   };
+
+  jobStatusFilter = () => {
+    console.log(this.state.jobs[0].status)
+  }
 
   render() {
     return (
@@ -25,20 +35,18 @@ class Dashboard extends Component {
           <Metric />
           <Metric />
           <Metric />
-          <button onClick={this.getUserJobs()}>JOBS</button>
         </div>
         <hr />
         <div className="job-zone">
-          <div className="job-board">
-            <JobBoard />
-            <p>{ this.state.jobs.map(job => job) }</p>
-          </div>
-          <div className="job-board">
-            <JobBoard />
-          </div>
-          <div className="job-board">
-            <JobBoard />
-          </div>
+          {this.state.statuses.map((status, index) => {
+            return (
+              <div className="job-board" key={index}>
+                {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
+                <h2>{status}</h2>
+                <JobBoard jobData={this.state.jobs} />
+              </div>
+            );
+          })}
         </div>
       </div>
     );
