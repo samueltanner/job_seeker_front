@@ -1,17 +1,18 @@
 import React from "react";
 
-const JobBoard = ( { jobData }) => {
+const JobBoard = ({ jobData, jobStatus }) => {
   return (
     <div>
-      { jobData.map((job, index) => (
-        <div  key={index}>
-        <p>{job.company_name}</p>
-        <p>{job.status}</p>
+      {jobData.map((job, index) => (
+        <div key={index}>
+          <p>{job.company_name}</p>
+          <p>{job.status}</p>
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
+
 // class JobBoard extends Component {
 //   state = {
 //     jobs: this.props.jobData,
