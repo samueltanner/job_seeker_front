@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import axios from "axios";
 import Metric from "./metric";
 import JobBoard from "./jobBoard";
-import axios from "axios";
+import JobCreate from "./jobCreate"
+
 
 class Dashboard extends Component {
   state = {
@@ -14,15 +16,15 @@ class Dashboard extends Component {
   }
 
   getUserJobs = () => {
-    axios.get("http://localhost:3000/api/users/1").then((response) => {
+    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
       // console.log(response.data.jobs);
-      console.log(this.state.jobs);
+      // console.log(this.state.jobs);
     });
   };
 
   jobDataFilter = (status) => {
-    console.log(Object.values(status)[0])
+    // console.log(Object.values(status)[0])
     return (
       this.state.jobs.filter(job => job.status === Object.values(status)[0])
     )
@@ -33,6 +35,8 @@ class Dashboard extends Component {
     return (
       <div>
         <h1>I am the dashboard</h1>
+        <button>Add a Job</button>
+        <JobCreate />
         <div className="metric-zone">
           <Metric />
           <Metric />
