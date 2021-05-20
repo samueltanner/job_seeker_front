@@ -1,12 +1,11 @@
 import React from "react";
 
-const JobBoard = ({ jobData, jobStatus }) => {
+const JobBoard = ({ jobData }) => {
   return (
     <div>
       {jobData.map((job, index) => (
         <div key={index}>
           <p>{job.company_name}</p>
-          <p>{job.status}</p>
         </div>
       ))}
     </div>

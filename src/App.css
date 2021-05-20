@@ -45,6 +45,8 @@ p {
 }
 
 .signup-form {
+  display: block;
+  gap: 5%;
 }
 
 .input-label {
