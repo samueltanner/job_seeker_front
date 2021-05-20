@@ -21,9 +21,13 @@ class Dashboard extends Component {
     });
   };
 
-  jobStatusFilter = () => {
-    console.log(this.state.jobs[0].status)
+  jobDataFilter = (status) => {
+    console.log(Object.values(status)[0])
+    return (
+      this.state.jobs.filter(job => job.status === Object.values(status)[0])
+    )
   }
+  
 
   render() {
     return (
@@ -43,7 +47,7 @@ class Dashboard extends Component {
               <div className="job-board" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
                 <h2>{status}</h2>
-                <JobBoard jobData={this.state.jobs} />
+                <JobBoard jobData={this.jobDataFilter({status})}/>
               </div>
             );
           })}
