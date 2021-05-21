@@ -81,7 +81,7 @@ class Home extends Component {
             <label className="column" htmlFor="password">
               Password
             </label>
-            <input className="column" type="password" name="password" id="password" onChange={this.handleChange} />
+            <input className="column" autoComplete="new-password" type="password" name="password" id="password" onChange={this.handleChange} />
           </div>
 
           <div className="row">

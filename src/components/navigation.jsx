@@ -2,27 +2,44 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 class Navigation extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { isLoggedIn: false };
   }
 
-
   render() {
-    let button;
+    let auth;
+    let dashboard;
+    let contacts;
     if (localStorage.getItem("jwt") == null) {
-      console.log("no jwt");
-      button = (
-        <NavLink exact activeClassName="current" to="/login">
-          Login
-        </NavLink>
+      auth = (
+        <li>
+          <NavLink exact activeClassName="current" to="/login">
+            Login
+          </NavLink>
+        </li>
       );
     } else {
-      console.log("jwt!");
-      button = (
-        <NavLink exact activeClassName="current" to="/logout">
-          Logout
-        </NavLink>
+      auth = (
+        <li>
+          <NavLink exact activeClassName="current" to="/logout">
+            Logout
+          </NavLink>
+        </li>
+      );
+      dashboard = (
+        <li>
+          <NavLink exact activeClassName="current" to="/dashboard">
+            Dashboard
+          </NavLink>
+        </li>
+      );
+      contacts = (
+        <li>
+          <NavLink exact activeClassName="current" to="/Contacts">
+            Contacts
+          </NavLink>
+        </li>
       );
     }
 
@@ -36,21 +53,13 @@ class Navigation extends Component {
               </NavLink>
             </li>
             <li>
-              <NavLink exact activeClassName="current" to="/dashboard">
-                Dashboard
-              </NavLink>
-            </li>
-            <li>
               <NavLink exact activeClassName="current" to="/about">
                 About
               </NavLink>
             </li>
-            <li>
-              <NavLink exact activeClassName="current" to="/Contacts">
-                Contacts
-              </NavLink>
-            </li>
-            <li>{button}</li>
+            {dashboard}
+            {contacts}
+            {auth}
           </ul>
         </nav>
       </div>
