@@ -62,31 +62,42 @@ class Home extends Component {
           </ul>
         </div>
         <form id="form" onSubmit={(e) => e.preventDefault()}>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input className="input-label" type="text" name="username" id="username" onChange={this.handleChange} />
+          <div className="row">
+            <label className="column" htmlFor="username">
+              Username
+            </label>
+            <input className="column" type="text" name="username" id="username" onChange={this.handleChange} />
           </div>
 
-          <div>
-            <label htmlFor="email">Email</label>
-            <input className="input-label" type="text" name="email" id="email" onChange={this.handleChange} />
+          <div className="row">
+            <label className="column" htmlFor="email">
+              Email
+            </label>
+            <input className="column" type="text" name="email" id="email" onChange={this.handleChange} />
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input className="input-label" type="text" name="password" id="password" onChange={this.handleChange} />
+          <div className="row">
+            <label className="column" htmlFor="password">
+              Password
+            </label>
+            <input className="column" type="password" name="password" id="password" onChange={this.handleChange} />
           </div>
 
-          <div>
-            <label htmlFor="password_confirmation">Password Confirmation</label>
+          <div className="row">
+            <label className="column" htmlFor="password_confirmation">
+              Password Confirmation
+            </label>
             <input
-              className="input-label"
-              type="text"
+              className="column"
+              type="password"
               name="password_confirmation"
               id="password_confirmation"
               onChange={this.handleChange}
             />
           </div>
-          <button onClick={this.handleSubmit}>Create Account</button>
+          <div className="center">
+            {" "}
+            <button onClick={this.handleSubmit}>Create Account</button>
+          </div>
         </form>
         {/* <button onClick={this.getUsers}>Get Me</button> */}
       </div>

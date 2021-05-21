@@ -47,6 +47,11 @@ p {
 .signup-form {
   display: block;
   gap: 5%;
+  width: 50%;
+  margin: 0 auto;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5%;
 }
 
 .input-label {
@@ -74,4 +79,34 @@ p {
 .job-board {
   border: 3px solid black;
   margin: 10px;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  margin-bottom: 5%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.job-create-form {
+  display: block;
+  gap: 5%;
+  margin: 0 auto;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5%;
+}
+
+.modal {
+  background: white;
 }
