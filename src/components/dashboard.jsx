@@ -13,9 +13,11 @@ class Dashboard extends Component {
     statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
   };
 
+
   componentDidMount() {
     this.getUserJobs();
   }
+
 
   getUserJobs = () => {
     axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {

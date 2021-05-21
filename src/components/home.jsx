@@ -10,6 +10,7 @@ class Home extends Component {
     errors: [],
   };
 
+
   handleReset = () => {
     document.getElementById("form").reset();
   };
@@ -38,6 +39,7 @@ class Home extends Component {
       .post("http://localhost:3000/api/users", user)
       .then((res) => {
         console.log(res.data);
+        this.handleLogin();
         this.props.history.push("/login");
       })
       .catch((error) => {
