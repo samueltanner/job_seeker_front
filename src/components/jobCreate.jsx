@@ -110,10 +110,10 @@ class JobCreate extends Component {
           </div>
           <br />
           <div className="center">
-            <button type="submit" onClick={this.handleSubmit}>
+            <button type="button" onClick={this.handleSubmit}>
               Add to My Jobs
             </button>
-            <button onClick={ this.props.closeModal }>
+            <button type="button" onClick={ this.props.closeModal }>
               Close
             </button>
           </div>
