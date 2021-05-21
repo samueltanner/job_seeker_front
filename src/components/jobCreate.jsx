@@ -8,10 +8,11 @@ class JobCreate extends Component {
     salary: 0,
     posting_url: "",
     notes: "",
-    status: "",
+    status: "Applied",
     description: "",
     user_id: localStorage.getItem("user_id"),
-    showModal: false
+    showModal: false,
+    errors: [],
   };
 
   handleReset = () => {
@@ -23,6 +24,11 @@ class JobCreate extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  onTrigger = (event) => {
+    this.props.parentCallBack(event);
+    // event.preventDefault();
   };
 
   handleSubmit = (event) => {
@@ -40,6 +46,7 @@ class JobCreate extends Component {
       .post("http://localhost:3000/api/jobs", job)
       .then((res) => {
         console.log(res.data);
+        this.onTrigger(job);
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -49,75 +56,75 @@ class JobCreate extends Component {
         // this.setState({email: ""});
         // this.setState.password = "";
       });
-      this.props.closeModal();
+    this.props.closeModal();
   };
-
 
   render() {
     return (
       <div className="modal">
         <div className="modal-content">
-        <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
-          <div className="row">
-            <label className="column" htmlFor="company_name">
-              Company Name:
-            </label>
-            <input className="column" onChange={this.handleChange} type="text" name="company_name" />
-          </div>
-          <div className="row">
-            <label className="column" htmlFor="position">
-              Position:
-            </label>
-            <input className="column" onChange={this.handleChange} type="text" name="position" />
-          </div>
-          <div className="row">
-            <label className="column" htmlFor="description">
-              Description:
-            </label>
-            <textarea className="column" onChange={this.handleChange} type="text" name="description" />
-          </div>
-          <div className="row">
-            <label className="column" htmlFor="salary">
-              Salary:
-            </label>
-            <input className="column" onChange={this.handleChange} type="number" name="salary" />
-          </div>
-          <div className="row">
-            <label className="column" htmlFor="posting_url">
-              Posting URL:
-            </label>
-            <input className="column" onChange={this.handleChange} type="text" name="posting_url" />
-          </div>
-          <div className="row">
-            <label className="column" htmlFor="status">
-              Status:
-            </label>
-            <select className="column" name="status" onChange={this.handleChange}>
-              <option value="Saved">Saved</option>
-              <option value="Draft">Draft</option>
-              <option value="Applied">Applied</option>
-              <option value="In_Contact">In Contact</option>
-              <option value="Interviewing">Interviewing</option>
-              <option value="Offered">Offered</option>
-              <option value="Denied">Denied</option>
-            </select>
-          </div>
-          <div className="row">
-            <label className="column" htmlFor="notes">
-              Notes:
-            </label>
-            <textarea className="column" type="text" name="notes" onChange={this.handleChange} />
-          </div>
-          <br />
-          <div className="center">
-            <button type="button" onClick={this.handleSubmit}>
-              Add to My Jobs
-            </button>
-            <button type="button" onClick={ this.props.closeModal }>
-              Close
-            </button>
-          </div>
-        </form>
+          <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
+            <div className="row">
+              <label className="column" htmlFor="company_name">
+                Company Name:
+              </label>
+              <input className="column" onChange={this.handleChange} type="text" name="company_name" />
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="position">
+                Position:
+              </label>
+              <input className="column" onChange={this.handleChange} type="text" name="position" />
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="description">
+                Description:
+              </label>
+              <textarea className="column" onChange={this.handleChange} type="text" name="description" />
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="salary">
+                Salary:
+              </label>
+              <input className="column" onChange={this.handleChange} type="number" name="salary" />
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="posting_url">
+                Posting URL:
+              </label>
+              <input className="column" onChange={this.handleChange} type="text" name="posting_url" />
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="status">
+                Status:
+              </label>
+              <select className="column" name="status" onChange={this.handleChange}>
+                <option value="Applied">Applied</option>
+                <option value="Saved">Saved</option>
+                <option value="Draft">Draft</option>
+                <option value="In Contact">In Contact</option>
+                <option value="Interviewing">Interviewing</option>
+                <option value="Offered">Offered</option>
+                <option value="Denied">Denied</option>
+              </select>
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="notes">
+                Notes:
+              </label>
+              <textarea className="column" type="text" name="notes" onChange={this.handleChange} />
+            </div>
+            <br />
+            <div className="center">
+              <button type="button" onClick={this.handleSubmit}>
+                Add to My Jobs
+              </button>
+              <button type="button" onClick={this.props.closeModal}>
+                Close
+              </button>
+              {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
+            </div>
+          </form>
         </div>
       </div>
     );

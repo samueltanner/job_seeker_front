@@ -2,7 +2,47 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 class Navigation extends Component {
+  constructor() {
+    super();
+    this.state = { isLoggedIn: false };
+  }
+
   render() {
+    let auth;
+    let dashboard;
+    let contacts;
+    if (localStorage.getItem("jwt") == null) {
+      auth = (
+        <li>
+          <NavLink exact activeClassName="current" to="/login">
+            Login
+          </NavLink>
+        </li>
+      );
+    } else {
+      auth = (
+        <li>
+          <NavLink exact activeClassName="current" to="/logout">
+            Logout
+          </NavLink>
+        </li>
+      );
+      dashboard = (
+        <li>
+          <NavLink exact activeClassName="current" to="/dashboard">
+            Dashboard
+          </NavLink>
+        </li>
+      );
+      contacts = (
+        <li>
+          <NavLink exact activeClassName="current" to="/Contacts">
+            Contacts
+          </NavLink>
+        </li>
+      );
+    }
+
     return (
       <div>
         <nav>
@@ -13,30 +53,13 @@ class Navigation extends Component {
               </NavLink>
             </li>
             <li>
-              <NavLink exact activeClassName="current" to="/dashboard">
-                Dashboard
-              </NavLink>
-            </li>
-            <li>
               <NavLink exact activeClassName="current" to="/about">
                 About
               </NavLink>
             </li>
-            <li>
-              <NavLink exact activeClassName="current" to="/Contacts">
-                Contacts
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact activeClassName="current" to="/Logout">
-                Logout
-              </NavLink>
-            </li>
-            <li>
-              <NavLink exact activeClassName="current" to="/Login">
-                Login
-              </NavLink>
-            </li>
+            {dashboard}
+            {contacts}
+            {auth}
           </ul>
         </nav>
       </div>

@@ -20,6 +20,7 @@ class Login extends Component {
     });
   };
 
+
   handleSubmit = (event) => {
     const userInfo = {
       email: this.state.email,
@@ -29,7 +30,7 @@ class Login extends Component {
     axios
       .post("http://localhost:3000/api/sessions", userInfo)
       .then((response) => {
-        console.log("Loggin in...");
+        console.log("Loging in...");
         axios.defaults.headers.common["Authorizaton"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
         localStorage.setItem("user_id", response.data.user_id);
@@ -58,7 +59,7 @@ class Login extends Component {
           </div>
           <div>
             <label htmlFor="password">Password:</label>
-            <input type="text" className="input-label" name="password" id="password" onChange={this.handleChange} />
+            <input type="password" className="input-label" name="password" id="password" onChange={this.handleChange} />
           </div>
           <button onClick={this.handleSubmit}>Login</button>
         </form>
