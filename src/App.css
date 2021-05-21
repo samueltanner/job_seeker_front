@@ -47,6 +47,11 @@ p {
 .signup-form {
   display: block;
   gap: 5%;
+  width: 50%;
+  margin: 0 auto;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5%;
 }
 
 .input-label {
@@ -74,4 +79,51 @@ p {
 .job-board {
   border: 3px solid black;
   margin: 10px;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  margin-bottom: 5%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.job-create-form {
+  display: block;
+  gap: 5%;
+  margin: 0 auto;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5%;
+}
+
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }

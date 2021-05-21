@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import Metric from "./metric";
 import JobBoard from "./jobBoard";
-import JobCreate from "./jobCreate"
+import JobCreate from "./jobCreate";
+
+
 
 
 class Dashboard extends Component {
@@ -30,13 +32,20 @@ class Dashboard extends Component {
     )
   }
   
+  showModal = () => {
+    this.setState({ showModal: true })
+  }
+
+  closeModal = () => {
+    this.setState({ showModal: false })
+}
 
   render() {
     return (
       <div>
         <h1>I am the dashboard</h1>
-        <button>Add a Job</button>
-        <JobCreate />
+        <button onClick={ this.showModal }>Add a Job</button>
+        { (this.state.showModal) ? <JobCreate closeModal={ this.closeModal }/> : null }
         <div className="metric-zone">
           <Metric />
           <Metric />

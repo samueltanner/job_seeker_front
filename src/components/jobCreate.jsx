@@ -11,6 +11,7 @@ class JobCreate extends Component {
     status: "",
     description: "",
     user_id: localStorage.getItem("user_id"),
+    showModal: false
   };
 
   handleReset = () => {
@@ -48,25 +49,50 @@ class JobCreate extends Component {
         // this.setState({email: ""});
         // this.setState.password = "";
       });
+      this.props.closeModal();
   };
+
 
   render() {
     return (
-      <div>
-        <div className="signup-form">
-          <form id="form" onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="company_name">Company Name:</label>
-            <input onChange={this.handleChange} type="text" className="input-label" name="company_name" />
-            <label htmlFor="position">Position:</label>
-            <input onChange={this.handleChange} type="text" className="input-label" name="position" />
-            <label htmlFor="description">Description:</label>
-            <textarea onChange={this.handleChange} type="text" className="input-label" name="description" />
-            <label htmlFor="salary">Salary:</label>
-            <input onChange={this.handleChange} type="number" className="input-label" name="salary" />
-            <label htmlFor="posting_url">Posting URL:</label>
-            <input onChange={this.handleChange} type="text" className="input-label" name="posting_url" />
-            <label htmlFor="status">Status:</label>
-            <select name="status" onChange={this.handleChange}>
+      <div className="modal">
+        <div className="modal-content">
+        <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
+          <div className="row">
+            <label className="column" htmlFor="company_name">
+              Company Name:
+            </label>
+            <input className="column" onChange={this.handleChange} type="text" name="company_name" />
+          </div>
+          <div className="row">
+            <label className="column" htmlFor="position">
+              Position:
+            </label>
+            <input className="column" onChange={this.handleChange} type="text" name="position" />
+          </div>
+          <div className="row">
+            <label className="column" htmlFor="description">
+              Description:
+            </label>
+            <textarea className="column" onChange={this.handleChange} type="text" name="description" />
+          </div>
+          <div className="row">
+            <label className="column" htmlFor="salary">
+              Salary:
+            </label>
+            <input className="column" onChange={this.handleChange} type="number" name="salary" />
+          </div>
+          <div className="row">
+            <label className="column" htmlFor="posting_url">
+              Posting URL:
+            </label>
+            <input className="column" onChange={this.handleChange} type="text" name="posting_url" />
+          </div>
+          <div className="row">
+            <label className="column" htmlFor="status">
+              Status:
+            </label>
+            <select className="column" name="status" onChange={this.handleChange}>
               <option value="Saved">Saved</option>
               <option value="Draft">Draft</option>
               <option value="Applied">Applied</option>
@@ -75,11 +101,23 @@ class JobCreate extends Component {
               <option value="Offered">Offered</option>
               <option value="Denied">Denied</option>
             </select>
-            <label htmlFor="notes">Notes:</label>
-            <textarea type="text" className="input-label" name="notes" onChange={this.handleChange} />
-            <br />
-            <button onClick={this.handleSubmit}>Add to My Jobs</button>
-          </form>
+          </div>
+          <div className="row">
+            <label className="column" htmlFor="notes">
+              Notes:
+            </label>
+            <textarea className="column" type="text" name="notes" onChange={this.handleChange} />
+          </div>
+          <br />
+          <div className="center">
+            <button type="button" onClick={this.handleSubmit}>
+              Add to My Jobs
+            </button>
+            <button type="button" onClick={ this.props.closeModal }>
+              Close
+            </button>
+          </div>
+        </form>
         </div>
       </div>
     );
