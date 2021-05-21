@@ -3,6 +3,7 @@ import axios from "axios";
 import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
+import JobShow from "./jobShow";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Dashboard extends Component {
     this.state = {
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
-      newJobs: ["job"],
+      currentJob: {}
     };
   }
 
@@ -46,6 +47,7 @@ class Dashboard extends Component {
     return (
       <div>
         <h1>I am the dashboard</h1>
+        <JobShow />
         <button onClick={this.showModal}>Add a Job</button>
         {this.state.showModal ? <JobCreate parentCallBack={this.handleCallBack} closeModal={this.closeModal} /> : null}
         <div className="metric-zone">

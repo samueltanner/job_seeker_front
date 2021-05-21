@@ -1,16 +1,37 @@
-import React from "react";
+import React, {Component} from "react";
 
-const JobBoard = ({ jobData }) => {
+class JobBoard extends Component {
+  constructor(props) {
+    super(props);     
+    this.state = {
+      currentJob: {},
+    }
+
+}  
+
+  setCurrentJob = (job) => {
+    // const currentJob = this.state.currentJob;
+    this.setState({currentJob: job});
+    console.log(job);
+    console.log(this.state.currentJob);
+  }
+
+    render() {    
+
   return (
     <div>
-      {jobData.map((job, index) => (
+      {this.props.jobData.map((job, index) => (
         <div key={index}>
           <p>{job.company_name}</p>
+          <button onClick={() => this.setCurrentJob(job)}>Job Info</button>
+          {/* <a href="#" onClick={this.setState({currentJob: job})}>{job.company_name}</a> */}
         </div>
       ))}
     </div>
   );
 };
+};
+export default JobBoard;
 
 // class JobBoard extends Component {
 //   state = {
@@ -35,4 +56,4 @@ const JobBoard = ({ jobData }) => {
 //   )
 // }
 
-export default JobBoard;
+// export default JobBoard;
