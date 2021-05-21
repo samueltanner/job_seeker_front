@@ -11,6 +11,7 @@ class JobCreate extends Component {
     status: "",
     description: "",
     user_id: localStorage.getItem("user_id"),
+    showModal: false
   };
 
   handleReset = () => {
@@ -48,12 +49,14 @@ class JobCreate extends Component {
         // this.setState({email: ""});
         // this.setState.password = "";
       });
+      this.props.closeModal();
   };
 
 
   render() {
     return (
       <div className="modal">
+        <div className="modal-content">
         <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
           <div className="row">
             <label className="column" htmlFor="company_name">
@@ -110,11 +113,12 @@ class JobCreate extends Component {
             <button type="submit" onClick={this.handleSubmit}>
               Add to My Jobs
             </button>
-            <button>
+            <button onClick={ this.props.closeModal }>
               Close
             </button>
           </div>
         </form>
+        </div>
       </div>
     );
   }
