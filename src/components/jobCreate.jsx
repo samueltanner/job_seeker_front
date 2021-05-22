@@ -47,6 +47,7 @@ class JobCreate extends Component {
       .then((res) => {
         console.log(res.data);
         this.onTrigger(job);
+        this.props.closeModal();
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -56,7 +57,6 @@ class JobCreate extends Component {
         // this.setState({email: ""});
         // this.setState.password = "";
       });
-    this.props.closeModal();
   };
 
   render() {
@@ -124,6 +124,13 @@ class JobCreate extends Component {
               </button>
               {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
             </div>
+          <div>
+          <ul className="text-danger">
+            {this.state.errors.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
+        </div>
           </form>
         </div>
       </div>

@@ -60,6 +60,9 @@ p {
 
 .text-danger {
   color: red;
+  list-style-type: none;
+  text-align: center;
+  margin: 3% 0;
 }
 
 .metric-zone {
@@ -96,6 +99,7 @@ p {
 .center {
   display: flex;
   justify-content: center;
+  gap: 2%;
 }
 
 .job-create-form {
