@@ -10,21 +10,25 @@ class JobBoard extends Component {
 }  
 
   setCurrentJob = (job) => {
+    // let currentJob = this.state.currentJob;
     // const currentJob = this.state.currentJob;
-    this.setState({currentJob: job});
-    console.log(job);
-    console.log(this.state.currentJob);
+    this.setState({currentJob: job}, function() {this.consoleLogJob();});
+    // console.log(job);
+    // console.log(this.state.currentJob);
   }
 
+  consoleLogJob = () => {
+    let currentJob = this.state.currentJob;
+    console.log(currentJob);
+  }
     render() {    
 
   return (
     <div>
       {this.props.jobData.map((job, index) => (
-        <div key={index}>
-          <p>{job.company_name}</p>
-          <button onClick={() => this.setCurrentJob(job)}>Job Info</button>
-          {/* <a href="#" onClick={this.setState({currentJob: job})}>{job.company_name}</a> */}
+        <div key={index} className="center margin">
+          <button className="button-as-link" onClick={() => this.setCurrentJob(job)}>{job.company_name}</button>
+          <p className="muted">({job.position}</p>
         </div>
       ))}
     </div>
