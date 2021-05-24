@@ -40,10 +40,6 @@ h1 {
   margin-bottom: 20px;
 }
 
-p {
-  margin-bottom: 15px;
-}
-
 .signup-form {
   display: block;
   gap: 5%;
@@ -60,6 +56,9 @@ p {
 
 .text-danger {
   color: red;
+  list-style-type: none;
+  text-align: center;
+  margin: 3% 0;
 }
 
 .metric-zone {
@@ -70,15 +69,40 @@ p {
 }
 
 .job-zone {
-  justify-content: center;
+  /* justify-content: center;
   display: flex;
   flex: wrap;
-  gap: 15px;
+  gap: 15px; */
   /* border-radius: 5px; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "a b c"
+    "a b c"
+    "a b c";
 }
+
+.button-as-link {
+  border: none;
+  background: none;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.button-as-link:hover {
+  color: blue;
+  cursor: pointer;
+}
+
+.muted {
+  font-style: italic;
+  color: gray;
+}
+
 .job-board {
   border: 3px solid black;
   margin: 10px;
+  text-align: center;
 }
 
 .column {
@@ -96,6 +120,11 @@ p {
 .center {
   display: flex;
   justify-content: center;
+  gap: 2%;
+}
+
+.margin {
+  margin: 3%;
 }
 
 .job-create-form {
