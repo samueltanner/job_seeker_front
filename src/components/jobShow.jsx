@@ -1,26 +1,47 @@
+import axios from "axios";
 import React, { Component } from "react";
 // import axios from 'axios';
 
 class JobShow extends Component {
- 
-  setSelectedStatus = (s, i) => {
-    s.options[i - 1].selected = true;
-    return;
-  };
-
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      status: "",
+    };
+  }
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleSave = (event) => {
+    const job = {
+      status: this.state.status,
+    };
+    console.log(this.props.job.id)
+    axios.patch("http://localhost:3000/api/jobs/" + this.props.job.id, job).then((res) => {
+      console.log(res.data);
+    });
+  };
+
+  handleDestroy = (event) => {
+    var job_id = this.props.job.id
+    axios.delete("http://localhost:3000/api/jobs/" + job_id).then((res) => {
+      console.log(res.data)
+      this.props.closeModal();
+    })
   }
   render() {
- 
     return (
       <div className="modal">
         <div className="modal-content">
           <h1>{this.props.job.company_name}</h1>
           <h3>{this.props.job.position}</h3>
-          <h3>{this.props.job.status}</h3>
-          <select id="status_dropdown" name="status" onChange={this.handleChange}>
+          {/* <h3>{this.props.job.status}</h3> */}
+          <select id="status_dropdown" defaultValue={this.props.job.status} name="status" onChange={this.handleChange}>
             <option value="Applied">Applied</option>
             <option value="Saved">Saved</option>
             <option value="Draft">Draft</option>
@@ -34,6 +55,8 @@ class JobShow extends Component {
           <p>{this.props.job.notes}</p>
           <button onClick={this.props.closeModal}>Close</button>
           <button>Edit Info</button>
+          <button onClick={this.handleSave}>Save Changes</button>
+          <button onClick={this.handleDestroy}>Delete Job</button>
         </div>
       </div>
     );

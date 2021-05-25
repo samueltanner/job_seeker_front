@@ -3,7 +3,7 @@ import axios from "axios";
 import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
-import JobShow from "./jobShow";
+
 
 class Dashboard extends Component {
   constructor(props) {
