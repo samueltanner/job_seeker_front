@@ -27,13 +27,13 @@ class JobShow extends Component {
     });
   };
 
-  handleDestroy = (event) => {
-    var job_id = this.props.job.id
-    axios.delete("http://localhost:3000/api/jobs/" + job_id).then((res) => {
-      console.log(res.data)
-      this.props.closeModal();
-    })
-  }
+  // handleDestroy = (event) => {
+  //   var job_id = this.props.job.id
+  //   axios.delete("http://localhost:3000/api/jobs/" + job_id).then((res) => {
+  //     console.log(res.data)
+  //     this.props.closeModal();
+  //   })
+  // }
   render() {
     return (
       <div className="modal">
@@ -56,7 +56,7 @@ class JobShow extends Component {
           <button onClick={this.props.closeModal}>Close</button>
           <button>Edit Info</button>
           <button onClick={this.handleSave}>Save Changes</button>
-          <button onClick={this.handleDestroy}>Delete Job</button>
+          <button onClick={() => this.props.deleteJob(this.props.job.id)}>Delete Job</button>
         </div>
       </div>
     );

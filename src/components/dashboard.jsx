@@ -42,6 +42,14 @@ class Dashboard extends Component {
     this.setState({ showModal: false });
   };
 
+  handleDestroyJob(response) {
+    // var job_id = this.props.job.id
+    axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
+      console.log(res.data)
+      this.closeModal();
+    })
+  }
+
   render() {
     // const {newJobs} = this.state.newJobs
     return (
@@ -63,7 +71,7 @@ class Dashboard extends Component {
               <div className="job-board" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
                 <h2>{status}</h2>
-                <JobBoard jobData={this.jobDataFilter({ status })} />
+                <JobBoard jobData={this.jobDataFilter({ status })} deleteJob={this.handleDestroyJob}/>
               </div>
             );
           })}

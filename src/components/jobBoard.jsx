@@ -32,6 +32,8 @@ class JobBoard extends Component {
     let currentJob = this.state.currentJob;
     console.log(currentJob);
   };
+
+  
   render() {
     return (
       <div>
@@ -40,7 +42,7 @@ class JobBoard extends Component {
             <button className="button-as-link" onClick={() => {this.setCurrentJob(job); this.showModal()}}>
               {job.company_name}
             </button>
-            {this.state.showModal ?  <JobShow closeModal={this.closeModal} job={this.state.currentJob}/> : null}
+            {this.state.showModal ?  <JobShow deleteJob={this.props.deleteJob} closeModal={this.closeModal} job={this.state.currentJob}/> : null}
             <p className="muted">{job.position}</p>
           </div>
         ))}
