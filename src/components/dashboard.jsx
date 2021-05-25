@@ -4,14 +4,13 @@ import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
-      currentJob: {}
+      currentJob: {},
     };
   }
 
@@ -26,8 +25,8 @@ class Dashboard extends Component {
       // console.log(this.state.jobs);
     });
   };
-  handleCallBack = (childData) => {
-    this.setState((state) => ({ jobs: [...state.jobs, childData] }));
+  addJob = (job) => {
+    this.setState((state) => ({ jobs: [...state.jobs, job] }));
   };
   jobDataFilter = (status) => {
     // console.log(Object.values(status)[0])
@@ -42,11 +41,23 @@ class Dashboard extends Component {
     this.setState({ showModal: false });
   };
 
-  handleDestroyJob(response) {
+  handleDestroyJob = (response) => {
     // var job_id = this.props.job.id
     axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
-      console.log(res.data)
-      this.closeModal();
+      console.log(res.data);
+      this.state.jobs.splice(this.state.jobs.indexOf(response), 1);
+      // this.closeModal();
+    });
+
+    // console.log(this.state.jobs)
+    var jobIndex = this.state.jobs.findIndex(o => o.id === response)
+    // console.log(jobIndex)
+    this.removeItem(jobIndex)
+  }
+
+  removeItem(index) {
+    this.setState({
+      jobs: this.state.jobs.filter((_, i) => i !== index)
     })
   }
 
@@ -56,7 +67,7 @@ class Dashboard extends Component {
       <div>
         <h1>I am the dashboard</h1>
         <button onClick={this.showModal}>Add a Job</button>
-        {this.state.showModal ? <JobCreate parentCallBack={this.handleCallBack} closeModal={this.closeModal} /> : null}
+        {this.state.showModal ? <JobCreate parentCallBack={this.addJob} closeModal={this.closeModal} /> : null}
         <div className="metric-zone">
           <Metric />
           <Metric />
@@ -71,11 +82,11 @@ class Dashboard extends Component {
               <div className="job-board" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
                 <h2>{status}</h2>
-                <JobBoard jobData={this.jobDataFilter({ status })} deleteJob={this.handleDestroyJob}/>
+                <JobBoard jobData={this.jobDataFilter({ status })} deleteJob={this.handleDestroyJob} />
               </div>
             );
           })}
-          </div>
+        </div>
       </div>
     );
   }

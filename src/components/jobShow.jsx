@@ -21,7 +21,7 @@ class JobShow extends Component {
     const job = {
       status: this.state.status,
     };
-    console.log(this.props.job.id)
+    console.log(this.props.job.id);
     axios.patch("http://localhost:3000/api/jobs/" + this.props.job.id, job).then((res) => {
       console.log(res.data);
     });
@@ -56,7 +56,14 @@ class JobShow extends Component {
           <button onClick={this.props.closeModal}>Close</button>
           <button>Edit Info</button>
           <button onClick={this.handleSave}>Save Changes</button>
-          <button onClick={() => this.props.deleteJob(this.props.job.id)}>Delete Job</button>
+          <button
+            onClick={() => {
+              this.props.deleteJob(this.props.job.id);
+              this.props.closeModal();
+            }}
+          >
+            Delete Job
+          </button>
         </div>
       </div>
     );
