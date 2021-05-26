@@ -3,6 +3,7 @@ import axios from "axios";
 
 class JobCreate extends Component {
   state = {
+    id: null,
     company_name: "",
     position: "",
     salary: null,
@@ -33,6 +34,7 @@ class JobCreate extends Component {
 
   handleSubmit = (event) => {
     const job = {
+      id: this.state.id,
       user_id: this.state.user_id,
       company_name: this.state.company_name,
       description: this.state.description,
@@ -47,7 +49,7 @@ class JobCreate extends Component {
       .then((res) => {
         console.log(res.data);
         this.props.closeModal();
-        this.onTrigger(job);
+        this.onTrigger(res.data);
       })
       .catch((error) => {
         // console.log(error.response.data.errors);
