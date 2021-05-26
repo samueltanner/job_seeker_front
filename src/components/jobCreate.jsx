@@ -5,7 +5,7 @@ class JobCreate extends Component {
   state = {
     company_name: "",
     position: "",
-    salary: 0,
+    salary: null,
     posting_url: "",
     notes: "",
     status: "Applied",
@@ -26,8 +26,8 @@ class JobCreate extends Component {
     });
   };
 
-  onTrigger = (event) => {
-    this.props.addJob(event);
+  onTrigger = (job) => {
+    this.props.handleAddJob(job);
     // event.preventDefault();
   };
 
@@ -46,17 +46,18 @@ class JobCreate extends Component {
       .post("http://localhost:3000/api/jobs", job)
       .then((res) => {
         console.log(res.data);
-        this.onTrigger(job);
         this.props.closeModal();
+        this.onTrigger(job);
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
-        this.setState({ errors: error.response.data.errors });
+        // console.log(error.response.data.errors);
+        // this.setState({ errors: error.response });
         // this.handleReset();
         // this.setState.errors = ["Invalid email or Password"];
         // this.setState({email: ""});
         // this.setState.password = "";
       });
+
   };
 
   render() {

@@ -77,7 +77,7 @@ class Dashboard extends Component {
       <div>
         <h1>I am the dashboard</h1>
         <button onClick={this.showModal}>Add a Job</button>
-        {this.state.showModal ? <JobCreate handleAddJob={this.addJob} closeModal={this.closeModal} /> : null}
+        {this.state.showModal ? <JobCreate handleAddJob={this.handleAddJob} closeModal={this.closeModal} /> : null}
         <div className="metric-zone">
           <Metric />
           <Metric />
