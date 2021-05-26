@@ -10,9 +10,23 @@ class Dashboard extends Component {
     this.state = {
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
-      currentJob: {},
+      // currentJob: {},
     };
   }
+
+  // setDashCurrentJob = (job) => {
+  //   console.log(job)
+  //   this.setState({currentJob: job}, function() {
+
+  //     this.consoleLogCurrentJob()
+  //   })
+  // }
+
+  // consoleLogCurrentJob = () => {
+  //   console.log("I AM THE DASH CURRENT JOB");
+
+  //   console.log(this.state.currentJob)
+  // }
 
   componentDidMount() {
     this.getUserJobs();

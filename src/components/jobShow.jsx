@@ -6,6 +6,7 @@ class JobShow extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: this.props.job.id,
       company_name: this.props.job.company_name,
       position: this.props.job.position,
       salary: this.props.job.salary,
@@ -15,9 +16,14 @@ class JobShow extends Component {
       description: this.props.job.description,
     };
   }
+
+  showCurrentJob = () => {
+    console.log(this.props.job)
+  }
   onTrigger = (job, job_id) => {
     this.props.updateJob(job, job_id);
     // console.log(job_id)
+    // console.log(job)
   };
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,6 +34,7 @@ class JobShow extends Component {
 
   handleSave = (event) => {
     const job = {
+      id: this.state.id,
       company_name: this.state.company_name,
       position: this.state.position,
       salary: this.state.salary,
@@ -37,11 +44,13 @@ class JobShow extends Component {
       description: this.state.description,
     };
     // console.log(this.props.job.id);
-    axios.patch("http://localhost:3000/api/jobs/" + this.props.job.id, job).then((res) => {
+    axios.patch("http://localhost:3000/api/jobs/" + this.state.id, job).then((res) => {
       // console.log(res.data);
-      console.log(job)
+      // console.log(this.props.job.id)
+      // this.props.setState.job(job)
+      // this.props.updateCurrentJob(job)
       this.props.closeModal();
-      this.onTrigger(job, this.props.job.id)
+      this.onTrigger(job, job.id);
     });
   };
 
@@ -159,6 +168,7 @@ class JobShow extends Component {
               </button>
               {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
             </div>
+            <button onClick={this.showCurrentJob}>TEMP BUTTON</button>
             <div>
               {/* <ul className="text-danger">
             {this.state.errors.map((x) => (

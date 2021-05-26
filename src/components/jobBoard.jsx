@@ -22,16 +22,18 @@ class JobBoard extends Component {
     // const currentJob = this.state.currentJob;
 
     this.setState({ currentJob: job }, function () {
-      // this.consoleLogJob();
+      this.consoleLogJob();
     });
     // console.log(job);
     // console.log(this.state.currentJob);
   };
 
-  // consoleLogJob = () => {
-  //   let currentJob = this.state.currentJob;
-  //   console.log(currentJob);
-  // };
+  consoleLogJob = () => {
+    let currentJob = this.state.currentJob;
+    console.log("THE CURRENT JOB IS:")
+    console.log(currentJob);
+    console.log(currentJob.id)
+  };
 
   
   render() {
@@ -39,10 +41,10 @@ class JobBoard extends Component {
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
-            <button className="button-as-link" onClick={() => {this.setCurrentJob(job); this.showModal()}}>
+            <button className="button-as-link" onClick={() => {this.setCurrentJob(job); this.showModal(); }}>
               {job.company_name}
             </button>
-            {this.state.showModal ?  <JobShow deleteJob={this.props.deleteJob} closeModal={this.closeModal} job={this.state.currentJob} updateJob={this.props.updateJob}/> : null}
+            {this.state.showModal ?  <JobShow deleteJob={this.props.deleteJob} closeModal={this.closeModal} job={this.state.currentJob} updateJob={this.props.updateJob} /> : null}
             <p className="muted">{job.position}</p>
           </div>
         ))}
