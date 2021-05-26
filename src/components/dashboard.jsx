@@ -25,9 +25,39 @@ class Dashboard extends Component {
       // console.log(this.state.jobs);
     });
   };
-  addJob = (job) => {
+  handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
   };
+  handleUpdateJob = (job, job_id) => {
+    this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
+    var jobIndex = this.state.jobs.findIndex((o) => o.id === job_id);
+    this.removeJobFromState(jobIndex);
+    this.handleAddJob(job)
+
+
+    // console.log("This is the updated job:")
+    console.log(job_id)
+    // console.log(job)
+  }
+  handleDestroyJob = (response) => {
+    // var job_id = this.props.job.id
+    axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
+      console.log(res.data);
+      this.state.jobs.splice(this.state.jobs.indexOf(response), 1);
+      // this.closeModal();
+    });
+
+    // console.log(this.state.jobs)
+    var jobIndex = this.state.jobs.findIndex((o) => o.id === response);
+    // console.log(jobIndex)
+    this.removeJobFromState(jobIndex);
+  };
+
+  removeJobFromState(index) {
+    this.setState({
+      jobs: this.state.jobs.filter((_, i) => i !== index),
+    });
+  }
   jobDataFilter = (status) => {
     // console.log(Object.values(status)[0])
     return this.state.jobs.filter((job) => job.status === Object.values(status)[0]);
@@ -41,33 +71,13 @@ class Dashboard extends Component {
     this.setState({ showModal: false });
   };
 
-  handleDestroyJob = (response) => {
-    // var job_id = this.props.job.id
-    axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
-      console.log(res.data);
-      this.state.jobs.splice(this.state.jobs.indexOf(response), 1);
-      // this.closeModal();
-    });
-
-    // console.log(this.state.jobs)
-    var jobIndex = this.state.jobs.findIndex(o => o.id === response)
-    // console.log(jobIndex)
-    this.removeItem(jobIndex)
-  }
-
-  removeItem(index) {
-    this.setState({
-      jobs: this.state.jobs.filter((_, i) => i !== index)
-    })
-  }
-
   render() {
     // const {newJobs} = this.state.newJobs
     return (
       <div>
         <h1>I am the dashboard</h1>
         <button onClick={this.showModal}>Add a Job</button>
-        {this.state.showModal ? <JobCreate parentCallBack={this.addJob} closeModal={this.closeModal} /> : null}
+        {this.state.showModal ? <JobCreate handleAddJob={this.addJob} closeModal={this.closeModal} /> : null}
         <div className="metric-zone">
           <Metric />
           <Metric />
@@ -82,7 +92,7 @@ class Dashboard extends Component {
               <div className="job-board" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
                 <h2>{status}</h2>
-                <JobBoard jobData={this.jobDataFilter({ status })} deleteJob={this.handleDestroyJob} />
+                <JobBoard jobData={this.jobDataFilter({ status })} deleteJob={this.handleDestroyJob} updateJob={this.handleUpdateJob}/>
               </div>
             );
           })}

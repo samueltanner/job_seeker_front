@@ -27,7 +27,7 @@ class JobCreate extends Component {
   };
 
   onTrigger = (event) => {
-    this.props.parentCallBack(event);
+    this.props.addJob(event);
     // event.preventDefault();
   };
 
