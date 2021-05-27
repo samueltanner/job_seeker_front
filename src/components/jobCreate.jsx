@@ -3,9 +3,10 @@ import axios from "axios";
 
 class JobCreate extends Component {
   state = {
+    id: null,
     company_name: "",
     position: "",
-    salary: 0,
+    salary: null,
     posting_url: "",
     notes: "",
     status: "Applied",
@@ -26,13 +27,14 @@ class JobCreate extends Component {
     });
   };
 
-  onTrigger = (event) => {
-    this.props.parentCallBack(event);
+  onTrigger = (job) => {
+    this.props.handleAddJob(job);
     // event.preventDefault();
   };
 
   handleSubmit = (event) => {
     const job = {
+      id: this.state.id,
       user_id: this.state.user_id,
       company_name: this.state.company_name,
       description: this.state.description,
@@ -46,17 +48,18 @@ class JobCreate extends Component {
       .post("http://localhost:3000/api/jobs", job)
       .then((res) => {
         console.log(res.data);
-        this.onTrigger(job);
         this.props.closeModal();
+        this.onTrigger(res.data);
       })
       .catch((error) => {
-        console.log(error.response.data.errors);
-        this.setState({ errors: error.response.data.errors });
+        // console.log(error.response.data.errors);
+        // this.setState({ errors: error.response });
         // this.handleReset();
         // this.setState.errors = ["Invalid email or Password"];
         // this.setState({email: ""});
         // this.setState.password = "";
       });
+
   };
 
   render() {
