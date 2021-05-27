@@ -160,7 +160,7 @@ class JobShow extends Component {
 
               <button
                 onClick={() => {
-                  this.props.deleteJob(this.props.job.id);
+                  this.props.deleteJob(this.state.id);
                   this.props.closeModal();
                 }}
               >

@@ -18,23 +18,11 @@ class JobBoard extends Component {
   };
 
   setCurrentJob = (job) => {
-    // let currentJob = this.state.currentJob;
-    // const currentJob = this.state.currentJob;
-
     this.setState({ currentJob: job }, function () {
-      this.consoleLogJob();
+      //typically this callback would hold a function, but not necessary here
     });
-    // console.log(job);
-    // console.log(this.state.currentJob);
-  };
 
-  consoleLogJob = () => {
-    let currentJob = this.state.currentJob;
-    console.log("THE CURRENT JOB IS:")
-    console.log(currentJob);
-    console.log(currentJob.id)
   };
-
   
   render() {
     return (
