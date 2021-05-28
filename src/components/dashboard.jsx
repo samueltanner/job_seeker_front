@@ -107,6 +107,18 @@ class Dashboard extends Component {
     this.setState({ showGoalsModal: false });
   };
 
+  createMetricTable = () => {
+    const metrics = {
+      user_id: localStorage.getItem("user_id"),
+      quick_apply: this.state.quick_apply,
+      intentional_apply: this.state.intentional_apply,
+      info_interview: this.state.info_interview,
+      white_boarding_minutes: this.state.white_boarding_minutes,
+      portfolio_minutes: this.state.portfolio_minutes,
+    };
+    axios.post("http://localhost:3000/api/metric_tables/", metrics).then((res) => {console.log(res)});
+  };
+
   render() {
     // const {newJobs} = this.state.newJobs
     return (
@@ -124,6 +136,7 @@ class Dashboard extends Component {
           </div>
           </div>
           <div className="metric-zone">
+          <button onClick={this.createMetricTable}>Create Metrics</button>
           {Object.values(this.state.userGoals).map((goal, index) => 
           <span key={index}>
             {this.state.userGoalTitles[index]}
