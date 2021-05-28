@@ -4,7 +4,9 @@ class Metric extends Component {
    
   render() { 
     return ( <div>
-    {this.props.metrics}/{this.props.goal} <button>+</button>
+      <div className="center margin">
+    {this.props.metrics}/{this.props.goal} <button className="margin">+</button>
+    </div>
     </div> );
   }
 }

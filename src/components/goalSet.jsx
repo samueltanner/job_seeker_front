@@ -5,19 +5,25 @@ class GoalSet extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user_goals: {
         quick_apply: 0,
         intentional_apply: 0,
         info_interview: 0,
         white_boarding_minutes: 0,
-        portfolio_minutes: 0,      
+        portfolio_minutes: 0     
+      },
     };
   }
 
+  // handleChange = (event) => {
+  //   const { name, value } = event.target;
+  //   this.setState({
+  //     [name]: parseInt(value),
+  //   });
+  // };
+
   handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: parseInt(value),
-    });
+    this.setState({[event.target.name]:parseInt(event.target.value)});
   };
 
   saveGoals = () => {
@@ -29,11 +35,10 @@ class GoalSet extends Component {
       portfolio_minutes: this.state.portfolio_minutes,
     };
     let currentUserId = localStorage.getItem("user_id");
-    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then((res) => {
-      console.log(res.config.data);
+    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals);
       this.props.closeModal();
+      this.props.updateUserGoals();
     this.props.history.push("/dashboard");
-  })
   };
 
   modalClose = () => {
@@ -92,7 +97,7 @@ class GoalSet extends Component {
               <input
                 className="column"
                 onChange={this.handleChange}
-                type="number"
+                type="text"
                 name="white_boarding_minutes"
               />
             </div>

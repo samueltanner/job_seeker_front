@@ -119,6 +119,10 @@ h1 {
   width: 50%;
 }
 
+.column-right {
+  float: right;
+}
+
 .row:after {
   content: "";
   display: table;
@@ -164,4 +168,8 @@ h1 {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+}
+
+.bold {
+  font-weight: bold;
 }

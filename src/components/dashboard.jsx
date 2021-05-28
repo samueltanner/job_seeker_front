@@ -12,7 +12,7 @@ class Dashboard extends Component {
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
       userGoals: {},
-      userGoalTitles: ["Quick Apply:", "Intentional Apply:", "Informational Interview:", "White-boarding (minutes):", "Portfolio (minutes):"],
+      userGoalTitles: ["Quick Apply", "Intentional Apply", "Informational Interview", "White-boarding (minutes)", "Portfolio (minutes)"],
       showGoalsModal: false,
       metrics: { 
         quick_apply: 0,
@@ -20,7 +20,9 @@ class Dashboard extends Component {
         info_interview: 0,
         white_boarding_minutes: 0,
         portfolio_minutes: 0,
-       }
+       },
+       showMetrics: false,
+       showMetricsButton: true,
       // currentJob: {},
     };
   }
@@ -91,6 +93,10 @@ class Dashboard extends Component {
     return this.state.jobs.filter((job) => job.status === Object.values(status)[0]);
   };
 
+  updateUserGoals = () => {
+    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((res) => {this.setState({userGoals: res.data.user_goals})})
+  }
+
   showModal = () => {
     this.setState({ showModal: true });
   };
@@ -117,6 +123,8 @@ class Dashboard extends Component {
       portfolio_minutes: this.state.portfolio_minutes,
     };
     axios.post("http://localhost:3000/api/metric_tables/", metrics).then((res) => {console.log(res)});
+    this.setState({ showMetrics: true});
+    this.setState({ showMetricsButton: false});
   };
 
   render() {
@@ -131,16 +139,16 @@ class Dashboard extends Component {
           <p key={index}>{this.state.userGoalTitles[index]} {goal}</p>)}
           <div className="center margin">
         <button onClick={this.showGoalsModal}>Edit Job Hunting Goals</button>
-        {this.state.showGoalsModal ? <GoalSet history={this.props.history} closeModal={this.closeGoalsModal} closeGoalsModal={this.closeGoalsModal}/> : null}
+        {this.state.showGoalsModal ? <GoalSet updateUserGoals={this.updateUserGoals} history={this.props.history} closeModal={this.closeGoalsModal} closeGoalsModal={this.closeGoalsModal}/> : null}
         </div>
           </div>
           </div>
           <div className="metric-zone">
-          <button onClick={this.createMetricTable}>Create Metrics</button>
+          {this.state.showMetricsButton ? <button onClick={this.createMetricTable}>Create Metrics</button> : null}
           {Object.values(this.state.userGoals).map((goal, index) => 
-          <span key={index}>
-            {this.state.userGoalTitles[index]}
-          <Metric goal={goal} metrics={Object.values(this.state.metrics)[index]}/>
+          <span className="hidden" key={index}>
+            <span className="bold">{this.state.userGoalTitles[index]}</span>
+            {this.state.showMetrics ? <Metric goal={goal} metrics={Object.values(this.state.metrics)[index]}/> : null}
           </span>)}
         </div>
         <hr />
