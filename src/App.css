@@ -66,6 +66,7 @@ h1 {
   display: flex;
   flex: wrap;
   gap: 15px;
+  margin: 1% auto;
 }
 
 .job-zone {

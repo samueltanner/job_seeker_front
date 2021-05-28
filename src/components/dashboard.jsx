@@ -3,6 +3,7 @@ import axios from "axios";
 import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
+import GoalSet from "./goalSet";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -10,6 +11,9 @@ class Dashboard extends Component {
     this.state = {
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
+      userGoals: {},
+      userGoalTitles: ["Quick Apply:", "Intentional Apply:", "Informational Interview:", "White-boarding (minutes):", "Portfolio (minutes):"],
+      showGoalsModal: false,
       // currentJob: {},
     };
   }
@@ -29,12 +33,13 @@ class Dashboard extends Component {
   // }
 
   componentDidMount() {
-    this.getUserJobs();
+    this.getUserJobsAndGoals();
   }
 
-  getUserJobs = () => {
+  getUserJobsAndGoals = () => {
     axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
+      this.setState({ userGoals: response.data.user_goals });
       // console.log(response.data.jobs);
       // console.log(this.state.jobs);
     });
@@ -81,23 +86,45 @@ class Dashboard extends Component {
     this.setState({ showModal: true });
   };
 
+  showGoalsModal = () => {
+    this.setState({ showGoalsModal: true });
+  };
+
   closeModal = () => {
     this.setState({ showModal: false });
   };
+
+  closeGoalsModal = () => {
+    this.setState({ showGoalsModal: false });
+  };
+
+  editGoals= () => {
+    console.log(this.state.userGoals);
+  }
 
   render() {
     // const {newJobs} = this.state.newJobs
     return (
       <div>
         <h1>I am the dashboard</h1>
+          <h2 className="center margin">Your Daily Job Hunting Goals:</h2>
+        <div className="metric-zone">
+          {Object.values(this.state.userGoals).map((goal, index) => 
+          <span key={index}>{this.state.userGoalTitles[index]} {goal}</span>)}
+          </div>
+          <div className="metric-zone">
+          <Metric />
+          <Metric />
+          <Metric />
+          <Metric />
+          <Metric />
+        </div>
+        <div className="center">
         <button onClick={this.showModal}>Add a Job</button>
         {this.state.showModal ? <JobCreate handleAddJob={this.handleAddJob} closeModal={this.closeModal} /> : null}
-        <div className="metric-zone">
-          <Metric />
-          <Metric />
-          <Metric />
-          <Metric />
-          <Metric />
+        <button onClick={this.showGoalsModal}>Edit Job Hunting Goals</button>
+        {this.state.showGoalsModal ? <GoalSet history={this.props.history} closeModal={this.closeGoalsModal} closeGoalsModal={this.closeGoalsModal}/> : null}
+
         </div>
         <hr />
         <div className="job-zone">

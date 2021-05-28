@@ -29,14 +29,23 @@ class GoalSet extends Component {
       portfolio_minutes: this.state.portfolio_minutes,
     };
     let currentUserId = localStorage.getItem("user_id");
-    console.log(currentUserId);
-    console.log(userGoals);
-    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then((res) => {
-    console.log(res.data);
-    });
+    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then(this.checkIfSettingGoalsForFirstTime());
     this.props.closeModal();
-    this.props.checkForUserGoals();
+    this.props.history.push("/dashboard");
   };
+
+  checkIfSettingGoalsForFirstTime = () => {
+    console.log(this.state);
+  }
+  
+  modalClose = () => {
+    if (this.props.closeModal) {
+      this.props.closeModal();
+    } else {
+      this.props.closeGoalsModal();
+    }
+    
+  }
 
   render() { 
     return ( <div className="modal">
@@ -102,7 +111,7 @@ class GoalSet extends Component {
             <div className="center">
               <button onClick={this.saveGoals}>Save Changes</button>
 
-              <button type="button" onClick={this.props.closeModal}>
+              <button type="button" onClick={this.modalClose}>
                 Close
               </button>
             </div>

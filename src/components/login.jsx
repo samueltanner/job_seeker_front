@@ -58,7 +58,7 @@ class Login extends Component {
 
   checkForUserGoals = () => {
     axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
-      console.log(response.data);
+      console.log(response.data)
       let currentUser = response.data;
       if (currentUser.user_goals === null) {
         this.showModal();
@@ -66,7 +66,7 @@ class Login extends Component {
         this.props.history.push("/dashboard");
       }
       
-    })
+    });
   }
 
   render() {
@@ -86,7 +86,7 @@ class Login extends Component {
           </div>
           <button onClick={this.handleSubmit}>Login</button>
         </form>
-        {this.state.showModal ?  <GoalSet closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} /> : null}
+        {this.state.showModal ?  <GoalSet closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} history={this.props.history}/> : null}
       </div>
     );
   }
