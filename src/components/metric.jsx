@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 
 class Metric extends Component {
-  state = {  }
+  state = { 
+    quick_apply: 0,
+    intentional_apply: 0,
+    info_interview: 0,
+    white_boarding_minutes: 0,
+    portfolio_minutes: 0,
+   }
   render() { 
     return ( <div>
-      I AM A METRIC
+      {this.props.metrics}/{this.props.goal}
     </div> );
   }
 }

@@ -100,6 +100,14 @@ h1 {
   color: gray;
 }
 
+.user-goals {
+  border: 1px solid black;
+}
+
+.padding {
+  padding: 2%;
+}
+
 .job-board {
   border: 3px solid black;
   margin: 10px;

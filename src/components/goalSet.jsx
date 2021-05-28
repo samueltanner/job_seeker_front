@@ -29,15 +29,10 @@ class GoalSet extends Component {
       portfolio_minutes: this.state.portfolio_minutes,
     };
     let currentUserId = localStorage.getItem("user_id");
-    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then(this.checkIfSettingGoalsForFirstTime());
-    this.props.closeModal();
+    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then(this.props.closeModal());
     this.props.history.push("/dashboard");
   };
 
-  checkIfSettingGoalsForFirstTime = () => {
-    console.log(this.state);
-  }
-  
   modalClose = () => {
     if (this.props.closeModal) {
       this.props.closeModal();
@@ -46,6 +41,8 @@ class GoalSet extends Component {
     }
     
   }
+
+
 
   render() { 
     return ( <div className="modal">
@@ -78,7 +75,7 @@ class GoalSet extends Component {
               <label className="column" htmlFor="info_interview">
                 Informational Interviews:
               </label>
-              <textarea
+              <input
                 className="column"
                 onChange={this.handleChange}
                 type="text"

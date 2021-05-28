@@ -14,6 +14,13 @@ class Dashboard extends Component {
       userGoals: {},
       userGoalTitles: ["Quick Apply:", "Intentional Apply:", "Informational Interview:", "White-boarding (minutes):", "Portfolio (minutes):"],
       showGoalsModal: false,
+      metrics: { 
+        quick_apply: 0,
+        intentional_apply: 0,
+        info_interview: 0,
+        white_boarding_minutes: 0,
+        portfolio_minutes: 0,
+       }
       // currentJob: {},
     };
   }
@@ -47,6 +54,7 @@ class Dashboard extends Component {
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
   };
+
   handleUpdateJob = (job, job_id) => {
     this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
     var jobIndex = this.state.jobs.findIndex((o) => o.id === job_id);
@@ -58,6 +66,7 @@ class Dashboard extends Component {
     console.log(job_id)
     // console.log(job)
   }
+
   handleDestroyJob = (response) => {
     // var job_id = this.props.job.id
     axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
@@ -86,47 +95,47 @@ class Dashboard extends Component {
     this.setState({ showModal: true });
   };
 
-  showGoalsModal = () => {
-    this.setState({ showGoalsModal: true });
-  };
-
   closeModal = () => {
     this.setState({ showModal: false });
+  };
+
+  showGoalsModal = () => {
+    this.setState({ showGoalsModal: true });
   };
 
   closeGoalsModal = () => {
     this.setState({ showGoalsModal: false });
   };
 
-  editGoals= () => {
-    console.log(this.state.userGoals);
-  }
-
   render() {
     // const {newJobs} = this.state.newJobs
     return (
       <div>
         <h1>I am the dashboard</h1>
-          <h2 className="center margin">Your Daily Job Hunting Goals:</h2>
-        <div className="metric-zone">
+        <div className="center margin">
+          <h2 className="center margin padding">Your Daily Job Hunting Goals:</h2>
+        <div className="user-goals padding">
           {Object.values(this.state.userGoals).map((goal, index) => 
-          <span key={index}>{this.state.userGoalTitles[index]} {goal}</span>)}
-          </div>
-          <div className="metric-zone">
-          <Metric />
-          <Metric />
-          <Metric />
-          <Metric />
-          <Metric />
-        </div>
-        <div className="center">
-        <button onClick={this.showModal}>Add a Job</button>
-        {this.state.showModal ? <JobCreate handleAddJob={this.handleAddJob} closeModal={this.closeModal} /> : null}
+          <p key={index}>{this.state.userGoalTitles[index]} {goal}</p>)}
+          <div className="center margin">
         <button onClick={this.showGoalsModal}>Edit Job Hunting Goals</button>
         {this.state.showGoalsModal ? <GoalSet history={this.props.history} closeModal={this.closeGoalsModal} closeGoalsModal={this.closeGoalsModal}/> : null}
-
+        </div>
+          </div>
+          </div>
+          <div className="metric-zone">
+          {Object.values(this.state.userGoals).map((goal, index) => 
+          <span key={index}>
+            {this.state.userGoalTitles[index]}
+          <Metric goal={goal} metrics={Object.values(this.state.metrics)[index]}/>
+          </span>)}
         </div>
         <hr />
+        <div className="center margin">
+        <button onClick={this.showModal}>Add a Job</button>
+        {this.state.showModal ? <JobCreate handleAddJob={this.handleAddJob} closeModal={this.closeModal} /> : null}
+
+        </div>
         <div className="job-zone">
           {this.state.statuses.map((status, index) => {
             return (
