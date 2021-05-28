@@ -12,7 +12,7 @@ class Dashboard extends Component {
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
       userGoals: {},
-      userGoalTitles: ["Quick Apply", "Intentional Apply", "Informational Interview", "White-boarding (minutes)", "Portfolio (minutes)"],
+      userGoalTitles: ["Quick Apply:", "Intentional Apply:", "Informational Interview:", "White-boarding (minutes):", "Portfolio (minutes):"],
       showGoalsModal: false,
       metrics: { 
         quick_apply: 0,
@@ -21,8 +21,6 @@ class Dashboard extends Component {
         white_boarding_minutes: 0,
         portfolio_minutes: 0,
        },
-       showMetrics: false,
-       showMetricsButton: true,
       // currentJob: {},
     };
   }
@@ -123,8 +121,6 @@ class Dashboard extends Component {
       portfolio_minutes: this.state.portfolio_minutes,
     };
     axios.post("http://localhost:3000/api/metric_tables/", metrics).then((res) => {console.log(res)});
-    this.setState({ showMetrics: true});
-    this.setState({ showMetricsButton: false});
   };
 
   render() {
@@ -144,11 +140,11 @@ class Dashboard extends Component {
           </div>
           </div>
           <div className="metric-zone">
-          {this.state.showMetricsButton ? <button onClick={this.createMetricTable}>Create Metrics</button> : null}
+         <button onClick={this.createMetricTable}>Create Metrics</button>
           {Object.values(this.state.userGoals).map((goal, index) => 
           <span className="hidden" key={index}>
             <span className="bold">{this.state.userGoalTitles[index]}</span>
-            {this.state.showMetrics ? <Metric goal={goal} metrics={Object.values(this.state.metrics)[index]}/> : null}
+<Metric goal={goal} metrics={Object.values(this.state.metrics)[index]}/>
           </span>)}
         </div>
         <hr />

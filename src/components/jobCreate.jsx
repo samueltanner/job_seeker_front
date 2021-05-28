@@ -52,7 +52,7 @@ class JobCreate extends Component {
         this.onTrigger(res.data);
       })
       .catch((error) => {
-        // console.log(error.response.data.errors);
+        console.log(error.response.data.errors);
         // this.setState({ errors: error.response });
         // this.handleReset();
         // this.setState.errors = ["Invalid email or Password"];

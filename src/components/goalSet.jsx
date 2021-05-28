@@ -37,8 +37,10 @@ class GoalSet extends Component {
     let currentUserId = localStorage.getItem("user_id");
     axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals);
       this.props.closeModal();
-      this.props.updateUserGoals();
-    this.props.history.push("/dashboard");
+      this.props.history.push("/dashboard");
+      if (this.props.updateUserGoals) {
+        this.props.updateUserGoals();
+      }
   };
 
   modalClose = () => {
