@@ -35,9 +35,11 @@ class GoalSet extends Component {
       portfolio_minutes: this.state.portfolio_minutes,
     };
     let currentUserId = localStorage.getItem("user_id");
-    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals);
+    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then((res) => {
+      console.log(res.data);
       this.props.closeModal();
       this.props.history.push("/dashboard");
+    });
       if (this.props.updateUserGoals) {
         this.props.updateUserGoals();
       }

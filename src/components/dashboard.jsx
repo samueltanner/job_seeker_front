@@ -47,7 +47,7 @@ class Dashboard extends Component {
     axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
-      // console.log(response.data.jobs);
+      console.log(response.data.user_goals);
       // console.log(this.state.jobs);
     });
   };
