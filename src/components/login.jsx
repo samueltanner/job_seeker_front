@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import GoalSet from "./goalSet";
 // import axios from "axios";
 
 class Login extends Component {
@@ -7,6 +8,7 @@ class Login extends Component {
     email: "",
     password: "",
     errors: [],
+    showModal: false,
   };
 
   handleReset = () => {
@@ -20,6 +22,13 @@ class Login extends Component {
     });
   };
 
+  showModal = () => {
+    this.setState({ showModal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
 
   handleSubmit = (event) => {
     const userInfo = {
@@ -34,7 +43,8 @@ class Login extends Component {
         axios.defaults.headers.common["Authorizaton"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
         localStorage.setItem("user_id", response.data.user_id);
-        this.props.history.push("/dashboard");
+        this.checkForUserGoals();
+        // this.props.history.push("/dashboard");
       })
       .catch((error) => {
         console.log(error.response);
@@ -45,6 +55,19 @@ class Login extends Component {
         // this.setState.password = "";
       });
   };
+
+  checkForUserGoals = () => {
+    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
+      console.log(response.data)
+      let currentUser = response.data;
+      if (currentUser.user_goals === null) {
+        this.showModal();
+      } else {
+        this.props.history.push("/dashboard");
+      }
+      
+    });
+  }
 
   render() {
     return (
@@ -63,6 +86,7 @@ class Login extends Component {
           </div>
           <button onClick={this.handleSubmit}>Login</button>
         </form>
+        {this.state.showModal ?  <GoalSet closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} history={this.props.history}/> : null}
       </div>
     );
   }

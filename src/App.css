@@ -66,6 +66,7 @@ h1 {
   display: flex;
   flex: wrap;
   gap: 15px;
+  margin: 1% auto;
 }
 
 .job-zone {
@@ -99,6 +100,14 @@ h1 {
   color: gray;
 }
 
+.user-goals {
+  border: 1px solid black;
+}
+
+.padding {
+  padding: 2%;
+}
+
 .job-board {
   border: 3px solid black;
   margin: 10px;
@@ -108,6 +117,10 @@ h1 {
 .column {
   float: left;
   width: 50%;
+}
+
+.column-right {
+  float: right;
 }
 
 .row:after {
@@ -155,4 +168,8 @@ h1 {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+}
+
+.bold {
+  font-weight: bold;
 }
