@@ -65,6 +65,7 @@ class Dashboard extends Component {
       console.log(response.data);
       if (response.data.length === 0) {
       } else {
+        console.log("THESE ARE THE METRICS")
         this.setState({ metrics: response.data[0] });
       }
     });
