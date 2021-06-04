@@ -65,8 +65,8 @@ class Dashboard extends Component {
       console.log(response.data);
       if (response.data.length === 0) {
       } else {
-        console.log("THESE ARE THE METRICS")
-        this.setState({ metrics: response.data[0] });
+        console.log("THESE ARE THE METRICS");
+        this.setState({ metrics: response.data[1] });
       }
     });
   };
@@ -145,6 +145,15 @@ class Dashboard extends Component {
     });
   };
 
+  // handleMetricIncrement = () => {
+  //   // console.log(event);
+  //   this.setState({
+  //     metrics: {
+  //       quick_apply: this.state.metrics.quick_apply += 1,
+  //     },
+  //   });
+  // };
+
   render() {
     // const {newJobs} = this.state.newJobs
     return (
@@ -176,7 +185,11 @@ class Dashboard extends Component {
           {Object.values(this.state.userGoals).map((goal, index) => (
             <span className="hidden" key={index}>
               <span className="bold">{this.state.userGoalTitles[index]}</span>
-              <Metric goal={goal} metrics={Object.values(this.state.metrics)[index]} />
+              <Metric
+                increment={this.handleMetricIncrement}
+                goal={goal}
+                metrics={(this.state.metrics)[index]}
+              />
             </span>
           ))}
         </div>
