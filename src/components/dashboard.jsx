@@ -54,22 +54,60 @@ class Dashboard extends Component {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
-      console.log(response.data.user_goals);
+      // console.log(response.data.user_goals);
       // console.log(this.state.jobs);
     });
   };
 
   getUserMetrics = () => {
     axios.get("http://localhost:3000/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
-      // this.setState({ metrics: response.data[1] });
-      console.log(response.data);
       if (response.data.length === 0) {
       } else {
-        console.log("THESE ARE THE METRICS");
-        this.setState({ metrics: response.data[1] });
-      }
-    });
+        var oldId = response.data[0].id;
+        console.log(response.data[0].id);
+
+        var quick_apply = [];
+        var intentional_apply = [];
+        var info_interview = [];
+        var white_boarding_minutes = [];
+        var portfolio_minutes = [];
+       response.data.forEach((instance) => {
+            quick_apply.push(instance.quick_apply);
+            intentional_apply.push(instance.intentional_apply);
+            info_interview.push(instance.info_interview);
+            white_boarding_minutes.push(instance.white_boarding_minutes);
+            portfolio_minutes.push(instance.portfolio_minutes);
+          });
+          for (var quick_apply_counter = 0, intentional_apply_counter = 0, info_interview_counter = 0, white_boarding_minutes_counter = 0, portfolio_minutes_counter = 0, index = 0; index < quick_apply.length; index ++  ) {
+            quick_apply_counter += quick_apply[index];
+            intentional_apply_counter += intentional_apply[index];
+            info_interview_counter += info_interview[index];
+            white_boarding_minutes_counter += white_boarding_minutes[index];
+            portfolio_minutes_counter += portfolio_minutes[index];
+          }
+            // console.log(quick_apply);
+            // console.log(quick_apply_counter);
+            // console.log(intentional_apply);
+            // console.log(info_interview);
+            // console.log(white_boarding_minutes);
+            // console.log(portfolio_minutes);
+
+            this.setState({ metrics: {
+              quick_apply: quick_apply_counter,
+              intentional_apply: intentional_apply_counter,
+              info_interview: info_interview_counter,
+              white_boarding_minutes: white_boarding_minutes_counter,
+              portfolio_minutes: portfolio_minutes_counter,
+            } 
+          });
+          if (response.data.length === 2) {
+          axios.delete("http://localhost:3000/api/metric_tables/" +  oldId).then(console.log("deleted old metric and set state of new metric successfully"))
+          }
+        }
+      });
   };
+
+
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
   };
@@ -131,28 +169,44 @@ class Dashboard extends Component {
     this.setState({ showGoalsModal: false });
   };
 
-  createMetricTable = () => {
-    const metrics = {
-      user_id: localStorage.getItem("user_id"),
-      quick_apply: this.state.quick_apply,
-      intentional_apply: this.state.intentional_apply,
-      info_interview: this.state.info_interview,
-      white_boarding_minutes: this.state.white_boarding_minutes,
-      portfolio_minutes: this.state.portfolio_minutes,
-    };
-    axios.post("http://localhost:3000/api/metric_tables/", metrics).then((res) => {
-      console.log(res);
-    });
+  handleMetricIncrement = (key, value) => {
+    // console.log(key);
+    // console.log(value);
+    this.setState(prevState => {
+      let metrics = Object.assign({}, prevState.metrics);
+      metrics[key] += 1;
+      return {metrics};
+    }, function() {
+      // console.log(this.state.metrics);
+      this.updateMetrics();
+  })
   };
 
-  // handleMetricIncrement = () => {
-  //   // console.log(event);
-  //   this.setState({
-  //     metrics: {
-  //       quick_apply: this.state.metrics.quick_apply += 1,
-  //     },
-  //   });
-  // };
+  handleMetricDecrement = (key, value) => {
+    // console.log(key);
+    // console.log(value);
+    this.setState(prevState => {
+      let metrics = Object.assign({}, prevState.metrics);
+      metrics[key] -= 1;
+      return {metrics};
+    }, function() {
+      console.log(this.state.metrics);
+      this.updateMetrics();
+  })
+  };
+
+  updateMetrics = () => {
+    var params = {
+      quick_apply: this.state.metrics.quick_apply,
+      intentional_apply: this.state.metrics.intentional_apply,
+      info_interview: this.state.metrics.info_interview,
+      white_boarding_minutes: this.state.metrics.white_boarding_minutes,
+      portfolio_minutes: this.state.metrics.portfolio_minutes,
+    }
+    axios.patch("http://localhost:3000/api/metric_tables/" + localStorage.getItem("metric_row_id"), params).then((response) => {
+    console.log(response);
+  })
+  }
 
   render() {
     // const {newJobs} = this.state.newJobs
@@ -181,12 +235,14 @@ class Dashboard extends Component {
           </div>
         </div>
         <div className="metric-zone">
-          <button onClick={this.createMetricTable}>Create Metrics</button>
           {Object.values(this.state.userGoals).map((goal, index) => (
             <span className="hidden" key={index}>
               <span className="bold">{this.state.userGoalTitles[index]}</span>
               <Metric
+                keys={Object.keys(this.state.metrics)[index]}
+                values={Object.values(this.state.metrics)[index]}
                 increment={this.handleMetricIncrement}
+                decrement={this.handleMetricDecrement}
                 goal={goal}
                 metrics={(this.state.metrics)[index]}
               />

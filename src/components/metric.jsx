@@ -4,23 +4,18 @@ class Metric extends Component {
 
    state = {
  
-      quick_apply: this.props.metrics,
-      intentional_apply: this.props.metrics,
-      info_interview: this.props.metrics,
-      white_boarding_minutes: this.props.metrics,
-      portfolio_minutes: this.props.metrics,
+      quick_apply: this.props.value,
+      intentional_apply: this.props.value,
+      info_interview: this.props.value,
+      white_boarding_minutes: this.props.value,
+      portfolio_minutes: this.props.value,
     
    }
-
-  handleMetricIncrement = () => {
-    console.log(this.props.metrics)
-    // this.setState(this.state.quick_apply += 1) 
-  }
 
   render() { 
     return ( <div>
       <div className="center margin">
-      <button  className="margin">-</button> {this.props.metrics}/{this.props.goal} <button onClick={this.handleMetricIncrement} className="margin">+</button>
+      <button  onClick={() => {this.props.decrement(this.props.keys,this.props.values)}} className="margin">-</button> {this.props.values}/{this.props.goal} <button onClick={() => {this.props.increment(this.props.keys,this.props.values)}} className="margin">+</button>
     </div>
     </div> );
   }
