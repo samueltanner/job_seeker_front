@@ -53,7 +53,7 @@ class Login extends Component {
     axios
       .post("http://localhost:3000/api/sessions", userInfo)
       .then((response) => {
-        console.log("Loging in...");
+        console.log("Logging in...");
         axios.defaults.headers.common["Authorizaton"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
         localStorage.setItem("user_id", response.data.user_id);
