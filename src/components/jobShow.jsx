@@ -18,8 +18,8 @@ class JobShow extends Component {
   }
 
   showCurrentJob = () => {
-    console.log(this.props.job)
-  }
+    console.log(this.props.job);
+  };
   onTrigger = (job, job_id) => {
     this.props.updateJob(job, job_id);
     // console.log(job_id)
@@ -150,6 +150,16 @@ class JobShow extends Component {
                 <option value="Denied">Denied</option>
               </select>
             </div>
+            <div>
+              <div className="row">
+                <div className="column">
+                  <label htmlFor="column">Contacts:</label>
+                </div>
+                <div className="column">
+                  <p>CONTACT LIST</p>
+                </div>
+              </div>
+            </div>
             <br />
             <div className="center">
               <button onClick={this.handleSave}>Save Changes</button>
@@ -167,9 +177,6 @@ class JobShow extends Component {
                 Delete Job
               </button>
               {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
-            </div>
-            <button onClick={this.showCurrentJob}>TEMP BUTTON</button>
-            <div>
               {/* <ul className="text-danger">
             {this.state.errors.map((x) => (
               <li key={x}>{x}</li>

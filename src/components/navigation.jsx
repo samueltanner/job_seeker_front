@@ -36,7 +36,7 @@ class Navigation extends Component {
       );
       contacts = (
         <li>
-          <NavLink exact activeClassName="current" to="/Contacts">
+          <NavLink exact activeClassName="current" to="/contacts">
             Contacts
           </NavLink>
         </li>

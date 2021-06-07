@@ -6,6 +6,7 @@ import Home from "./components/home";
 import Login from "./components/login";
 import { withRouter } from "react-router-dom";
 import Dashboard from "./components/dashboard";
+import Contacts from "./components/contacts"
 import Logout from './components/logout'
 
 const App = () => (
@@ -24,6 +25,7 @@ const Main = () => (
     <Route exact path="/login" component={Login}></Route>
     <Route exact path="/dashboard" component={Dashboard}></Route>
     <Route exact path="/logout" component={Logout}></Route>
+    <Route exact path="/contacts" component={Contacts}></Route>
     {/* <Route exact path="/about" component={About}></Route>
     <Route exact path="/contact" component={Contact}></Route>
     <Route exact path="/projects" component={Projects}></Route> */}
