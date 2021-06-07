@@ -11,6 +11,7 @@ class Logout extends Component {
     delete axios.defaults.headers.common["Authorization"];
     localStorage.removeItem("jwt");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("metric_row_id");
     this.props.history.push("/");
   }
 
