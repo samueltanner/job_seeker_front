@@ -11,7 +11,7 @@ import Logout from './components/logout'
 
 const App = () => (
   <div className="app">
-    <Navigation />
+    <Navigation/>
     <Main />
   </div>
 );

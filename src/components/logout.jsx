@@ -1,11 +1,28 @@
 import axios from "axios";
 import React, { Component } from "react";
+import Modal from "./modal";
+
 
 class Logout extends Component {
   constructor(props) {
     super(props);
-    this.handleLogout();
+    this.state = {
+      showModal: false,
+    }
   }
+
+  componentDidMount() {
+    this.showModal();
+  }
+
+  showModal = () => {
+    this.setState({ showModal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+    this.handleLogout();
+  };
 
   handleLogout() {
     delete axios.defaults.headers.common["Authorization"];
@@ -17,7 +34,10 @@ class Logout extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>
+      {this.state.showModal ? <Modal closeModal={this.closeModal} /> : null}
+
+      </div>
     )
   }
 }

@@ -4,6 +4,8 @@ import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
+// import Modal from "./modal";
+
 
 class Dashboard extends Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class Dashboard extends Component {
         "Portfolio (minutes):",
       ],
       showGoalsModal: false,
+      showLogoutModal: false,
       metrics: {
         quick_apply: 0,
         intentional_apply: 0,
@@ -269,6 +272,8 @@ class Dashboard extends Component {
             );
           })}
         </div>
+        {/* <div>{this.state.showLogoutModal ? <Modal getUserMetrics={this.getUserMetrics}/> : null} */}
+{/* </div> */}
       </div>
     );
   }

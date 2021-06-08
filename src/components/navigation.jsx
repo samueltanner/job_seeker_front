@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 class Navigation extends Component {
-  constructor() {
-    super();
-    this.state = { isLoggedIn: false };
+  constructor(props) {
+    super(props);
+    this.state = { 
+      isLoggedIn: false,
+    };
   }
 
   render() {
