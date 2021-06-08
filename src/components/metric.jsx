@@ -4,11 +4,11 @@ class Metric extends Component {
 
    state = {
  
-      quick_apply: this.props.value,
-      intentional_apply: this.props.value,
+      apply: this.props.value,
       info_interview: this.props.value,
       white_boarding_minutes: this.props.value,
       portfolio_minutes: this.props.value,
+      breaks: this.props.value,
     
    }
 

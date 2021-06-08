@@ -9,11 +9,11 @@ class Modal extends Component {
       userGoals: {},
       metrics: {},
       userGoalTitles: [
-        "Quick Apply:",
-        "Intentional Apply:",
+        "Submitted Applications:",
         "Informational Interview:",
         "White-boarding (minutes):",
         "Portfolio (minutes):",
+        "Breaks From Computer:",
       ],
     }
 
