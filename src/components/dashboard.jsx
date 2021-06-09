@@ -4,6 +4,8 @@ import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
+// import Modal from "./modal";
+
 
 class Dashboard extends Component {
   constructor(props) {
@@ -13,19 +15,20 @@ class Dashboard extends Component {
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
       userGoals: {},
       userGoalTitles: [
-        "Quick Apply:",
-        "Intentional Apply:",
+        "Submitted Applications:",
         "Informational Interview:",
         "White-boarding (minutes):",
         "Portfolio (minutes):",
+        "Breaks From Computer:",
       ],
       showGoalsModal: false,
+      showLogoutModal: false,
       metrics: {
-        quick_apply: 0,
-        intentional_apply: 0,
+        apply: 0,
         info_interview: 0,
         white_boarding_minutes: 0,
         portfolio_minutes: 0,
+        breaks: 0,
       },
       // currentJob: {},
     };
@@ -66,38 +69,38 @@ class Dashboard extends Component {
         var oldId = response.data[0].id;
         console.log(response.data[0].id);
 
-        var quick_apply = [];
-        var intentional_apply = [];
+        var apply = [];
+        var breaks = [];
         var info_interview = [];
         var white_boarding_minutes = [];
         var portfolio_minutes = [];
        response.data.forEach((instance) => {
-            quick_apply.push(instance.quick_apply);
-            intentional_apply.push(instance.intentional_apply);
+            apply.push(instance.apply);
             info_interview.push(instance.info_interview);
             white_boarding_minutes.push(instance.white_boarding_minutes);
             portfolio_minutes.push(instance.portfolio_minutes);
+            breaks.push(instance.breaks);
           });
-          for (var quick_apply_counter = 0, intentional_apply_counter = 0, info_interview_counter = 0, white_boarding_minutes_counter = 0, portfolio_minutes_counter = 0, index = 0; index < quick_apply.length; index ++  ) {
-            quick_apply_counter += quick_apply[index];
-            intentional_apply_counter += intentional_apply[index];
+          for (var apply_counter = 0, breaks_counter = 0, info_interview_counter = 0, white_boarding_minutes_counter = 0, portfolio_minutes_counter = 0, index = 0; index < apply.length; index ++  ) {
+            apply_counter += apply[index];
             info_interview_counter += info_interview[index];
             white_boarding_minutes_counter += white_boarding_minutes[index];
             portfolio_minutes_counter += portfolio_minutes[index];
+            breaks_counter += breaks[index];
           }
-            // console.log(quick_apply);
-            // console.log(quick_apply_counter);
-            // console.log(intentional_apply);
+            // console.log(apply);
+            // console.log(apply_counter);
+            // console.log(breaks);
             // console.log(info_interview);
             // console.log(white_boarding_minutes);
             // console.log(portfolio_minutes);
 
             this.setState({ metrics: {
-              quick_apply: quick_apply_counter,
-              intentional_apply: intentional_apply_counter,
+              apply: apply_counter,
               info_interview: info_interview_counter,
               white_boarding_minutes: white_boarding_minutes_counter,
               portfolio_minutes: portfolio_minutes_counter,
+              breaks: breaks_counter,
             } 
           });
           if (response.data.length === 2) {
@@ -110,6 +113,10 @@ class Dashboard extends Component {
 
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
+    console.log(job.status);
+    if (job.status === "Applied") {
+      this.handleMetricIncrement(Object.keys(this.state.metrics)[0], 0);
+    }
   };
 
   handleUpdateJob = (job, job_id) => {
@@ -197,11 +204,11 @@ class Dashboard extends Component {
 
   updateMetrics = () => {
     var params = {
-      quick_apply: this.state.metrics.quick_apply,
-      intentional_apply: this.state.metrics.intentional_apply,
+      apply: this.state.metrics.apply,
       info_interview: this.state.metrics.info_interview,
       white_boarding_minutes: this.state.metrics.white_boarding_minutes,
       portfolio_minutes: this.state.metrics.portfolio_minutes,
+      breaks: this.state.metrics.breaks,
     }
     axios.patch("http://localhost:3000/api/metric_tables/" + localStorage.getItem("metric_row_id"), params).then((response) => {
     console.log(response);
@@ -269,6 +276,8 @@ class Dashboard extends Component {
             );
           })}
         </div>
+        {/* <div>{this.state.showLogoutModal ? <Modal getUserMetrics={this.getUserMetrics}/> : null} */}
+{/* </div> */}
       </div>
     );
   }

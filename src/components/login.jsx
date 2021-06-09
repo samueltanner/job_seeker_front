@@ -33,11 +33,11 @@ class Login extends Component {
   createMetricInstance = () => {
     var params = {
         user_id: localStorage.getItem("user_id"),
-        quick_apply: 0,
-        intentional_apply: 0,
+        apply: 0,
         info_interview: 0,
         white_boarding_minutes: 0,
         portfolio_minutes: 0,
+        breaks: 0,
     }
     axios.post("http://localhost:3000/api/metric_tables", params).then((response) => {
       localStorage.setItem("metric_row_id", response.data.id);

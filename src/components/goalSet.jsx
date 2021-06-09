@@ -6,11 +6,11 @@ class GoalSet extends Component {
     super(props);
     this.state = {
       user_goals: {
-        quick_apply: 0,
-        intentional_apply: 0,
+        apply: 0,
         info_interview: 0,
         white_boarding_minutes: 0,
-        portfolio_minutes: 0     
+        portfolio_minutes: 0,     
+        breaks: 0
       },
     };
   }
@@ -28,11 +28,11 @@ class GoalSet extends Component {
 
   saveGoals = () => {
     const userGoals = {
-      quick_apply: this.state.quick_apply,
-      intentional_apply: this.state.intentional_apply,
+      apply: this.state.apply,
       info_interview: this.state.info_interview,
       white_boarding_minutes: this.state.white_boarding_minutes,
       portfolio_minutes: this.state.portfolio_minutes,
+      breaks: this.state.breaks,
     };
     let currentUserId = localStorage.getItem("user_id");
     axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then((res) => {
@@ -62,25 +62,14 @@ class GoalSet extends Component {
       <h1 className="center">Set your daily job-hunting goals</h1>
       <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
             <div className="row">
-              <label className="column" htmlFor="quick_apply">
-                Quick Apply:
+              <label className="column" htmlFor="apply">
+                Submitted Applications:
               </label>
               <input
                 className="column"
                 onChange={this.handleChange}
                 type="text"
-                name="quick_apply"
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="intentional_apply">
-                Intentional Application:
-              </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="intentional_apply"
+                name="apply"
               />
             </div>
             <div className="row">
@@ -114,6 +103,17 @@ class GoalSet extends Component {
                 onChange={this.handleChange}
                 type="text"
                 name="portfolio_minutes"
+              />
+            </div>
+            <div className="row">
+              <label className="column" htmlFor="breaks">
+                Breaks From Computer:
+              </label>
+              <input
+                className="column"
+                onChange={this.handleChange}
+                type="text"
+                name="breaks"
               />
             </div>
             <br />
