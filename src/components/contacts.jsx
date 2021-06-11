@@ -9,6 +9,7 @@ class Contacts extends Component {
     this.state = {
       contacts: [],
       filtered: [],
+      currentContact: {},
     };
     this.indexContacts();
     this.handleChange = this.handleChange.bind(this);
@@ -46,6 +47,25 @@ class Contacts extends Component {
       console.log(res.data);
     });
   };
+
+  showContactModal = () => {
+    this.setState({ showContactModal: true });
+  };
+
+  closeContactModal = () => {
+    this.setState({ showContactModal: false });
+  };
+
+  setCurrentContact = (contact) => {
+    this.setState({ currentContact: contact });
+    console.log(contact);
+  };
+
+  updateContactInfo = (contact) => {
+    console.log("contact was updated");
+    console.log(contact);
+  };
+
   render() {
     return (
       <div>
@@ -55,21 +75,42 @@ class Contacts extends Component {
         </div>
         <div>
           <table>
-            <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Company</th>
-            </tr>
-            {Object.values(this.state.filtered).map((contact, index) => (
-              <tr key={index}>
-                <td>{contact.name}</td>
-                <td>{contact.job_title} </td>
-                <td>{contact.job}</td>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Company</th>
+                <th>More</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {Object.values(this.state.filtered).map((contact, index) => (
+                <tr key={index}>
+                  <td>{contact.name}</td>
+                  <td>{contact.job_title} </td>
+                  <td>{contact.job}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        this.setCurrentContact(contact);
+                        this.showContactModal();
+                      }}
+                    >
+                      ...
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
-        <ContactShow />
+        {this.state.showContactModal ? (
+          <ContactShow
+            closeContactModal={this.closeContactModal}
+            contact={this.state.currentContact}
+            updateContactInfo={this.updateContactInfo}
+          />
+        ) : null}
       </div>
     );
   }
