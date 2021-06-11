@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import ContactShow from "./contactShow";
 // import axios from "axios";
 
 class Contacts extends Component {
@@ -28,9 +29,9 @@ class Contacts extends Component {
         const filter = e.target.value.toLowerCase();
         return nameLC.includes(filter) || jobLC.includes(filter);
       });
-    // } else if (e.target.value === "") {
-    //   newList = Object.values(this.state.contacts);
-    // } 
+      // } else if (e.target.value === "") {
+      //   newList = Object.values(this.state.contacts);
+      // }
     } else {
       newList = Object.values(this.state.contacts);
       // return newList;
@@ -53,16 +54,22 @@ class Contacts extends Component {
           <input type="text" placeholder="...Search" onChange={this.handleChange} />
         </div>
         <div>
-          {Object.values(this.state.filtered).map((contact, index) => (
-            <div key={index}>
-              <ul>
-                <li>
-                  {contact.name} {contact.job_title} {contact.job}
-                </li>
-              </ul>
-            </div>
-          ))}
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Position</th>
+              <th>Company</th>
+            </tr>
+            {Object.values(this.state.filtered).map((contact, index) => (
+              <tr key={index}>
+                <td>{contact.name}</td>
+                <td>{contact.job_title} </td>
+                <td>{contact.job}</td>
+              </tr>
+            ))}
+          </table>
         </div>
+        <ContactShow />
       </div>
     );
   }
