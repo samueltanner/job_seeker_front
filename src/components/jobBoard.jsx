@@ -19,20 +19,32 @@ class JobBoard extends Component {
 
   setCurrentJob = (job) => {
     this.setState({ currentJob: job }, function () {
-      //typically this callback would hold a function, but not necessary here
+      // console.log(job);
     });
-
   };
-  
+
   render() {
     return (
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
-            <button className="button-as-link" onClick={() => {this.setCurrentJob(job); this.showModal(); }}>
+            <button
+              className="button-as-link"
+              onClick={() => {
+                this.setCurrentJob(job);
+                this.showModal();
+              }}
+            >
               {job.company_name}
             </button>
-            {this.state.showModal ?  <JobShow deleteJob={this.props.deleteJob} closeModal={this.closeModal} job={this.state.currentJob} updateJob={this.props.updateJob} /> : null}
+            {this.state.showModal ? (
+              <JobShow
+                deleteJob={this.props.deleteJob}
+                closeModal={this.closeModal}
+                job={this.state.currentJob}
+                updateJob={this.props.updateJob}
+              />
+            ) : null}
             <p className="muted">{job.position}</p>
           </div>
         ))}

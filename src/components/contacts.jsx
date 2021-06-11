@@ -92,6 +92,7 @@ class Contacts extends Component {
   };
 
   render() {
+
     return (
       <div>
         <h1> My Contacts:</h1>

@@ -14,11 +14,13 @@ class JobShow extends Component {
       notes: this.props.job.notes,
       status: this.props.job.status,
       description: this.props.job.description,
+      contacts: [],
     };
+    this.getJobContacts();
   }
 
   showCurrentJob = () => {
-    console.log(this.props.job);
+    // console.log(this.props.job);
   };
   onTrigger = (job, job_id) => {
     this.props.updateJob(job, job_id);
@@ -52,7 +54,19 @@ class JobShow extends Component {
     });
   };
 
+  getJobContacts = () => {
+    axios.get("http://localhost:3000/api/jobs/" + this.state.id).then((res) => {
+      if (res.data.contacts.length === 0) {
+      } else {
+        this.setState({ contacts: res.data.contacts });
+      }
+      console.log(res.data.contacts);
+    });
+  };
+
   render() {
+    var contactList = this.state.contacts.map((contact) => <div>{contact.name}</div>);
+
     return (
       <div className="modal">
         <div className="modal-content">
@@ -154,7 +168,15 @@ class JobShow extends Component {
                   <label htmlFor="column">Contacts:</label>
                 </div>
                 <div className="column">
-                  <p>CONTACT LIST</p>
+                  {/* {contactList} */}
+                  {Object.values(this.state.contacts).map((contact, index) => {
+                    return (
+                      <div key={index}>
+                        <button>{contact.name} - {contact.job_title}</button>
+                      </div>
+                    );
+                  })}
+                  {/* <p>CONTACT LIST</p> */}
                 </div>
               </div>
             </div>
