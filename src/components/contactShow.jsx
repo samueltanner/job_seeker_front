@@ -3,11 +3,23 @@ import React, { Component } from "react";
 class ContactShow extends Component {
   constructor(props) {
     super(props);
-    // this.showCurrentContact()
+    this.state = {
+      id: this.props.contact.id,
+      name: this.props.contact.name,
+      email: this.props.contact.email,
+      job: this.props.contact.job,
+      job_title: this.props.contact.job_title,
+      linkedin_url: this.props.contact.linkedin_url,
+      phone: this.props.contact.phone,
+      date_contacted: this.props.contact.date_contacted,
+    };
   }
-  // showCurrentContact = () => {
-  //   console.log(this.props.contact)
-  // }
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
 
   state = {};
   render() {
@@ -31,13 +43,14 @@ class ContactShow extends Component {
               <label className="column" htmlFor="job">
                 Company:
               </label>
-              <input
+              <p>{this.props.contact.job}</p>
+              {/* <input
                 className="column"
                 onChange={this.handleChange}
                 type="text"
                 name="job"
                 defaultValue={this.props.contact.job}
-              />
+              /> */}
             </div>
             <div className="row">
               <label className="column" htmlFor="job_title">
@@ -101,12 +114,18 @@ class ContactShow extends Component {
             </div>
             <br />
             <div className="center">
-              <button onClick={() => {this.props.updateContactInfo(this.props.contact)}}>Save Changes</button>
+              <button
+                onClick={() => {
+                  this.props.updateContactInfo(this.state);
+                  this.props.closeContactModal();
+                }}
+              >
+                Save Changes
+              </button>
 
               <button type="button" onClick={this.props.closeContactModal}>
                 Close
               </button>
-
             </div>
           </form>
         </div>

@@ -22,8 +22,6 @@ class JobShow extends Component {
   };
   onTrigger = (job, job_id) => {
     this.props.updateJob(job, job_id);
-    // console.log(job_id)
-    // console.log(job)
   };
   handleChange = (event) => {
     const { name, value } = event.target;

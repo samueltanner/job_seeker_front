@@ -10,6 +10,7 @@ class Contacts extends Component {
       contacts: [],
       filtered: [],
       currentContact: {},
+      searchBar: "...Search"
     };
     this.indexContacts();
     this.handleChange = this.handleChange.bind(this);
@@ -47,7 +48,11 @@ class Contacts extends Component {
       console.log(res.data);
     });
   };
+  resetFilter = () => {
+    this.setState({ filtered: this.state.contacts });
+    this.setState({searchBar: "...Search"})
 
+  };
   showContactModal = () => {
     this.setState({ showContactModal: true });
   };
@@ -62,8 +67,28 @@ class Contacts extends Component {
   };
 
   updateContactInfo = (contact) => {
-    console.log("contact was updated");
-    console.log(contact);
+    // let updatedContact = null;
+    axios.patch("http://localhost:3000/api/contacts/" + contact.id, contact).then((res) => {
+      console.log(res.data);
+      // this.state.contacts.splice(this.state.contacts.indexOf(contact.id));
+      const contactIndex = this.state.contacts.findIndex((o) => o.id === res.data.id);
+      this.removeContactFromState(contactIndex);
+      this.addContact(contact);
+      this.resetFilter();
+
+    });
+  };
+
+  removeContactFromState(contactIndex) {
+    this.setState({ contacts: this.state.contacts.filter((_, i) => i !== contactIndex) });
+    this.setState({ filtered: this.state.filtered.filter((_, i) => i !== contactIndex) });
+  }
+
+  addContact = (contact) => {
+    this.setState(prevState => ({ contacts: [contact, ...prevState.contacts] }));
+    this.setState(prevState => ({ filtered: [contact, ...prevState.filtered] }));
+    // this.resetFilter()
+    console.log(this.state.contacts);
   };
 
   render() {
@@ -71,7 +96,7 @@ class Contacts extends Component {
       <div>
         <h1> My Contacts:</h1>
         <div>
-          <input type="text" placeholder="...Search" onChange={this.handleChange} />
+          <input type="text" placeholder={this.state.searchBar} onChange={this.handleChange} />
         </div>
         <div>
           <table>
