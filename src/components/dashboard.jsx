@@ -4,6 +4,7 @@ import Metric from "./metric";
 import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
+import BreakCounter from "./breakCounter";
 // import Modal from "./modal";
 
 
@@ -30,6 +31,8 @@ class Dashboard extends Component {
         portfolio_minutes: 0,
         breaks: 0,
       },
+      mssg: "",
+
       // currentJob: {},
     };
   }
@@ -216,7 +219,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    // const {newJobs} = this.state.newJobs
+    console.log("render() method");
+
     return (
       <div>
         <h1>I am the dashboard</h1>
@@ -240,6 +244,7 @@ class Dashboard extends Component {
               ) : null}
             </div>
           </div>
+            <BreakCounter keys={Object.keys(this.state.metrics)[4]} values={Object.values(this.state.metrics)[4]} increment={this.handleMetricIncrement}/>
         </div>
         <div className="metric-zone">
           {Object.values(this.state.userGoals).map((goal, index) => (
