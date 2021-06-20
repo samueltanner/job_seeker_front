@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import ContactShow from "./contactShow";
 // import axios from 'axios';
 
 class JobShow extends Component {
@@ -15,6 +16,7 @@ class JobShow extends Component {
       status: this.props.job.status,
       description: this.props.job.description,
       contacts: [],
+      currentContact: {},
     };
     this.getJobContacts();
   }
@@ -64,8 +66,43 @@ class JobShow extends Component {
     });
   };
 
+  setCurrentContact = (contact) => {
+    this.setState({ currentContact: contact });
+    console.log(contact);
+  };
+
+  showContactModal = () => {
+    this.setState({ showContactModal: true });
+  };
+
+  closeContactModal = () => {
+    this.setState({ showContactModal: false });
+  };
+
+  updateContactInfo = (contact) => {
+    // let updatedContact = null;
+    axios.patch("http://localhost:3000/api/contacts/" + contact.id, contact).then((res) => {
+      console.log(res.data);
+      // this.state.contacts.splice(this.state.contacts.indexOf(contact.id));
+      const contactIndex = this.state.contacts.findIndex((o) => o.id === res.data.id);
+      this.removeContactFromState(contactIndex);
+      this.addContact(contact);
+
+
+    });
+  };
+
+  removeContactFromState(contactIndex) {
+    this.setState({ contacts: this.state.contacts.filter((_, i) => i !== contactIndex) });
+  }
+
+  addContact = (contact) => {
+    this.setState(prevState => ({ contacts: [contact, ...prevState.contacts] }));
+    // this.resetFilter()
+    console.log(this.state.contacts);
+  };
   render() {
-    var contactList = this.state.contacts.map((contact) => <div>{contact.name}</div>);
+    // var contactList = this.state.contacts.map((contact) => <div>{contact.name}</div>);
 
     return (
       <div className="modal">
@@ -172,7 +209,14 @@ class JobShow extends Component {
                   {Object.values(this.state.contacts).map((contact, index) => {
                     return (
                       <div key={index}>
-                        <button>{contact.name} - {contact.job_title}</button>
+                        <button
+                          onClick={() => {
+                            this.setCurrentContact(contact);
+                            this.showContactModal();
+                          }}
+                        >
+                          {contact.name} - {contact.job_title}
+                        </button>
                       </div>
                     );
                   })}
@@ -205,6 +249,19 @@ class JobShow extends Component {
             </div>
           </form>
         </div>
+
+        {this.state.showContactModal ? (
+          <ContactShow
+            closeContactModal={this.closeContactModal}
+            contact={this.state.currentContact}
+            updateContactInfo={this.updateContactInfo}
+          />
+        ) : null}
+        {/* <ContactShowInJob
+            closeContactModalViaJobShow={this.closeContactModalViaJobShow}
+            contact={this.state.currentContact}
+            updateContactInfo={this.updateContactInfo}
+          /> */}
       </div>
     );
   }
