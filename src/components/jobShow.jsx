@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { Component } from "react";
 import ContactShow from "./contactShow";
+import { Button, Modal, InputGroup, Form, FormControl } from "react-bootstrap";
+
 // import axios from 'axios';
 
 class JobShow extends Component {
@@ -87,8 +89,6 @@ class JobShow extends Component {
       const contactIndex = this.state.contacts.findIndex((o) => o.id === res.data.id);
       this.removeContactFromState(contactIndex);
       this.addContact(contact);
-
-
     });
   };
 
@@ -97,7 +97,7 @@ class JobShow extends Component {
   }
 
   addContact = (contact) => {
-    this.setState(prevState => ({ contacts: [contact, ...prevState.contacts] }));
+    this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
     // this.resetFilter()
     console.log(this.state.contacts);
   };
@@ -105,164 +105,160 @@ class JobShow extends Component {
     // var contactList = this.state.contacts.map((contact) => <div>{contact.name}</div>);
 
     return (
-      
       // <div className="modal">
       //   <div className="modal-content">
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="row">
-              <label className="column" htmlFor="company_name">
-                Company Name:
-              </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="company_name"
-                defaultValue={this.props.job.company_name}
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="position">
-                Position:
-              </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="position"
-                defaultValue={this.props.job.position}
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="description">
-                Description:
-              </label>
-              <textarea
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="description"
-                defaultValue={this.props.job.description}
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="salary">
-                Salary:
-              </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="number"
-                name="salary"
-                defaultValue={this.props.job.salary}
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="posting_url">
-                Posting URL:
-              </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="posting_url"
-                defaultValue={this.props.job.posting_url}
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="notes">
-                Notes:
-              </label>
-              <textarea
-                className="column"
-                type="text"
-                name="notes"
-                defaultValue={this.props.job.notes}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="status">
-                Status:
-              </label>
-              <select
-                className="column"
-                name="status"
-                defaultValue={this.props.job.status}
-                onChange={this.handleChange}
-              >
-                <option value="Applied">Applied</option>
-                <option value="Saved">Saved</option>
-                <option value="Draft">Draft</option>
-                <option value="In Contact">In Contact</option>
-                <option value="Interviewing">Interviewing</option>
-                <option value="Offered">Offered</option>
-                <option value="Denied">Denied</option>
-              </select>
-            </div>
-            <div>
-              <div className="row">
-                <div className="column">
-                  <label htmlFor="column">Contacts:</label>
-                </div>
-                <div className="column">
-                  {/* {contactList} */}
-                  {Object.values(this.state.contacts).map((contact, index) => {
-                    return (
-                      <div key={index}>
-                        <button
-                          onClick={() => {
-                            this.setCurrentContact(contact);
-                            this.showContactModal();
-                          }}
-                        >
-                          {contact.name} - {contact.job_title}
-                        </button>
-                      </div>
-                    );
-                  })}
-                  {/* <p>CONTACT LIST</p> */}
-                </div>
-              </div>
-            </div>
-            <br />
-            <div className="center">
-              <button onClick={this.handleSave}>Save Changes</button>
+      <div onSubmit={(e) => e.preventDefault()}>
+        {/* <Form.Label htmlFor="basic-url">Your vanity URL</Form.Label> */}
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">Company</InputGroup.Text>
+          <FormControl
+            name="company_name"
+            type="text"
+            aria-describedby="basic-addon3"
+            onChange={this.handleChange}
+            defaultValue={this.props.job.company_name}
+          />
+        </InputGroup>
 
-              <button type="button" onClick={this.props.closeModal}>
-                Close
-              </button>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">Position</InputGroup.Text>
+          <FormControl
+            name="position"
+            type="text"
+            aria-describedby="basic-addon3"
+            defaultValue={this.props.job.position}
+            onChange={this.handleChange}
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">Description</InputGroup.Text>
+          <FormControl
+            name="description"
+            type="text"
+            aria-describedby="basic-addon3"
+            defaultValue={this.props.job.description}
+            as="textarea"
+            onChange={this.handleChange}
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">Salary</InputGroup.Text>
+          <FormControl
+            name="salary"
+            type="number"
+            aria-describedby="basic-addon3"
+            defaultValue={this.props.job.salary}
+            onChange={this.handleChange}
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">URL</InputGroup.Text>
+          <FormControl
+            name="posting_url"
+            type="text"
+            aria-describedby="basic-addon3"
+            defaultValue={this.props.job.posting_url}
+            onChange={this.handleChange}
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">Notes</InputGroup.Text>
+          <FormControl
+            name="notes"
+            type="text"
+            aria-describedby="basic-addon3"
+            as="textarea"
+            defaultValue={this.props.job.notes}
+            onChange={this.handleChange}
+          />
+        </InputGroup>
 
-              <button
-                onClick={() => {
-                  this.props.deleteJob(this.state.id);
-                  // this.props.closeModal();
-                }}
-              >
-                Delete Job
-              </button>
-              {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
-              {/* <ul className="text-danger">
-            {this.state.errors.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
-          </ul> */}
+        <div>
+
+          {/* <Select>
+            <option value="Applied">Applied</option>
+            <option value="Saved">Saved</option>
+            <option value="Draft">Draft</option>
+            <option value="In Contact">In Contact</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offered">Offered</option>
+            <option value="Denied">Denied</option>
+          </Form.Select> */}
+
+        </div>
+        {/* <Form.Select size="lg">
+          <option>Large select</option>
+        </Form.Select> */}
+
+        <div className="row">
+          <label className="column" htmlFor="status">
+            Status:
+          </label>
+          <select className="column" name="status" defaultValue={this.props.job.status} onChange={this.handleChange}>
+            <option value="Applied">Applied</option>
+            <option value="Saved">Saved</option>
+            <option value="Draft">Draft</option>
+            <option value="In Contact">In Contact</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offered">Offered</option>
+            <option value="Denied">Denied</option>
+          </select>
+        </div>
+        <div>
+          <div className="row">
+            <div className="column">
+              <label htmlFor="column">Contacts:</label>
             </div>
-          </form>
-        // </div>
+            <div className="column">
+              {/* {contactList} */}
+              {Object.values(this.state.contacts).map((contact, index) => {
+                return (
+                  <div key={index}>
+                    <button
+                      onClick={() => {
+                        this.setCurrentContact(contact);
+                        this.showContactModal();
+                      }}
+                    >
+                      {contact.name} - {contact.job_title}
+                    </button>
+                  </div>
+                );
+              })}
+              {/* <p>CONTACT LIST</p> */}
+            </div>
+          </div>
+        </div>
+        <br />
+        <div className="center">
+          <Button variant="success" onClick={this.handleSave}>
+            Save Changes
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              if (window.confirm("Are you sure you want to delete this job?")) this.props.deleteJob(this.state.id);
+              // this.props.closeModal();
+            }}
+          >
+            Delete Job
+          </Button>
+        </div>
+      </div>
+      // </div>
 
-        // {this.state.showContactModal ? (
-        //   <ContactShow
-        //     closeContactModal={this.closeContactModal}
-        //     contact={this.state.currentContact}
-        //     updateContactInfo={this.updateContactInfo}
-        //   />
-        // ) : null}
-        // {/* <ContactShowInJob
-        //     closeContactModalViaJobShow={this.closeContactModalViaJobShow}
-        //     contact={this.state.currentContact}
-        //     updateContactInfo={this.updateContactInfo}
-        //   /> */}
+      // {this.state.showContactModal ? (
+      //   <ContactShow
+      //     closeContactModal={this.closeContactModal}
+      //     contact={this.state.currentContact}
+      //     updateContactInfo={this.updateContactInfo}
+      //   />
+      // ) : null}
+      // {/* <ContactShowInJob
+      //     closeContactModalViaJobShow={this.closeContactModalViaJobShow}
+      //     contact={this.state.currentContact}
+      //     updateContactInfo={this.updateContactInfo}
+      //   /> */}
       // </div>
     );
   }

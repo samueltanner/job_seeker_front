@@ -53,12 +53,6 @@ class JobBoard extends Component {
             <Modal.Body>
               <JobShow job={props.job} deleteJob={props.deleteJob} updateJob={props.updateJob} />
             </Modal.Body>
-            <Modal.Footer>
-              <Button variant="primary" onClick={handleClose}>
-                Save Changes
-              </Button>
-           
-            </Modal.Footer>
           </Modal>
         </>
       );

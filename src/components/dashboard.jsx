@@ -5,7 +5,7 @@ import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
 import BreakCounter from "./breakCounter";
-import { Button, Card, Modal } from "react-bootstrap";
+import { Form, Card, Modal } from "react-bootstrap";
 
 // import Modal from "./modal";
 
@@ -239,12 +239,11 @@ class Dashboard extends Component {
   };
 
   render() {
-    
-
     console.log("render() method");
 
     return (
       <div>
+        <Form />
         <div className="center margin">
           <h2 className="center margin padding">Your Daily Job Hunting Goals:</h2>
           <div className="user-goals padding">
