@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import JobShow from "./jobShow";
+import { Button, Modal } from "react-bootstrap";
 
 class JobBoard extends Component {
   constructor(props) {
@@ -23,29 +24,51 @@ class JobBoard extends Component {
     });
   };
 
+ triggerSave() {
+   this.handleSave();
+ }
+
   render() {
+    function JobModel(props) {
+      const [show, setShow] = useState(false);
+
+      const handleClose = () => setShow(false);
+      const handleShow = () => setShow(true);
+
+      return (
+        <>
+          <Button variant="light" onClick={handleShow}>
+            <h6>
+              {props.job.company_name} - {props.job.position}
+            </h6>
+          </Button>
+
+          <Modal show={show} backdrop={false} onHide={handleClose} centered>
+            <Modal.Header>
+              <Modal.Title>{props.job.company_name} - {props.job.position}</Modal.Title>
+            <Button variant="light" onClick={handleClose}>
+                X
+              </Button>
+            </Modal.Header>
+            <Modal.Body>
+              <JobShow job={props.job} deleteJob={props.deleteJob} updateJob={props.updateJob} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleClose}>
+                Save Changes
+              </Button>
+           
+            </Modal.Footer>
+          </Modal>
+        </>
+      );
+    }
+
     return (
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
-            <button
-              className="button-as-link"
-              onClick={() => {
-                this.setCurrentJob(job);
-                this.showModal();
-              }}
-            >
-              {job.company_name}
-            </button>
-            {this.state.showModal ? (
-              <JobShow
-                deleteJob={this.props.deleteJob}
-                closeModal={this.closeModal}
-                job={this.state.currentJob}
-                updateJob={this.props.updateJob}
-              />
-            ) : null}
-            <p className="muted">{job.position}</p>
+            <JobModel job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob}/>
           </div>
         ))}
       </div>

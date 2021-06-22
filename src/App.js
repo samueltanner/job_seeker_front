@@ -9,6 +9,7 @@ import Dashboard from "./components/dashboard";
 import Contacts from "./components/contacts"
 import Logout from './components/logout'
 
+
 const App = () => (
   <div className="app">
     <Navigation/>

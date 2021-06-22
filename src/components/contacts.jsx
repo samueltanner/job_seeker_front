@@ -10,7 +10,7 @@ class Contacts extends Component {
       contacts: [],
       filtered: [],
       currentContact: {},
-      searchBar: "...Search"
+      searchBar: "...Search",
     };
     this.indexContacts();
     this.handleChange = this.handleChange.bind(this);
@@ -50,8 +50,7 @@ class Contacts extends Component {
   };
   resetFilter = () => {
     this.setState({ filtered: this.state.contacts });
-    this.setState({searchBar: "...Search"})
-
+    this.setState({ searchBar: "...Search" });
   };
   showContactModal = () => {
     this.setState({ showContactModal: true });
@@ -75,7 +74,6 @@ class Contacts extends Component {
       this.removeContactFromState(contactIndex);
       this.addContact(contact);
       this.resetFilter();
-
     });
   };
 
@@ -85,17 +83,19 @@ class Contacts extends Component {
   }
 
   addContact = (contact) => {
-    this.setState(prevState => ({ contacts: [contact, ...prevState.contacts] }));
-    this.setState(prevState => ({ filtered: [contact, ...prevState.filtered] }));
+    this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
+    this.setState((prevState) => ({ filtered: [contact, ...prevState.filtered] }));
     // this.resetFilter()
     console.log(this.state.contacts);
   };
 
   render() {
-
     return (
       <div>
         <h1> My Contacts:</h1>
+        <div>
+          <button>Add Contact</button>
+        </div>
         <div>
           <input type="text" placeholder={this.state.searchBar} onChange={this.handleChange} />
         </div>

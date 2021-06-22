@@ -51,7 +51,7 @@ class JobShow extends Component {
       // console.log(this.props.job.id)
       // this.props.setState.job(job)
       // this.props.updateCurrentJob(job)
-      this.props.closeModal();
+      // this.props.closeModal();
       this.onTrigger(job, job.id);
     });
   };
@@ -105,9 +105,10 @@ class JobShow extends Component {
     // var contactList = this.state.contacts.map((contact) => <div>{contact.name}</div>);
 
     return (
-      <div className="modal">
-        <div className="modal-content">
-          <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
+      
+      // <div className="modal">
+      //   <div className="modal-content">
+          <form onSubmit={(e) => e.preventDefault()}>
             <div className="row">
               <label className="column" htmlFor="company_name">
                 Company Name:
@@ -235,7 +236,7 @@ class JobShow extends Component {
               <button
                 onClick={() => {
                   this.props.deleteJob(this.state.id);
-                  this.props.closeModal();
+                  // this.props.closeModal();
                 }}
               >
                 Delete Job
@@ -248,21 +249,21 @@ class JobShow extends Component {
           </ul> */}
             </div>
           </form>
-        </div>
+        // </div>
 
-        {this.state.showContactModal ? (
-          <ContactShow
-            closeContactModal={this.closeContactModal}
-            contact={this.state.currentContact}
-            updateContactInfo={this.updateContactInfo}
-          />
-        ) : null}
-        {/* <ContactShowInJob
-            closeContactModalViaJobShow={this.closeContactModalViaJobShow}
-            contact={this.state.currentContact}
-            updateContactInfo={this.updateContactInfo}
-          /> */}
-      </div>
+        // {this.state.showContactModal ? (
+        //   <ContactShow
+        //     closeContactModal={this.closeContactModal}
+        //     contact={this.state.currentContact}
+        //     updateContactInfo={this.updateContactInfo}
+        //   />
+        // ) : null}
+        // {/* <ContactShowInJob
+        //     closeContactModalViaJobShow={this.closeContactModalViaJobShow}
+        //     contact={this.state.currentContact}
+        //     updateContactInfo={this.updateContactInfo}
+        //   /> */}
+      // </div>
     );
   }
 }
