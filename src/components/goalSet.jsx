@@ -57,7 +57,8 @@ class GoalSet extends Component {
 
 
   render() { 
-    return ( <div className="modal">
+    return ( 
+    <div className="modal">
     <div className="modal-content">
       <h1 className="center">Set your daily job-hunting goals</h1>
       <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
