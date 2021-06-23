@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import ContactShow from "./contactShow";
-import { Button, Modal, InputGroup, Form, FormControl } from "react-bootstrap";
+import { Button, Modal, InputGroup, Form, FormControl, DropdownButton, Dropdown } from "react-bootstrap";
 
 // import axios from 'axios';
 
@@ -174,7 +174,6 @@ class JobShow extends Component {
         </InputGroup>
 
         <div>
-
           {/* <Select>
             <option value="Applied">Applied</option>
             <option value="Saved">Saved</option>
@@ -184,17 +183,19 @@ class JobShow extends Component {
             <option value="Offered">Offered</option>
             <option value="Denied">Denied</option>
           </Form.Select> */}
-
         </div>
         {/* <Form.Select size="lg">
           <option>Large select</option>
         </Form.Select> */}
+        <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        </DropdownButton>
 
-        <div className="row">
-          <label className="column" htmlFor="status">
-            Status:
-          </label>
-          <select className="column" name="status" defaultValue={this.props.job.status} onChange={this.handleChange}>
+        <div>
+          <label htmlFor="status">Status:</label>
+          <select name="status" defaultValue={this.props.job.status} onChange={this.handleChange}>
             <option value="Applied">Applied</option>
             <option value="Saved">Saved</option>
             <option value="Draft">Draft</option>
@@ -205,23 +206,26 @@ class JobShow extends Component {
           </select>
         </div>
         <div>
-          <div className="row">
-            <div className="column">
-              <label htmlFor="column">Contacts:</label>
+          <div>
+            <div>
+              <label>Contacts:</label>
             </div>
-            <div className="column">
+            <div>
               {/* {contactList} */}
               {Object.values(this.state.contacts).map((contact, index) => {
                 return (
-                  <div key={index}>
-                    <button
+                  <div key={index} className="contact_buttons_area">
+                    <Button className="contact_button center" variant="light">
+                      {contact.name} - {contact.job_title}
+                    </Button>
+                    {/* <button
                       onClick={() => {
                         this.setCurrentContact(contact);
                         this.showContactModal();
                       }}
                     >
                       {contact.name} - {contact.job_title}
-                    </button>
+                    </button> */}
                   </div>
                 );
               })}
