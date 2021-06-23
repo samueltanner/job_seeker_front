@@ -8,6 +8,8 @@ import { withRouter } from "react-router-dom";
 import Dashboard from "./components/dashboard";
 import Contacts from "./components/contacts"
 import Logout from './components/logout'
+// import 'bootstrap/dist/css/bootstrap.css';
+
 
 const App = () => (
   <div className="app">
