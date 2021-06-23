@@ -29,7 +29,7 @@ class JobBoard extends Component {
  }
 
   render() {
-    function JobModel(props) {
+    function JobModal(props) {
       const [show, setShow] = useState(false);
 
       const handleClose = () => setShow(false);
@@ -62,7 +62,7 @@ class JobBoard extends Component {
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
-            <JobModel job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob}/>
+            <JobModal job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob}/>
           </div>
         ))}
       </div>

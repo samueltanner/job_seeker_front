@@ -9,8 +9,8 @@ class GoalSet extends Component {
         apply: 0,
         info_interview: 0,
         white_boarding_minutes: 0,
-        portfolio_minutes: 0,     
-        breaks: 0
+        portfolio_minutes: 0,
+        breaks: 0,
       },
     };
   }
@@ -23,7 +23,7 @@ class GoalSet extends Component {
   // };
 
   handleChange = (event) => {
-    this.setState({[event.target.name]:parseInt(event.target.value)});
+    this.setState({ [event.target.name]: parseInt(event.target.value) });
   };
 
   saveGoals = () => {
@@ -40,90 +40,61 @@ class GoalSet extends Component {
       this.props.closeModal();
       this.props.history.push("/dashboard");
     });
-      if (this.props.updateUserGoals) {
-        this.props.updateUserGoals();
-      }
+    if (this.props.updateUserGoals) {
+      this.props.updateUserGoals();
+    }
   };
 
-  modalClose = () => {
-    if (this.props.closeModal) {
-      this.props.closeModal();
-    } else {
-      this.props.closeGoalsModal();
-    }
-    
-  }
+  // modalClose = () => {
+  //   if (this.props.closeModal) {
+  //     this.props.closeModal();
+  //   } else {
+  //     this.props.closeGoalsModal();
+  //   }
 
+  // }
 
-
-  render() { 
-    return ( 
-    <div className="modal">
-    <div className="modal-content">
-      <h1 className="center">Set your daily job-hunting goals</h1>
-      <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
+  render() {
+    return (
+      <div className="modal-login">
+        <div className="modal-content">
+          <h1 className="center">Set your daily job-hunting goals</h1>
+          <div className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
             <div className="row">
               <label className="column" htmlFor="apply">
                 Submitted Applications:
               </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="apply"
-              />
+              <input className="column" onChange={this.handleChange} type="text" name="apply" />
             </div>
             <div className="row">
               <label className="column" htmlFor="info_interview">
                 Informational Interviews:
               </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="info_interview"
-              />
+              <input className="column" onChange={this.handleChange} type="text" name="info_interview" />
             </div>
             <div className="row">
               <label className="column" htmlFor="white_boarding_minutes">
                 White Boarding (in minutes):
               </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="white_boarding_minutes"
-              />
+              <input className="column" onChange={this.handleChange} type="text" name="white_boarding_minutes" />
             </div>
             <div className="row">
               <label className="column" htmlFor="portfolio_minutes">
                 Portfolio Building (in minutes):
               </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="portfolio_minutes"
-              />
+              <input className="column" onChange={this.handleChange} type="text" name="portfolio_minutes" />
             </div>
             <div className="row">
               <label className="column" htmlFor="breaks">
                 Breaks From Computer:
               </label>
-              <input
-                className="column"
-                onChange={this.handleChange}
-                type="text"
-                name="breaks"
-              />
+              <input className="column" onChange={this.handleChange} type="text" name="breaks" />
             </div>
             <br />
             <div className="center">
               <button onClick={this.saveGoals}>Save Changes</button>
 
-              <button type="button" onClick={this.modalClose}>
-                Close
-              </button>
+              <button type="button">Close</button>
             </div>
             <div>
               {/* <ul className="text-danger">
@@ -132,10 +103,11 @@ class GoalSet extends Component {
             ))}
           </ul> */}
             </div>
-          </form>
-    </div>
-  </div> );
+          </div>
+        </div>
+      </div>
+    );
   }
 }
- 
+
 export default GoalSet;
