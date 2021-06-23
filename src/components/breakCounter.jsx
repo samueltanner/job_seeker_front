@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class BreakCounter extends Component {
-
     constructor() {
       super();
       this.state = { time: {}, seconds: 900 };
@@ -68,9 +67,6 @@ class BreakCounter extends Component {
       }
     }
 
-    refreshPage() {
-      window.location.reload(false);
-    }
 
     onTrigger = () => {
       this.props.increment(this.props.keys,this.props.values);
@@ -89,8 +85,8 @@ class BreakCounter extends Component {
           </span>
           <div className="row text-center">{this.state.time.m} minutes and {this.state.time.s} seconds</div>
         </div>
-      );
-    }
+    );
   }
- 
+}
+
 export default BreakCounter;

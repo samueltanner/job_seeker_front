@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import { Navbar, Container, Nav } from "react-bootstrap";
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       isLoggedIn: false,
     };
   }
@@ -14,56 +15,44 @@ class Navigation extends Component {
     let dashboard;
     let contacts;
     if (localStorage.getItem("jwt") == null) {
-      auth = (
-        <li>
-          <NavLink exact activeClassName="current" to="/login">
-            Login
-          </NavLink>
-        </li>
-      );
+      auth = <Nav.Link href="/login">Login</Nav.Link>;
     } else {
-      auth = (
-        <li>
-          <NavLink exact activeClassName="current" to="/logout">
-            Logout
-          </NavLink>
-        </li>
-      );
-      dashboard = (
-        <li>
-          <NavLink exact activeClassName="current" to="/dashboard">
-            Dashboard
-          </NavLink>
-        </li>
-      );
-      contacts = (
-        <li>
-          <NavLink exact activeClassName="current" to="/contacts">
-            Contacts
-          </NavLink>
-        </li>
-      );
+      auth = <Nav.Link href="/logout">Logout</Nav.Link>;
+      dashboard = <Nav.Link href="/dashboard">Dashboard</Nav.Link>;
+      contacts = <Nav.Link href="/contacts">Contacts</Nav.Link>;
     }
 
     return (
       <div>
-        <nav>
+        <Navbar bg="dark" variant="dark">
+          <Container>
+            <Navbar.Brand href="/dashboard">Job Seeker</Navbar.Brand>
+            <Nav className="me-auto">
+              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/about">About</Nav.Link>
+              {dashboard}
+              {contacts}
+              {auth}
+            </Nav>
+          </Container>
+        </Navbar>
+        {/* <nav>
           <ul>
             <li>
-              <NavLink exact activeClassName="current" to="/">
+              <Nav.Link exact activeClassName="current" to="/">
                 Home
-              </NavLink>
+              </Nav.Link>
             </li>
             <li>
-              <NavLink exact activeClassName="current" to="/about">
+              <Nav.Link exact activeClassName="current" to="/about">
                 About
-              </NavLink>
+              </Nav.Link>
             </li>
             {dashboard}
             {contacts}
             {auth}
           </ul>
-        </nav>
+        </nav> */}
       </div>
     );
   }

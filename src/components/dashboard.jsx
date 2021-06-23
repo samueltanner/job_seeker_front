@@ -5,12 +5,14 @@ import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
 import BreakCounter from "./breakCounter";
+import { Form, Card, Modal } from "react-bootstrap";
 import PortfolioCounter from "./portfolioCounter";
 import WhiteBoardingCounter from "./whiteBoardingCounter";
 
 
 // import Modal from "./modal";
 
+// import Modal from "./modal";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -81,42 +83,53 @@ class Dashboard extends Component {
         var info_interview = [];
         var white_boarding_minutes = [];
         var portfolio_minutes = [];
-       response.data.forEach((instance) => {
-            apply.push(instance.apply);
-            info_interview.push(instance.info_interview);
-            white_boarding_minutes.push(instance.white_boarding_minutes);
-            portfolio_minutes.push(instance.portfolio_minutes);
-            breaks.push(instance.breaks);
-          });
-          for (var apply_counter = 0, breaks_counter = 0, info_interview_counter = 0, white_boarding_minutes_counter = 0, portfolio_minutes_counter = 0, index = 0; index < apply.length; index ++  ) {
-            apply_counter += apply[index];
-            info_interview_counter += info_interview[index];
-            white_boarding_minutes_counter += white_boarding_minutes[index];
-            portfolio_minutes_counter += portfolio_minutes[index];
-            breaks_counter += breaks[index];
-          }
-            // console.log(apply);
-            // console.log(apply_counter);
-            // console.log(breaks);
-            // console.log(info_interview);
-            // console.log(white_boarding_minutes);
-            // console.log(portfolio_minutes);
-
-            this.setState({ metrics: {
-              apply: apply_counter,
-              info_interview: info_interview_counter,
-              white_boarding_minutes: white_boarding_minutes_counter,
-              portfolio_minutes: portfolio_minutes_counter,
-              breaks: breaks_counter,
-            } 
-          });
-          if (response.data.length === 2) {
-          axios.delete("http://localhost:3000/api/metric_tables/" +  oldId).then(console.log("deleted old metric and set state of new metric successfully"))
-          }
+        response.data.forEach((instance) => {
+          apply.push(instance.apply);
+          info_interview.push(instance.info_interview);
+          white_boarding_minutes.push(instance.white_boarding_minutes);
+          portfolio_minutes.push(instance.portfolio_minutes);
+          breaks.push(instance.breaks);
+        });
+        for (
+          var apply_counter = 0,
+            breaks_counter = 0,
+            info_interview_counter = 0,
+            white_boarding_minutes_counter = 0,
+            portfolio_minutes_counter = 0,
+            index = 0;
+          index < apply.length;
+          index++
+        ) {
+          apply_counter += apply[index];
+          info_interview_counter += info_interview[index];
+          white_boarding_minutes_counter += white_boarding_minutes[index];
+          portfolio_minutes_counter += portfolio_minutes[index];
+          breaks_counter += breaks[index];
         }
-      });
-  };
+        // console.log(apply);
+        // console.log(apply_counter);
+        // console.log(breaks);
+        // console.log(info_interview);
+        // console.log(white_boarding_minutes);
+        // console.log(portfolio_minutes);
 
+        this.setState({
+          metrics: {
+            apply: apply_counter,
+            info_interview: info_interview_counter,
+            white_boarding_minutes: white_boarding_minutes_counter,
+            portfolio_minutes: portfolio_minutes_counter,
+            breaks: breaks_counter,
+          },
+        });
+        if (response.data.length === 2) {
+          axios
+            .delete("http://localhost:3000/api/metric_tables/" + oldId)
+            .then(console.log("deleted old metric and set state of new metric successfully"));
+        }
+      }
+    });
+  };
 
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
@@ -127,7 +140,7 @@ class Dashboard extends Component {
   };
 
   handleUpdateJob = (job, job_id) => {
-    this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
+    // this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
     var jobIndex = this.state.jobs.findIndex((o) => o.id === job_id);
     this.removeJobFromState(jobIndex);
     this.handleAddJob(job);
@@ -186,14 +199,17 @@ class Dashboard extends Component {
   handleMetricIncrement = (key, value) => {
     // console.log(key);
     // console.log(value);
-    this.setState(prevState => {
-      let metrics = Object.assign({}, prevState.metrics);
-      metrics[key] += 1;
-      return {metrics};
-    }, function() {
-      // console.log(this.state.metrics);
-      this.updateMetrics();
-  })
+    this.setState(
+      (prevState) => {
+        let metrics = Object.assign({}, prevState.metrics);
+        metrics[key] += 1;
+        return { metrics };
+      },
+      function () {
+        // console.log(this.state.metrics);
+        this.updateMetrics();
+      }
+    );
   };
 
   handlePortfolioIncrement = (key, value, minute, second) => {
@@ -216,14 +232,17 @@ class Dashboard extends Component {
   handleMetricDecrement = (key, value) => {
     // console.log(key);
     // console.log(value);
-    this.setState(prevState => {
-      let metrics = Object.assign({}, prevState.metrics);
-      metrics[key] -= 1;
-      return {metrics};
-    }, function() {
-      console.log(this.state.metrics);
-      this.updateMetrics();
-  })
+    this.setState(
+      (prevState) => {
+        let metrics = Object.assign({}, prevState.metrics);
+        metrics[key] -= 1;
+        return { metrics };
+      },
+      function () {
+        console.log(this.state.metrics);
+        this.updateMetrics();
+      }
+    );
   };
   
 
@@ -234,17 +253,19 @@ class Dashboard extends Component {
       white_boarding_minutes: this.state.metrics.white_boarding_minutes,
       portfolio_minutes: this.state.metrics.portfolio_minutes,
       breaks: this.state.metrics.breaks,
-    }
-    axios.patch("http://localhost:3000/api/metric_tables/" + localStorage.getItem("metric_row_id"), params).then((response) => {
-    console.log(response);
-  })
-  }
+    };
+    axios
+      .patch("http://localhost:3000/api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
+      .then((response) => {
+        console.log(response);
+      });
+  };
 
   render() {
 
     return (
       <div>
-        <h1>I am the dashboard</h1>
+        <Form />
         <div className="center margin">
           <h2 className="center margin padding">Your Daily Job Hunting Goals:</h2>
           <div className="user-goals padding">
@@ -279,7 +300,7 @@ class Dashboard extends Component {
                 increment={this.handleMetricIncrement}
                 decrement={this.handleMetricDecrement}
                 goal={goal}
-                metrics={(this.state.metrics)[index]}
+                metrics={this.state.metrics[index]}
               />
             </span>
           ))}
@@ -294,18 +315,27 @@ class Dashboard extends Component {
             return (
               <div className="job-board" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
-                <h2>{status}</h2>
-                <JobBoard
-                  jobData={this.jobDataFilter({ status })}
-                  deleteJob={this.handleDestroyJob}
-                  updateJob={this.handleUpdateJob}
-                />
+                {/* <h2>{status}</h2> */}
+
+                <div>
+                  <Card>
+                    <Card.Header as="h5">{status}</Card.Header>
+                    <Card.Body>
+                      {/* <App/> */}
+                      <JobBoard
+                        jobData={this.jobDataFilter({ status })}
+                        deleteJob={this.handleDestroyJob}
+                        updateJob={this.handleUpdateJob}
+                      />
+                    </Card.Body>
+                  </Card>
+                </div>
               </div>
             );
           })}
         </div>
         {/* <div>{this.state.showLogoutModal ? <Modal getUserMetrics={this.getUserMetrics}/> : null} */}
-{/* </div> */}
+        {/* </div> */}
       </div>
     );
   }
