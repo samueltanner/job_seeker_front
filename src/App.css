@@ -144,7 +144,7 @@ h1 {
   padding: 5%;
 }
 
-.modal {
+.modal-login {
   position: fixed;
   z-index: 1;
   padding-top: 100px;
@@ -163,6 +163,7 @@ h1 {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+
 }
 
 .bold {

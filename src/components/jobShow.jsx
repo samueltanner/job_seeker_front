@@ -187,13 +187,19 @@ class JobShow extends Component {
         {/* <Form.Select size="lg">
           <option>Large select</option>
         </Form.Select> */}
-        <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+          <label htmlFor="status">Status:</label>
+
+        <DropdownButton id="status" name="status" defaultValue={this.props.job.status} title={this.props.job.status} onChange={this.handleChange}>
+          <Dropdown.Item value="Applied">Applied</Dropdown.Item>
+          <Dropdown.Item value="Saved">Saved</Dropdown.Item>
+          <Dropdown.Item value="Draft">Draft</Dropdown.Item>
+          <Dropdown.Item value="In Contact">In Contact</Dropdown.Item>
+          <Dropdown.Item value="Interviewing">Interviewing</Dropdown.Item>
+          <Dropdown.Item value="Offered">Offered</Dropdown.Item>
+          <Dropdown.Item value="Denied">Denied</Dropdown.Item>
         </DropdownButton>
 
-        <div>
+        {/* <div>
           <label htmlFor="status">Status:</label>
           <select name="status" defaultValue={this.props.job.status} onChange={this.handleChange}>
             <option value="Applied">Applied</option>
@@ -204,7 +210,7 @@ class JobShow extends Component {
             <option value="Offered">Offered</option>
             <option value="Denied">Denied</option>
           </select>
-        </div>
+        </div> */}
         <div>
           <div>
             <div>

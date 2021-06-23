@@ -64,7 +64,7 @@ class JobCreate extends Component {
 
   render() {
     return (
-      <div className="modal">
+      <div className="modal-login">
         <div className="modal-content">
           <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
             <div className="row">
