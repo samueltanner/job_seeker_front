@@ -6,6 +6,11 @@ import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
 import BreakCounter from "./breakCounter";
 import { Form, Card, Modal } from "react-bootstrap";
+import PortfolioCounter from "./portfolioCounter";
+import WhiteBoardingCounter from "./whiteBoardingCounter";
+
+
+// import Modal from "./modal";
 
 // import Modal from "./modal";
 
@@ -207,6 +212,23 @@ class Dashboard extends Component {
     );
   };
 
+  handlePortfolioIncrement = (key, value, minute, second) => {
+    // console.log(key);
+    // console.log(second);
+    if (minute > 0 && second % 60 === 0) {
+      // console.log(minute);
+
+      this.setState(prevState => {
+        let metrics = Object.assign({}, prevState.metrics);
+        metrics[key] += 1;
+        return {metrics};
+      }, function() {
+        // console.log(this.state.metrics);
+        this.updateMetrics();
+      })
+    }
+  };
+
   handleMetricDecrement = (key, value) => {
     // console.log(key);
     // console.log(value);
@@ -222,6 +244,7 @@ class Dashboard extends Component {
       }
     );
   };
+  
 
   updateMetrics = () => {
     var params = {
@@ -239,7 +262,6 @@ class Dashboard extends Component {
   };
 
   render() {
-    console.log("render() method");
 
     return (
       <div>
@@ -264,11 +286,9 @@ class Dashboard extends Component {
               ) : null}
             </div>
           </div>
-          <BreakCounter
-            keys={Object.keys(this.state.metrics)[4]}
-            values={Object.values(this.state.metrics)[4]}
-            increment={this.handleMetricIncrement}
-          />
+            <BreakCounter keys={Object.keys(this.state.metrics)[4]} values={Object.values(this.state.metrics)[4]} increment={this.handleMetricIncrement}/>
+            <PortfolioCounter keys={Object.keys(this.state.metrics)[3]} values={Object.values(this.state.metrics)[3]} increment={this.handlePortfolioIncrement}/>
+            <WhiteBoardingCounter keys={Object.keys(this.state.metrics)[2]} values={Object.values(this.state.metrics)[2]} increment={this.handlePortfolioIncrement}/>
         </div>
         <div className="metric-zone">
           {Object.values(this.state.userGoals).map((goal, index) => (
