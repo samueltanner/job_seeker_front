@@ -4,7 +4,7 @@ class PortfolioCounter extends Component {
 
     constructor(props) {
       super();
-      this.state = { time: {}, seconds: (props.values * 60) };
+      this.state = { time: {}, seconds: (props.values * 60), showStartButton: true };
       this.timer = 0;
       this.startTimer = this.startTimer.bind(this);
       this.countUp = this.countUp.bind(this);
@@ -44,6 +44,7 @@ class PortfolioCounter extends Component {
       this.setState({
         time: this.secondsToTime(seconds),
         seconds: seconds,
+        showStartButton: false,
       });
       this.onTrigger(this.state.time.m, this.state.time.s);
     }
@@ -54,20 +55,21 @@ class PortfolioCounter extends Component {
     };
   
     freezeIt(timer) {
+      this.setState({
+        showStartButton: true,
+      });
       clearInterval(timer);
     }
 
     render() {
       return(
         <div>
-          <span className="row">
-          <p className="text-center bold margin">Portfolio Time Tracker</p>
-          <div className="metric-zone">
-          <button onClick={this.startTimer}>Start</button>
-          <button onClick={() => this.freezeIt(this.timer)}>Stop</button>
+          {/* <p className="text-center bold margin">Portfolio Time Tracker</p> */}
+          <div className="center">
+          {this.state.showStartButton === true && <button onClick={this.startTimer}>Timer</button> }
+          {this.state.showStartButton === false && <button onClick={() => this.freezeIt(this.timer)}>Stop</button> }
+          <div>{this.state.time.h} : {this.state.time.m} : {this.state.time.s}</div>
           </div>
-          </span>
-          <div className="row text-center">{this.state.time.h} : {this.state.time.m} : {this.state.time.s}</div>
         </div>
       );
     }
