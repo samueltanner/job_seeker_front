@@ -17,6 +17,7 @@ class JobShow extends Component {
       notes: this.props.job.notes,
       status: this.props.job.status,
       description: this.props.job.description,
+      date_updated: this.props.job.date_updated,
       contacts: [],
       currentContact: {},
     };
@@ -46,6 +47,7 @@ class JobShow extends Component {
       notes: this.state.notes,
       status: this.state.status,
       description: this.state.description,
+      date_updated: this.state.date_updated,
     };
     // console.log(this.props.job.id);
     axios.patch("http://localhost:3000/api/jobs/" + this.state.id, job).then((res) => {
@@ -210,7 +212,7 @@ class JobShow extends Component {
             {Object.values(this.state.contacts).map((contact, index) => {
               return (
                 <div key={index} className="contact_buttons_area">
-                  <Button className="contact_button center" variant="light">
+                  <Button onClick={this.showContactModal} className="contact_button center" variant="light">
                     {contact.name} - {contact.job_title}
                   </Button>
                 </div>
@@ -233,16 +235,16 @@ class JobShow extends Component {
             Delete Job
           </Button>
         </div>
+        {/* {this.state.showContactModal ? (
+          <ContactShow
+            closeContactModal={this.closeContactModal}
+            contact={this.state.currentContact}
+            updateContactInfo={this.updateContactInfo}
+          />
+        ) : null} */}
       </div>
       // </div>
 
-      // {this.state.showContactModal ? (
-      //   <ContactShow
-      //     closeContactModal={this.closeContactModal}
-      //     contact={this.state.currentContact}
-      //     updateContactInfo={this.updateContactInfo}
-      //   />
-      // ) : null}
       // {/* <ContactShowInJob
       //     closeContactModalViaJobShow={this.closeContactModalViaJobShow}
       //     contact={this.state.currentContact}
