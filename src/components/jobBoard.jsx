@@ -20,7 +20,7 @@ class JobBoard extends Component {
 
   setCurrentJob = (job) => {
     this.setState({ currentJob: job }, function () {
-      // console.log(job);
+      console.log(job);
     });
   };
 
@@ -33,7 +33,9 @@ class JobBoard extends Component {
       const [show, setShow] = useState(false);
 
       const handleClose = () => setShow(false);
-      const handleShow = () => setShow(true);
+      const handleShow = () => {
+        setShow(true);
+        console.log(props.job)};
 
       return (
         <>
@@ -62,7 +64,7 @@ class JobBoard extends Component {
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
-            <JobModal job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob}/>
+            <JobModal job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob} />
           </div>
         ))}
       </div>

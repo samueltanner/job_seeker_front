@@ -64,7 +64,7 @@ class JobShow extends Component {
       } else {
         this.setState({ contacts: res.data.contacts });
       }
-      console.log(res.data.contacts);
+      // console.log(res.data.contacts);
     });
   };
 
@@ -172,9 +172,26 @@ class JobShow extends Component {
             onChange={this.handleChange}
           />
         </InputGroup>
-
-        <div>
-          {/* <Select>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3">Last Contacted</InputGroup.Text>
+          <FormControl
+            name="date_updated"
+            type="date"
+            aria-describedby="basic-addon3"
+            value={this.props.job.date_updated}
+            onChange={this.handleChange}
+          />
+        </InputGroup>
+        <label htmlFor="status">Status:</label>
+        <Form.Group>
+          <Form.Control
+            as="select"
+            id="status"
+            name="status"
+            defaultValue={this.props.job.status}
+            title={this.props.job.status}
+            onChange={this.handleChange}
+          >
             <option value="Applied">Applied</option>
             <option value="Saved">Saved</option>
             <option value="Draft">Draft</option>
@@ -182,61 +199,23 @@ class JobShow extends Component {
             <option value="Interviewing">Interviewing</option>
             <option value="Offered">Offered</option>
             <option value="Denied">Denied</option>
-          </Form.Select> */}
-        </div>
-        {/* <Form.Select size="lg">
-          <option>Large select</option>
-        </Form.Select> */}
-          <label htmlFor="status">Status:</label>
-
-        <DropdownButton id="status" name="status" defaultValue={this.props.job.status} title={this.props.job.status} onChange={this.handleChange}>
-          <Dropdown.Item value="Applied">Applied</Dropdown.Item>
-          <Dropdown.Item value="Saved">Saved</Dropdown.Item>
-          <Dropdown.Item value="Draft">Draft</Dropdown.Item>
-          <Dropdown.Item value="In Contact">In Contact</Dropdown.Item>
-          <Dropdown.Item value="Interviewing">Interviewing</Dropdown.Item>
-          <Dropdown.Item value="Offered">Offered</Dropdown.Item>
-          <Dropdown.Item value="Denied">Denied</Dropdown.Item>
-        </DropdownButton>
-
-        {/* <div>
-          <label htmlFor="status">Status:</label>
-          <select name="status" defaultValue={this.props.job.status} onChange={this.handleChange}>
-            <option value="Applied">Applied</option>
-            <option value="Saved">Saved</option>
-            <option value="Draft">Draft</option>
-            <option value="In Contact">In Contact</option>
-            <option value="Interviewing">Interviewing</option>
-            <option value="Offered">Offered</option>
-            <option value="Denied">Denied</option>
-          </select>
-        </div> */}
+          </Form.Control>
+        </Form.Group>
+        <br />
         <div>
           <div>
-            <div>
-              <label>Contacts:</label>
-            </div>
-            <div>
-              {/* {contactList} */}
-              {Object.values(this.state.contacts).map((contact, index) => {
-                return (
-                  <div key={index} className="contact_buttons_area">
-                    <Button className="contact_button center" variant="light">
-                      {contact.name} - {contact.job_title}
-                    </Button>
-                    {/* <button
-                      onClick={() => {
-                        this.setCurrentContact(contact);
-                        this.showContactModal();
-                      }}
-                    >
-                      {contact.name} - {contact.job_title}
-                    </button> */}
-                  </div>
-                );
-              })}
-              {/* <p>CONTACT LIST</p> */}
-            </div>
+            <label>Contacts:</label>
+          </div>
+          <div>
+            {Object.values(this.state.contacts).map((contact, index) => {
+              return (
+                <div key={index} className="contact_buttons_area">
+                  <Button className="contact_button center" variant="light">
+                    {contact.name} - {contact.job_title}
+                  </Button>
+                </div>
+              );
+            })}
           </div>
         </div>
         <br />

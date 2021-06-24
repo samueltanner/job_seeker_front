@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { InputGroup, FormControl } from "react-bootstrap";
 
 class JobCreate extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     id: null,
     company_name: "",
@@ -14,7 +18,13 @@ class JobCreate extends Component {
     user_id: localStorage.getItem("user_id"),
     showModal: false,
     errors: [],
+    date_updated: null,
+    maxDate: "2021-06-24",
   };
+
+  componentDidMount() {
+    this.maxDate()
+  }
 
   handleReset = () => {
     document.getElementById("form").reset();
@@ -43,6 +53,7 @@ class JobCreate extends Component {
       posting_url: this.state.posting_url,
       notes: this.state.notes,
       status: this.state.status,
+      date_updated: this.state.date_updated,
     };
     axios
       .post("http://localhost:3000/api/jobs", job)
@@ -59,8 +70,18 @@ class JobCreate extends Component {
         // this.setState({email: ""});
         // this.setState.password = "";
       });
-
   };
+
+  maxDate = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
+    today = `${yyyy}-${mm}-${dd}`;
+    this.setState({date_updated: today})
+    // console.log(this.state.date_updated)
+  };
+
 
   render() {
     return (
@@ -111,6 +132,18 @@ class JobCreate extends Component {
                 <option value="Denied">Denied</option>
               </select>
             </div>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Last Contacted</InputGroup.Text>
+              <FormControl
+                name="date_updated"
+                type="date"
+                max={this.state.maxDate}
+                defaultValue={this.state.maxDate}
+                aria-describedby="basic-addon3"
+                // value={this.props.job.date_updated}
+                onChange={this.handleChange}
+              />
+            </InputGroup>
             <div className="row">
               <label className="column" htmlFor="notes">
                 Notes:
@@ -127,13 +160,13 @@ class JobCreate extends Component {
               </button>
               {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
             </div>
-          <div>
-          <ul className="text-danger">
-            {this.state.errors.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
-          </ul>
-        </div>
+            <div>
+              <ul className="text-danger">
+                {this.state.errors.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            </div>
           </form>
         </div>
       </div>
