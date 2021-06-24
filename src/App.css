@@ -2,7 +2,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
@@ -163,7 +165,6 @@ h1 {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-
 }
 
 .bold {
@@ -181,4 +182,10 @@ h1 {
 }
 .text-center {
   text-align: center;
+}
+
+.timers {
+  display: block;
+  padding: 2%;
+  border: 1px solid black;
 }

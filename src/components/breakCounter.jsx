@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class BreakCounter extends Component {
     constructor() {
       super();
-      this.state = { time: {}, seconds: 900 };
+      this.state = { time: {}, seconds: 900, showBreakButton: true };
       this.timer = 0;
       this.startTimer = this.startTimer.bind(this);
       this.countDown = this.countDown.bind(this);
@@ -40,8 +40,9 @@ class BreakCounter extends Component {
     }
 
     stopTimer(timer) {
-      console.log(this.timer);
-      console.log(this.state.seconds);
+      this.setState({
+        showBreakButton: true,
+      });
       clearInterval(timer);
     }
 
@@ -52,6 +53,7 @@ class BreakCounter extends Component {
       this.setState({
         time: this.secondsToTime(seconds),
         seconds: seconds,
+        showBreakButton: false,
       });
       
       // Check if we're at zero.
@@ -76,14 +78,14 @@ class BreakCounter extends Component {
     render() {
       return(
         <div>
-          <span className="row">
-          <p className="text-center bold margin">Ready for a Break?</p>
+          <span className="row center">
+          {/* <p className="text-center bold margin">Ready for a Break?</p> */}
           <div className="metric-zone">
-          <button onClick={this.startTimer}>Start Break</button>
-          <button onClick={() => this.stopTimer(this.timer)}>Stop</button>
+          {this.state.showBreakButton === true && <button onClick={this.startTimer}>Start Break</button> }
+          {this.state.showBreakButton === false && <button onClick={() => this.stopTimer(this.timer)}>Stop Break</button> }
           </div>
           </span>
-          <div className="row text-center">{this.state.time.m} minutes and {this.state.time.s} seconds</div>
+          <div className="row center">{this.state.time.m} minutes and {this.state.time.s} seconds</div>
         </div>
     );
   }

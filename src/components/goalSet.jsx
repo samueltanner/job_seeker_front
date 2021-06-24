@@ -94,7 +94,7 @@ class GoalSet extends Component {
             <div className="center">
               <button onClick={this.saveGoals}>Save Changes</button>
 
-              <button type="button">Close</button>
+              <button onClick={this.props.closeModal} type="button">Close</button>
             </div>
             <div>
               {/* <ul className="text-danger">
