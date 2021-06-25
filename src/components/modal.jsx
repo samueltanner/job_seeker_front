@@ -36,7 +36,7 @@ class Modal extends Component {
   }
 
   render() {
-    return <div className="modal-login">
+    return <div className="modal-custom">
       <div className="modal-content">
         <h2 className="center">Did You Meet Your Goals?</h2>
         <div className="job-board margin padding">

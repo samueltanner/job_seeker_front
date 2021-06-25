@@ -7,6 +7,7 @@ class JobBoard extends Component {
     super(props);
     this.state = {
       currentJob: {},
+      showModal: false,
     };
   }
 
@@ -29,71 +30,27 @@ class JobBoard extends Component {
  }
 
   render() {
-    function JobModal(props) {
-      const [show, setShow] = useState(false);
-
-      const handleClose = () => setShow(false);
-      const handleShow = () => {
-        setShow(true);
-        console.log(props.job)};
-
-      return (
-        <>
-          <Button variant="light" onClick={handleShow}>
-            <h6>
-              {props.job.company_name} - {props.job.position}
-            </h6>
-          </Button>
-
-          <Modal show={show} backdrop={false} onHide={handleClose} centered>
-            <Modal.Header>
-              <Modal.Title>{props.job.company_name} - {props.job.position}</Modal.Title>
-            <Button variant="light" onClick={handleClose}>
-                X
-              </Button>
-            </Modal.Header>
-            <Modal.Body>
-              <JobShow job={props.job} deleteJob={props.deleteJob} updateJob={props.updateJob} />
-            </Modal.Body>
-          </Modal>
-        </>
-      );
-    }
+  
 
     return (
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
-            <JobModal job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob} />
+            <Button variant="light" onClick={this.showModal}>
+              {job.company_name} - {job.position}
+            </Button>
+            {this.state.showModal ? <JobShow job={job} deleteJob={this.props.deleteJob} updateJob={this.props.updateJob} closeModal={this.closeModal}/> : null}
           </div>
         ))}
+        <div>
+   
+     
+
+        </div>
       </div>
     );
   }
 }
 export default JobBoard;
 
-// class JobBoard extends Component {
-//   state = {
-//     jobs: this.props.jobData,
-//   };
-//   render() {
-//     return (
-//       <div>
-//         {this.state.jobs.map((job, index) => {
-//           return <p key={index}>{job.id}</p>;
-//         })}
-//       </div>
-//     );
-//   }
-// }
 
-// const JobBoard = (props) => {
-//   console.log("here are your props")
-//   console.log(props.jobData)
-//   return (
-//     <div>Job Board</div>
-//   )
-// }
-
-// export default JobBoard;
