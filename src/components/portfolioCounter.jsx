@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Button } from "react-bootstrap";
+
 
 class PortfolioCounter extends Component {
 
@@ -66,8 +68,8 @@ class PortfolioCounter extends Component {
         <div>
           {/* <p className="text-center bold margin">Portfolio Time Tracker</p> */}
           <div className="center">
-          {this.state.showStartButton === true && <button onClick={this.startTimer}>Timer</button> }
-          {this.state.showStartButton === false && <button onClick={() => this.freezeIt(this.timer)}>Stop</button> }
+          {this.state.showStartButton === true && <Button variant="success" onClick={this.startTimer}>Start Timer</Button> }
+          {this.state.showStartButton === false && <Button variant="danger" onClick={() => this.freezeIt(this.timer)}>Stop Timer</Button> }
           <div>{this.state.time.h} : {this.state.time.m} : {this.state.time.s}</div>
           </div>
         </div>

@@ -282,36 +282,39 @@ class Dashboard extends Component {
           <div className="metric-zone">
             {Object.values(this.state.userGoals).map((goal, index) => (
               <span className="hidden" key={index}>
+                <Card>
                 <span className="center bold">{this.state.userGoalTitles[index]}</span>
-                <Metric
-                  keys={Object.keys(this.state.metrics)[index]}
-                  values={Object.values(this.state.metrics)[index]}
-                  increment={this.handleMetricIncrement}
-                  decrement={this.handleMetricDecrement}
-                  goal={goal}
-                  metrics={this.state.metrics[index]}
-                />
+                  <Metric
+                    keys={Object.keys(this.state.metrics)[index]}
+                    values={Object.values(this.state.metrics)[index]}
+                    increment={this.handleMetricIncrement}
+                    decrement={this.handleMetricDecrement}
+                    goal={goal}
+                    metrics={this.state.metrics[index]}
+                  />
+
                 {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
                   <PortfolioCounter
-                    keys={Object.keys(this.state.metrics)[3]}
-                    values={Object.values(this.state.metrics)[3]}
-                    increment={this.handlePortfolioIncrement}
+                  keys={Object.keys(this.state.metrics)[3]}
+                  values={Object.values(this.state.metrics)[3]}
+                  increment={this.handlePortfolioIncrement}
                   />
-                )}
+                  )}
                 {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
                   <WhiteBoardingCounter
-                    keys={Object.keys(this.state.metrics)[2]}
-                    values={Object.values(this.state.metrics)[2]}
-                    increment={this.handlePortfolioIncrement}
+                  keys={Object.keys(this.state.metrics)[2]}
+                  values={Object.values(this.state.metrics)[2]}
+                  increment={this.handlePortfolioIncrement}
                   />
-                )}
+                  )}
                 {this.state.userGoalTitles[index] === "Breaks:" && (
                   <BreakCounter
-                    keys={Object.keys(this.state.metrics)[4]}
-                    values={Object.values(this.state.metrics)[4]}
-                    increment={this.handleMetricIncrement}
+                  keys={Object.keys(this.state.metrics)[4]}
+                  values={Object.values(this.state.metrics)[4]}
+                  increment={this.handleMetricIncrement}
                   />
-                )}
+                  )}
+                  </Card>
               </span>
             ))}
             <div>
@@ -326,6 +329,7 @@ class Dashboard extends Component {
               history={this.props.history}
               closeModal={this.closeGoalsModal}
               closeGoalsModal={this.closeGoalsModal}
+              userGoals={this.state.userGoals}
             />
           ) : null}
           <div className="row">

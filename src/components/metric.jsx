@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Button, Card } from "react-bootstrap";
+
 
 class Metric extends Component {
 
@@ -15,7 +17,8 @@ class Metric extends Component {
   render() { 
     return ( <div>
       <div className="center margin">
-      <button  onClick={() => {this.props.decrement(this.props.keys,this.props.values)}} className="margin">-</button> {this.props.values}/{this.props.goal} <button onClick={() => {this.props.increment(this.props.keys,this.props.values)}} className="margin">+</button>
+
+      <Button variant="light" onClick={() => {this.props.decrement(this.props.keys,this.props.values)}} className="margin">-</Button> {this.props.values}/{this.props.goal} <Button variant="light" onClick={() => {this.props.increment(this.props.keys,this.props.values)}} className="margin">+</Button>
     </div>
     </div> );
   }
