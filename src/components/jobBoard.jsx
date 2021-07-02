@@ -1,6 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import JobShow from "./jobShow";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 class JobBoard extends Component {
   constructor(props) {

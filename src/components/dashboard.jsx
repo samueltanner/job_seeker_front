@@ -294,12 +294,12 @@ class Dashboard extends Component {
     return (
       <div>
         <Form />
-        <div className="row center margin">
+        <div className="row center margin-top">
           <div className="metric-zone">
             {Object.values(this.state.userGoals).map((goal, index) => (
               <span className="hidden" key={index}>
-                <Card>
-                  <span className="center bold">{this.state.userGoalTitles[index]}</span>
+                <Card style={{ width: '12rem' }}>
+                <Card.Title className="text-center bold">{this.state.userGoalTitles[index]}</Card.Title>
                   <Metric
                     keys={Object.keys(this.state.metrics)[index]}
                     values={Object.values(this.state.metrics)[index]}
@@ -309,36 +309,37 @@ class Dashboard extends Component {
                     metrics={this.state.metrics[index]}
                   />
 
-                  {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
-                    <PortfolioCounter
-                      keys={Object.keys(this.state.metrics)[3]}
-                      values={Object.values(this.state.metrics)[3]}
-                      increment={this.handlePortfolioIncrement}
-                    />
+                {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
+                  <PortfolioCounter
+                  keys={Object.keys(this.state.metrics)[3]}
+                  values={Object.values(this.state.metrics)[3]}
+                  increment={this.handlePortfolioIncrement}
+                  />
                   )}
-                  {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
-                    <WhiteBoardingCounter
-                      keys={Object.keys(this.state.metrics)[2]}
-                      values={Object.values(this.state.metrics)[2]}
-                      increment={this.handlePortfolioIncrement}
-                    />
+                {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
+                  <WhiteBoardingCounter
+                  keys={Object.keys(this.state.metrics)[2]}
+                  values={Object.values(this.state.metrics)[2]}
+                  increment={this.handlePortfolioIncrement}
+                  />
                   )}
-                  {this.state.userGoalTitles[index] === "Breaks:" && (
-                    <BreakCounter
-                      keys={Object.keys(this.state.metrics)[4]}
-                      values={Object.values(this.state.metrics)[4]}
-                      increment={this.handleMetricIncrement}
-                    />
+                {this.state.userGoalTitles[index] === "Breaks:" && (
+                  <BreakCounter
+                  keys={Object.keys(this.state.metrics)[4]}
+                  values={Object.values(this.state.metrics)[4]}
+                  increment={this.handleMetricIncrement}
+                  />
                   )}
-                </Card>
+                  </Card>
               </span>
             ))}
-            <div>
-              <Button variant="warning" onClick={this.showGoalsModal}>
-                Change My Goals
-              </Button>
-            </div>
           </div>
+            </div>
+        <div className="right">
+              <Button size="sm" variant="warning" onClick={this.showGoalsModal}>
+                Edit Goals
+              </Button>
+              </div>
           {this.state.showGoalsModal ? (
             <GoalSet
               updateUserGoals={this.updateUserGoals}
@@ -348,19 +349,7 @@ class Dashboard extends Component {
               userGoals={this.state.userGoals}
             />
           ) : null}
-          <div className="row">
-            {/* <div className="user-goals padding">
-          <h2 className="text-center margin padding">Your Daily Job Hunting Goals:</h2>
-          {Object.values(this.state.userGoals).map((goal, index) => (
-            <p key={index}>
-              {this.state.userGoalTitles[index]} {goal}
-            </p>
-          ))}
-          <div className="center margin">
-          </div>
-        </div> */}
-          </div>
-        </div>
+        
         <hr />
         <div className="center margin">
           <Button onClick={this.showModal}>Add a Job</Button>
