@@ -61,7 +61,6 @@ class Login extends Component {
     }})
 
     this.showModal();
-
   }
 
   handleSubmit = (event) => {
