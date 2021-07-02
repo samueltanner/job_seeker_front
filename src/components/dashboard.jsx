@@ -84,12 +84,13 @@ class Dashboard extends Component {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
-      const appliedJobs = [];
-      response.data.jobs.forEach(function(job){
-        if (job.status === "Applied") {
-          appliedJobs.push(job.id)
-        }
-      });
+      let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
+      console.log(appliedJobs);
+      // response.data.jobs.forEach(function(job){
+      //   if (job.status === "Applied") {
+      //     appliedJobs.push(job.id)
+      //   }
+      // });
       this.setState({ appliedJobs: appliedJobs});
       // console.log(this.state.appliedJobs)
       // console.log(response.data.user_goals);
@@ -159,9 +160,15 @@ class Dashboard extends Component {
 
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
-    console.log(job);
+    // console.log(job);
+    let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
+    // console.log(appliedJobs);
+    // console.log(this.state.appliedJobs);
+    this.setState({appliedJobs: appliedJobs});
     if (job.status === "Applied" && !this.state.appliedJobs.includes(job.id)) {
       this.handleMetricIncrement(Object.keys(this.state.metrics)[0], 0);
+    } else if ((job.status === "Saved" || job.status === "Draft") && !this.state.appliedJobs.includes(job.id)) {
+      this.handleMetricDecrement(Object.keys(this.state.metrics)[0], 0);
     }
   };
 
@@ -172,9 +179,9 @@ class Dashboard extends Component {
     this.handleAddJob(job);
 
     // console.log("This is the updated job:")
-    console.log(job_id);
+    // console.log(job_id);
     this.setState((state) => ({appliedJobs: [...state.appliedJobs, job.id]}))
-    console.log(this.state.appliedJobs)
+    // console.log(this.state.appliedJobs)
   };
 
   handleDestroyJob = (response) => {
@@ -233,7 +240,7 @@ class Dashboard extends Component {
         return { metrics };
       },
       function () {
-        // console.log(this.state.metrics);
+        console.log(this.state.metrics);
         this.updateMetrics();
       }
     );
