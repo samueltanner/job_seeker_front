@@ -9,6 +9,13 @@ class Login extends Component {
     password: "",
     errors: [],
     showModal: false,
+    userGoals: {
+      apply: 0,
+      info_interview: 0,
+      white_boarding_minutes: 0,
+      portfolio_minutes: 0,
+      breaks: 0,
+    }
   };
 
   handleReset = () => {
@@ -44,6 +51,18 @@ class Login extends Component {
     })
   };
 
+  setUserGoalsOnLogin = () =>  {
+    this.setState({userGoals: {
+      apply: null,
+      info_interview: null,
+      white_boarding_minutes: null,
+      portfolio_minutes: null,
+      breaks: null,
+    }})
+
+    this.showModal();
+  }
+
   handleSubmit = (event) => {
     const userInfo = {
       email: this.state.email,
@@ -76,7 +95,7 @@ class Login extends Component {
       console.log(response.data)
       let currentUser = response.data;
       if (currentUser.user_goals === null) {
-        this.showModal();
+        this.setUserGoalsOnLogin();
       } else {
         this.props.history.push("/dashboard");
       }
@@ -101,7 +120,7 @@ class Login extends Component {
           </div>
           <button onClick={this.handleSubmit}>Login</button>
         </form>
-        {this.state.showModal ?  <GoalSet closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} history={this.props.history}/> : null}
+        {this.state.showModal ?  <GoalSet userGoals={this.state.userGoals} closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} history={this.props.history}/> : null}
       </div>
     );
   }
