@@ -1,4 +1,4 @@
- html {
+html {
   box-sizing: border-box;
 }
 
@@ -38,7 +38,7 @@ nav ul li a {
 
 h1 {
   margin-bottom: 20px;
-} 
+}
 
 .signup-form {
   display: block;
@@ -199,3 +199,15 @@ h1 {
   /* left: 80%; */
 }
 
+.small {
+  width: 50%;
+}
+
+.right {
+  text-align: right;
+  margin-right: 5%;
+}
+
+.margin-top {
+  margin-top: 5%;
+}
