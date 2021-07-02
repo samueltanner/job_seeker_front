@@ -20,7 +20,13 @@ class Dashboard extends Component {
       today: "",
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
-      userGoals: {},
+      userGoals: {
+        apply: 0,
+        info_interview: 0,
+        white_boarding_minutes: 0,
+        portfolio_minutes: 0,
+        breaks: 0,
+      },
       userGoalTitles: [
         "Submitted Applications:",
         "Informational Interview:",
@@ -283,7 +289,7 @@ class Dashboard extends Component {
             {Object.values(this.state.userGoals).map((goal, index) => (
               <span className="hidden" key={index}>
                 <Card>
-                <span className="center bold">{this.state.userGoalTitles[index]}</span>
+                  <span className="center bold">{this.state.userGoalTitles[index]}</span>
                   <Metric
                     keys={Object.keys(this.state.metrics)[index]}
                     values={Object.values(this.state.metrics)[index]}
@@ -293,28 +299,28 @@ class Dashboard extends Component {
                     metrics={this.state.metrics[index]}
                   />
 
-                {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
-                  <PortfolioCounter
-                  keys={Object.keys(this.state.metrics)[3]}
-                  values={Object.values(this.state.metrics)[3]}
-                  increment={this.handlePortfolioIncrement}
-                  />
+                  {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
+                    <PortfolioCounter
+                      keys={Object.keys(this.state.metrics)[3]}
+                      values={Object.values(this.state.metrics)[3]}
+                      increment={this.handlePortfolioIncrement}
+                    />
                   )}
-                {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
-                  <WhiteBoardingCounter
-                  keys={Object.keys(this.state.metrics)[2]}
-                  values={Object.values(this.state.metrics)[2]}
-                  increment={this.handlePortfolioIncrement}
-                  />
+                  {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
+                    <WhiteBoardingCounter
+                      keys={Object.keys(this.state.metrics)[2]}
+                      values={Object.values(this.state.metrics)[2]}
+                      increment={this.handlePortfolioIncrement}
+                    />
                   )}
-                {this.state.userGoalTitles[index] === "Breaks:" && (
-                  <BreakCounter
-                  keys={Object.keys(this.state.metrics)[4]}
-                  values={Object.values(this.state.metrics)[4]}
-                  increment={this.handleMetricIncrement}
-                  />
+                  {this.state.userGoalTitles[index] === "Breaks:" && (
+                    <BreakCounter
+                      keys={Object.keys(this.state.metrics)[4]}
+                      values={Object.values(this.state.metrics)[4]}
+                      increment={this.handleMetricIncrement}
+                    />
                   )}
-                  </Card>
+                </Card>
               </span>
             ))}
             <div>
