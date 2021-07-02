@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
 import GoalSet from "./goalSet";
+import { Form, Button } from "react-bootstrap";
+
+
 // import axios from "axios";
 
 class Login extends Component {
@@ -105,21 +108,23 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <form id="form" onSubmit={(e) => e.preventDefault()}>
+      <div className="center margin-top">
+        <Form className="small" id="form" onSubmit={(e) => e.preventDefault()}>
           <div>
             <p className="text-danger">{this.state.errors}</p>
           </div>
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="text" className="input-label" name="email" id="email" onChange={this.handleChange} />
+          <Form.Group>
+            <Form.Label htmlFor="email">Email:</Form.Label>
+            <Form.Control type="text" className="input-label" name="email" id="email" onChange={this.handleChange} />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="password">Password:</Form.Label>
+            <Form.Control type="password" className="input-label" name="password" id="password" onChange={this.handleChange} />
+          </Form.Group>
+          <div className="center">
+          <Button onClick={this.handleSubmit}>Login</Button>
           </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" className="input-label" name="password" id="password" onChange={this.handleChange} />
-          </div>
-          <button onClick={this.handleSubmit}>Login</button>
-        </form>
+        </Form>
         {this.state.showModal ?  <GoalSet userGoals={this.state.userGoals} closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} history={this.props.history}/> : null}
       </div>
     );

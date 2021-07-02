@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Form, Button } from "react-bootstrap";
+
 
 class Home extends Component {
   state = {
@@ -53,7 +55,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="signup-form">
+      <div className="signup-form margin-top">
         {/* <form onSubmit={this.handleSubmit}> */}
         <div className="text-danger">
           <ul>
@@ -62,28 +64,28 @@ class Home extends Component {
             ))}
           </ul>
         </div>
-        <form id="form" onSubmit={(e) => e.preventDefault()}>
-          <div className="row">
+        <Form id="form" onSubmit={(e) => e.preventDefault()}>
+          <div className="row margin-top">
             <label className="column" htmlFor="username">
               Username
             </label>
             <input className="column" type="text" name="username" id="username" onChange={this.handleChange} />
           </div>
 
-          <div className="row">
+          <div className="row margin-top">
             <label className="column" htmlFor="email">
               Email
             </label>
             <input className="column" type="text" name="email" id="email" onChange={this.handleChange} />
           </div>
-          <div className="row">
+          <div className="row margin-top">
             <label className="column" htmlFor="password">
               Password
             </label>
             <input className="column" autoComplete="new-password" type="password" name="password" id="password" onChange={this.handleChange} />
           </div>
 
-          <div className="row">
+          <div className="row margin-top">
             <label className="column" htmlFor="password_confirmation">
               Password Confirmation
             </label>
@@ -95,11 +97,11 @@ class Home extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="center">
+          <div className="center margin-top">
             {" "}
-            <button onClick={this.handleSubmit}>Create Account</button>
+            <Button onClick={this.handleSubmit}>Create Account</Button>
           </div>
-        </form>
+        </Form>
         {/* <button onClick={this.getUsers}>Get Me</button> */}
       </div>
     );
