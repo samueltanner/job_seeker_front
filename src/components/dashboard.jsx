@@ -19,6 +19,7 @@ class Dashboard extends Component {
     this.state = {
       today: "",
       jobs: [],
+      appliedJobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
       userGoals: {
         apply: 0,
@@ -83,6 +84,14 @@ class Dashboard extends Component {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
+      const appliedJobs = [];
+      response.data.jobs.forEach(function(job){
+        if (job.status === "Applied") {
+          appliedJobs.push(job.id)
+        }
+      });
+      this.setState({ appliedJobs: appliedJobs});
+      // console.log(this.state.appliedJobs)
       // console.log(response.data.user_goals);
       // console.log(this.state.jobs);
     });
@@ -151,7 +160,7 @@ class Dashboard extends Component {
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
     console.log(job);
-    if (job.status === "Applied") {
+    if (job.status === "Applied" && !this.state.appliedJobs.includes(job.id)) {
       this.handleMetricIncrement(Object.keys(this.state.metrics)[0], 0);
     }
   };
@@ -164,7 +173,8 @@ class Dashboard extends Component {
 
     // console.log("This is the updated job:")
     console.log(job_id);
-    // console.log(job)
+    this.setState((state) => ({appliedJobs: [...state.appliedJobs, job.id]}))
+    console.log(this.state.appliedJobs)
   };
 
   handleDestroyJob = (response) => {
