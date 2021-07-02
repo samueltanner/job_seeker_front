@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {Button } from "react-bootstrap";
+
 
 class BreakCounter extends Component {
     constructor() {
@@ -81,8 +83,8 @@ class BreakCounter extends Component {
           <span className="row center">
           {/* <p className="text-center bold margin">Ready for a Break?</p> */}
           <div className="metric-zone">
-          {this.state.showBreakButton === true && <button onClick={this.startTimer}>Start Break</button> }
-          {this.state.showBreakButton === false && <button onClick={() => this.stopTimer(this.timer)}>Stop Break</button> }
+          {this.state.showBreakButton === true && <Button variant="success" onClick={this.startTimer}>Start Break</Button> }
+          {this.state.showBreakButton === false && <Button variant="danger" onClick={() => this.stopTimer(this.timer)}>Stop Break</Button> }
           </div>
           </span>
           <div className="row center">{this.state.time.m} minutes and {this.state.time.s} seconds</div>

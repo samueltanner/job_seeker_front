@@ -5,10 +5,9 @@ import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
 import BreakCounter from "./breakCounter";
-import { Form, Card, Modal } from "react-bootstrap";
+import { Form, Card, Button } from "react-bootstrap";
 import PortfolioCounter from "./portfolioCounter";
 import WhiteBoardingCounter from "./whiteBoardingCounter";
-
 
 // import Modal from "./modal";
 
@@ -18,6 +17,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      today: "",
       jobs: [],
       statuses: ["Saved", "Draft", "Applied", "In Contact", "Interviewing", "Offered", "Denied"],
       userGoals: {},
@@ -43,6 +43,16 @@ class Dashboard extends Component {
     };
   }
 
+  maxDate = () => {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
+    today = `${yyyy}-${mm}-${dd}`;
+    this.setState({ today: today });
+    // console.log(this.state.date_updated)
+  };
+
   // setDashCurrentJob = (job) => {
   //   console.log(job)
   //   this.setState({currentJob: job}, function() {
@@ -59,6 +69,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.getUserJobsAndGoals();
+    this.maxDate();
   }
 
   getUserJobsAndGoals = () => {
@@ -218,14 +229,17 @@ class Dashboard extends Component {
     if (minute > 0 && second % 60 === 0) {
       // console.log(minute);
 
-      this.setState(prevState => {
-        let metrics = Object.assign({}, prevState.metrics);
-        metrics[key] += 1;
-        return {metrics};
-      }, function() {
-        // console.log(this.state.metrics);
-        this.updateMetrics();
-      })
+      this.setState(
+        (prevState) => {
+          let metrics = Object.assign({}, prevState.metrics);
+          metrics[key] += 1;
+          return { metrics };
+        },
+        function () {
+          // console.log(this.state.metrics);
+          this.updateMetrics();
+        }
+      );
     }
   };
 
@@ -244,7 +258,6 @@ class Dashboard extends Component {
       }
     );
   };
-  
 
   updateMetrics = () => {
     var params = {
@@ -260,42 +273,67 @@ class Dashboard extends Component {
         console.log(response);
       });
   };
-  
+
   render() {
-    
     return (
       <div>
         <Form />
         <div className="row center margin">
-        <div className="metric-zone">
-          {Object.values(this.state.userGoals).map((goal, index) => (
-            <span className="hidden" key={index}>
-              <span className="center bold">{this.state.userGoalTitles[index]}</span>
-              <Metric
-                keys={Object.keys(this.state.metrics)[index]}
-                values={Object.values(this.state.metrics)[index]}
-                increment={this.handleMetricIncrement}
-                decrement={this.handleMetricDecrement}
-                goal={goal}
-                metrics={this.state.metrics[index]}
-              />
-              {this.state.userGoalTitles[index] === "Portfolio (minutes):" &&
-              <PortfolioCounter keys={Object.keys(this.state.metrics)[3]} values={Object.values(this.state.metrics)[3]} increment={this.handlePortfolioIncrement}/> }
-            {this.state.userGoalTitles[index] === "White-boarding (minutes):" &&<WhiteBoardingCounter keys={Object.keys(this.state.metrics)[2]} values={Object.values(this.state.metrics)[2]} increment={this.handlePortfolioIncrement}/> }
-            {this.state.userGoalTitles[index] === "Breaks:" && <BreakCounter keys={Object.keys(this.state.metrics)[4]} values={Object.values(this.state.metrics)[4]} increment={this.handleMetricIncrement}/> }
-            </span>
-          ))}
-        </div>
-              {this.state.showGoalsModal ? (
-                <GoalSet
-                updateUserGoals={this.updateUserGoals}
-                history={this.props.history}
-                closeModal={this.closeGoalsModal}
-                closeGoalsModal={this.closeGoalsModal}
-                />
-                ) : null}
+          <div className="metric-zone">
+            {Object.values(this.state.userGoals).map((goal, index) => (
+              <span className="hidden" key={index}>
+                <Card>
+                <span className="center bold">{this.state.userGoalTitles[index]}</span>
+                  <Metric
+                    keys={Object.keys(this.state.metrics)[index]}
+                    values={Object.values(this.state.metrics)[index]}
+                    increment={this.handleMetricIncrement}
+                    decrement={this.handleMetricDecrement}
+                    goal={goal}
+                    metrics={this.state.metrics[index]}
+                  />
+
+                {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
+                  <PortfolioCounter
+                  keys={Object.keys(this.state.metrics)[3]}
+                  values={Object.values(this.state.metrics)[3]}
+                  increment={this.handlePortfolioIncrement}
+                  />
+                  )}
+                {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
+                  <WhiteBoardingCounter
+                  keys={Object.keys(this.state.metrics)[2]}
+                  values={Object.values(this.state.metrics)[2]}
+                  increment={this.handlePortfolioIncrement}
+                  />
+                  )}
+                {this.state.userGoalTitles[index] === "Breaks:" && (
+                  <BreakCounter
+                  keys={Object.keys(this.state.metrics)[4]}
+                  values={Object.values(this.state.metrics)[4]}
+                  increment={this.handleMetricIncrement}
+                  />
+                  )}
+                  </Card>
+              </span>
+            ))}
+            <div>
+              <Button variant="warning" onClick={this.showGoalsModal}>
+                Change My Goals
+              </Button>
+            </div>
+          </div>
+          {this.state.showGoalsModal ? (
+            <GoalSet
+              updateUserGoals={this.updateUserGoals}
+              history={this.props.history}
+              closeModal={this.closeGoalsModal}
+              closeGoalsModal={this.closeGoalsModal}
+              userGoals={this.state.userGoals}
+            />
+          ) : null}
           <div className="row">
-        {/* <div className="user-goals padding">
+            {/* <div className="user-goals padding">
           <h2 className="text-center margin padding">Your Daily Job Hunting Goals:</h2>
           {Object.values(this.state.userGoals).map((goal, index) => (
             <p key={index}>
@@ -305,13 +343,14 @@ class Dashboard extends Component {
           <div className="center margin">
           </div>
         </div> */}
-        <button onClick={this.showGoalsModal}>Edit Job Hunting Goals</button>
-        </div>
+          </div>
         </div>
         <hr />
         <div className="center margin">
-          <button onClick={this.showModal}>Add a Job</button>
-          {this.state.showModal ? <JobCreate handleAddJob={this.handleAddJob} closeModal={this.closeModal} /> : null}
+          <Button onClick={this.showModal}>Add a Job</Button>
+          {this.state.showModal ? (
+            <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
+          ) : null}
         </div>
         <div className="job-zone">
           {this.state.statuses.map((status, index) => {

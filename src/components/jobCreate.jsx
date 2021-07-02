@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { InputGroup, FormControl, Button,Form } from "react-bootstrap";
 
 class JobCreate extends Component {
+  // constructor(props) {
+  //   super(props);
+  // }
   state = {
     id: null,
     company_name: "",
@@ -14,7 +18,9 @@ class JobCreate extends Component {
     user_id: localStorage.getItem("user_id"),
     showModal: false,
     errors: [],
+    date_updated: this.props.today,
   };
+
 
   handleReset = () => {
     document.getElementById("form").reset();
@@ -43,6 +49,7 @@ class JobCreate extends Component {
       posting_url: this.state.posting_url,
       notes: this.state.notes,
       status: this.state.status,
+      date_updated: this.state.date_updated,
     };
     axios
       .post("http://localhost:3000/api/jobs", job)
@@ -59,49 +66,105 @@ class JobCreate extends Component {
         // this.setState({email: ""});
         // this.setState.password = "";
       });
-
   };
+
+  // maxDate = () => {
+  //   var today = new Date();
+  //   var dd = String(today.getDate()).padStart(2, "0");
+  //   var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  //   var yyyy = today.getFullYear();
+  //   today = `${yyyy}-${mm}-${dd}`;
+  //   this.setState({date_updated: today})
+  //   // console.log(this.state.date_updated)
+  // };
+
 
   render() {
     return (
-      <div className="modal-login">
+      <div className="modal-custom">
         <div className="modal-content">
-          <form className="job-create-form" id="form" onSubmit={(e) => e.preventDefault()}>
-            <div className="row">
-              <label className="column" htmlFor="company_name">
-                Company Name:
-              </label>
-              <input className="column" onChange={this.handleChange} type="text" name="company_name" />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="position">
-                Position:
-              </label>
-              <input className="column" onChange={this.handleChange} type="text" name="position" />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="description">
-                Description:
-              </label>
-              <textarea className="column" onChange={this.handleChange} type="text" name="description" />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="salary">
-                Salary:
-              </label>
-              <input className="column" onChange={this.handleChange} type="number" name="salary" />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="posting_url">
-                Posting URL:
-              </label>
-              <input className="column" onChange={this.handleChange} type="text" name="posting_url" />
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="status">
-                Status:
-              </label>
-              <select className="column" name="status" onChange={this.handleChange}>
+        <Button variant="light" className="close-modal-button" onClick={this.props.closeModal}>
+              X
+            </Button>
+            <h5 className="center">Add a Job</h5>
+
+          <form onSubmit={(e) => e.preventDefault()}>
+          <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Company Name</InputGroup.Text>
+              <FormControl
+                name="company_name"
+                type="text"
+                aria-describedby="basic-addon3"
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+          <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Position</InputGroup.Text>
+              <FormControl
+                name="position"
+                type="text"
+                aria-describedby="basic-addon3"
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+          <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Description</InputGroup.Text>
+              <FormControl
+                name="description"
+                type="text"
+                as="textarea"
+                aria-describedby="basic-addon3"
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Salary</InputGroup.Text>
+              <FormControl
+                name="salary"
+                type="number"
+                aria-describedby="basic-addon3"
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Posting URL</InputGroup.Text>
+              <FormControl
+                name="posting_url"
+                type="text"
+                aria-describedby="basic-addon3"
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Last Contacted</InputGroup.Text>
+              <FormControl
+                name="date_updated"
+                type="date"
+                aria-describedby="basic-addon3"
+                defaultValue={this.props.today}
+
+                // defaultValue={this.props.job.date_updated}
+                // onChange={this.handleChange}
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon3">Notes</InputGroup.Text>
+              <FormControl
+                name="notes"
+                type="text"
+                as="textarea"
+                aria-describedby="basic-addon3"
+                onChange={this.handleChange}
+              />
+            </InputGroup>
+
+            <Form.Group>
+              <Form.Control
+                as="select"
+                id="status"
+                name="status"
+                onChange={this.handleChange}
+              >
                 <option value="Applied">Applied</option>
                 <option value="Saved">Saved</option>
                 <option value="Draft">Draft</option>
@@ -109,31 +172,22 @@ class JobCreate extends Component {
                 <option value="Interviewing">Interviewing</option>
                 <option value="Offered">Offered</option>
                 <option value="Denied">Denied</option>
-              </select>
-            </div>
-            <div className="row">
-              <label className="column" htmlFor="notes">
-                Notes:
-              </label>
-              <textarea className="column" type="text" name="notes" onChange={this.handleChange} />
-            </div>
+              </Form.Control>
+            </Form.Group>
+          
             <br />
             <div className="center">
-              <button type="button" onClick={this.handleSubmit}>
+              <Button variant="success" type="button" onClick={this.handleSubmit}>
                 Add to My Jobs
-              </button>
-              <button type="button" onClick={this.props.closeModal}>
-                Close
-              </button>
-              {/* <button onClick={this.onTrigger}>TRIGGERED</button> */}
+              </Button>
             </div>
-          <div>
-          <ul className="text-danger">
-            {this.state.errors.map((x) => (
-              <li key={x}>{x}</li>
-            ))}
-          </ul>
-        </div>
+            <div>
+              <ul className="text-danger">
+                {this.state.errors.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            </div>
           </form>
         </div>
       </div>
