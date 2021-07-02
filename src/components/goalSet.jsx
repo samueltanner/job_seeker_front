@@ -3,19 +3,38 @@ import axios from "axios";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 
 class GoalSet extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user_goals: {
-        apply: 0,
-        info_interview: 0,
-        white_boarding_minutes: 0,
-        portfolio_minutes: 0,
-        breaks: 0,
-      },
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.state = {
+  //   //   user_goals: {
+  //   //     apply: 0,
+  //   //     info_interview: 0,
+  //   //     white_boarding_minutes: 0,
+  //   //     portfolio_minutes: 0,
+  //   //     breaks: 0,
+  //   //   },
+  //   };
+  // }
 
+  state = {
+    user_goals: {
+      apply: 0,
+      info_interview: 0,
+      white_boarding_minutes: 0,
+      portfolio_minutes: 0,
+      breaks: 0,
+    }
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      apply: this.props.userGoals.apply,
+      info_interview: this.props.userGoals.info_interview,
+      white_boarding_minutes: this.props.userGoals.white_boarding_minutes,
+      portfolio_minutes: this.props.userGoals.portfolio_minutes,
+      breaks: this.props.userGoals.breaks,
+    })
+  }
   // handleChange = (event) => {
   //   const { name, value } = event.target;
   //   this.setState({
