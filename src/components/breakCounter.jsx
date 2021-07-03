@@ -87,7 +87,7 @@ class BreakCounter extends Component {
           {this.state.showBreakButton === false && <Button size="sm" variant="danger" onClick={() => this.stopTimer(this.timer)}>Stop Break</Button> }
           </div>
           </span>
-          <div className="row center">{this.state.time.m} minutes and {this.state.time.s} seconds</div>
+          <div className="row center margin-bottom">{this.state.time.m} minutes and {this.state.time.s} seconds</div>
         </div>
     );
   }

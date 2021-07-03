@@ -67,7 +67,7 @@ class PortfolioCounter extends Component {
       return(
         <div>
           {/* <p className="text-center bold margin">Portfolio Time Tracker</p> */}
-          <div className="center">
+          <div className="center margin-bottom">
           {this.state.showStartButton === true && <Button size="sm" variant="success" onClick={this.startTimer}>Start Timer</Button> }
           {this.state.showStartButton === false && <Button size="sm" variant="danger" onClick={() => this.freezeIt(this.timer)}>Stop Timer</Button> }
           <div>{this.state.time.h} : {this.state.time.m} : {this.state.time.s}</div>

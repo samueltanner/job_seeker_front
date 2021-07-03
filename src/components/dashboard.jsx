@@ -5,7 +5,7 @@ import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
 import BreakCounter from "./breakCounter";
-import { Form, Card, Button } from "react-bootstrap";
+import { Form, Card, Button, Container, Row, Col } from "react-bootstrap";
 import PortfolioCounter from "./portfolioCounter";
 import WhiteBoardingCounter from "./whiteBoardingCounter";
 
@@ -304,10 +304,11 @@ class Dashboard extends Component {
     return (
       <div>
         <Form />
-        <div className="row center margin-top">
-          <div className="metric-zone">
+        {/* <div className="margin-top"> */}
+          <Container fluid>
+            <Row className="center">
             {Object.values(this.state.userGoals).map((goal, index) => (
-              <span className="hidden" key={index}>
+              <Col xs={5} md={3} lg={2} className="margin-top gap" key={index}>
                 <Card style={{ width: '12rem' }}>
                 <Card.Title className="text-center bold">{this.state.userGoalTitles[index]}</Card.Title>
                   <Metric
@@ -341,15 +342,22 @@ class Dashboard extends Component {
                   />
                   )}
                   </Card>
-              </span>
+                </Col>
             ))}
-          </div>
-            </div>
-        <div className="right">
+            </Row>
+          </Container>
+            {/* </div> */}
+        
+        <hr />
+        <div className="center margin">
+          <Button onClick={this.showModal}>Add a Job</Button>
               <Button size="sm" variant="warning" onClick={this.showGoalsModal}>
                 Edit Goals
               </Button>
-              </div>
+          {this.state.showModal ? (
+            <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
+            ) : null}
+        </div>
           {this.state.showGoalsModal ? (
             <GoalSet
               updateUserGoals={this.updateUserGoals}
@@ -359,23 +367,16 @@ class Dashboard extends Component {
               userGoals={this.state.userGoals}
             />
           ) : null}
-        
-        <hr />
-        <div className="center margin">
-          <Button onClick={this.showModal}>Add a Job</Button>
-          {this.state.showModal ? (
-            <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
-          ) : null}
-        </div>
-        <div className="job-zone">
+        <Container fluid>
+        <Row>
           {this.state.statuses.map((status, index) => {
             return (
-              <div className="job-board" key={index}>
+              <Col sm="4" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
                 {/* <h2>{status}</h2> */}
 
                 <div>
-                  <Card>
+                  <Card className="margin-top">
                     <Card.Header as="h5">{status}</Card.Header>
                     <Card.Body>
                       {/* <App/> */}
@@ -387,10 +388,11 @@ class Dashboard extends Component {
                     </Card.Body>
                   </Card>
                 </div>
-              </div>
+              </Col>
             );
           })}
-        </div>
+        </Row>
+        </Container>
         {/* <div>{this.state.showLogoutModal ? <Modal getUserMetrics={this.getUserMetrics}/> : null} */}
         {/* </div> */}
       </div>
