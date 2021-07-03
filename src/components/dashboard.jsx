@@ -302,14 +302,14 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="background">
         <Form />
         {/* <div className="margin-top"> */}
           <Container fluid>
             <Row className="center">
             {Object.values(this.state.userGoals).map((goal, index) => (
               <Col xs={5} md={3} lg={2} className="margin-top gap" key={index}>
-                <Card style={{ width: '12rem' }}>
+                <Card style={{ width: '12rem' }} className="shadow">
                 <Card.Title className="text-center bold">{this.state.userGoalTitles[index]}</Card.Title>
                   <Metric
                     keys={Object.keys(this.state.metrics)[index]}
@@ -350,8 +350,8 @@ class Dashboard extends Component {
         
         <hr />
         <div className="center margin">
-          <Button onClick={this.showModal}>Add a Job</Button>
-              <Button size="sm" variant="warning" onClick={this.showGoalsModal}>
+          <Button className="shadow" onClick={this.showModal}>Add a Job</Button>
+              <Button className="shadow" size="sm" variant="warning" onClick={this.showGoalsModal}>
                 Edit Goals
               </Button>
           {this.state.showModal ? (
@@ -376,7 +376,7 @@ class Dashboard extends Component {
                 {/* <h2>{status}</h2> */}
 
                 <div>
-                  <Card className="margin-top">
+                  <Card className="margin-top shadow">
                     <Card.Header as="h5">{status}</Card.Header>
                     <Card.Body>
                       {/* <App/> */}

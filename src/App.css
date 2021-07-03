@@ -219,3 +219,11 @@ h1 {
 .gap {
   gap: 2%;
 }
+
+.background {
+  /* background: url("coding.jpeg"); */
+}
+
+.shadow {
+  box-shadow: 1px 2px 5px gray;
+}
