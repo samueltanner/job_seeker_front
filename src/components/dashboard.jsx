@@ -161,21 +161,24 @@ class Dashboard extends Component {
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
     // console.log(job);
-    let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
-    // console.log(appliedJobs);
-    // console.log(this.state.appliedJobs);
-    this.setState({appliedJobs: appliedJobs});
     if (job.status === "Applied" && !this.state.appliedJobs.includes(job.id)) {
       this.handleMetricIncrement(Object.keys(this.state.metrics)[0], 0);
-    } else if ((job.status === "Saved" || job.status === "Draft") && !this.state.appliedJobs.includes(job.id)) {
-      this.handleMetricDecrement(Object.keys(this.state.metrics)[0], 0);
     }
+  
   };
 
   handleUpdateJob = (job, job_id) => {
     // this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
     var jobIndex = this.state.jobs.findIndex((o) => o.id === job_id);
     this.removeJobFromState(jobIndex);
+    let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
+    // console.log(appliedJobs);
+    // console.log(this.state.appliedJobs);
+    this.setState({appliedJobs: appliedJobs});
+  if ((job.status === "Saved" || job.status === "Draft") && !this.state.appliedJobs.includes(job.id)) {
+      this.handleMetricDecrement(Object.keys(this.state.metrics)[0], 0);
+    }
+
     this.handleAddJob(job);
 
     // console.log("This is the updated job:")
