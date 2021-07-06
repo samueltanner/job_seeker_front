@@ -302,9 +302,10 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="background">
+      <div>
         <Form />
         {/* <div className="margin-top"> */}
+        <div className="background padding-bottom">
           <Container fluid>
             <Row className="center">
             {Object.values(this.state.userGoals).map((goal, index) => (
@@ -346,6 +347,7 @@ class Dashboard extends Component {
             ))}
             </Row>
           </Container>
+          </div>
             {/* </div> */}
         
         <hr />
