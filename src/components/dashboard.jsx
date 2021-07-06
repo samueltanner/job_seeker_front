@@ -5,7 +5,7 @@ import JobBoard from "./jobBoard";
 import JobCreate from "./jobCreate";
 import GoalSet from "./goalSet";
 import BreakCounter from "./breakCounter";
-import { Form, Card, Button } from "react-bootstrap";
+import { Form, Card, Button, Container, Row, Col } from "react-bootstrap";
 import PortfolioCounter from "./portfolioCounter";
 import WhiteBoardingCounter from "./whiteBoardingCounter";
 
@@ -84,12 +84,13 @@ class Dashboard extends Component {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
-      const appliedJobs = [];
-      response.data.jobs.forEach(function(job){
-        if (job.status === "Applied") {
-          appliedJobs.push(job.id)
-        }
-      });
+      let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
+      console.log(appliedJobs);
+      // response.data.jobs.forEach(function(job){
+      //   if (job.status === "Applied") {
+      //     appliedJobs.push(job.id)
+      //   }
+      // });
       this.setState({ appliedJobs: appliedJobs});
       // console.log(this.state.appliedJobs)
       // console.log(response.data.user_goals);
@@ -159,22 +160,31 @@ class Dashboard extends Component {
 
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
-    console.log(job);
+    // console.log(job);
     if (job.status === "Applied" && !this.state.appliedJobs.includes(job.id)) {
       this.handleMetricIncrement(Object.keys(this.state.metrics)[0], 0);
     }
+  
   };
 
   handleUpdateJob = (job, job_id) => {
     // this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
     var jobIndex = this.state.jobs.findIndex((o) => o.id === job_id);
     this.removeJobFromState(jobIndex);
+    let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
+    // console.log(appliedJobs);
+    // console.log(this.state.appliedJobs);
+    this.setState({appliedJobs: appliedJobs});
+  if ((job.status === "Saved" || job.status === "Draft") && !this.state.appliedJobs.includes(job.id)) {
+      this.handleMetricDecrement(Object.keys(this.state.metrics)[0], 0);
+    }
+
     this.handleAddJob(job);
 
     // console.log("This is the updated job:")
-    console.log(job_id);
+    // console.log(job_id);
     this.setState((state) => ({appliedJobs: [...state.appliedJobs, job.id]}))
-    console.log(this.state.appliedJobs)
+    // console.log(this.state.appliedJobs)
   };
 
   handleDestroyJob = (response) => {
@@ -233,7 +243,7 @@ class Dashboard extends Component {
         return { metrics };
       },
       function () {
-        // console.log(this.state.metrics);
+        console.log(this.state.metrics);
         this.updateMetrics();
       }
     );
@@ -292,14 +302,15 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
+      <div className="background">
         <Form />
-        <div className="row center margin">
-          <div className="metric-zone">
+        {/* <div className="margin-top"> */}
+          <Container fluid>
+            <Row className="center">
             {Object.values(this.state.userGoals).map((goal, index) => (
-              <span className="hidden" key={index}>
-                <Card>
-                  <span className="center bold">{this.state.userGoalTitles[index]}</span>
+              <Col xs={5} md={3} lg={2} className="margin-top gap" key={index}>
+                <Card style={{ width: '12rem' }} className="shadow">
+                <Card.Title className="text-center bold">{this.state.userGoalTitles[index]}</Card.Title>
                   <Metric
                     keys={Object.keys(this.state.metrics)[index]}
                     values={Object.values(this.state.metrics)[index]}
@@ -309,36 +320,44 @@ class Dashboard extends Component {
                     metrics={this.state.metrics[index]}
                   />
 
-                  {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
-                    <PortfolioCounter
-                      keys={Object.keys(this.state.metrics)[3]}
-                      values={Object.values(this.state.metrics)[3]}
-                      increment={this.handlePortfolioIncrement}
-                    />
+                {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
+                  <PortfolioCounter
+                  keys={Object.keys(this.state.metrics)[3]}
+                  values={Object.values(this.state.metrics)[3]}
+                  increment={this.handlePortfolioIncrement}
+                  />
                   )}
-                  {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
-                    <WhiteBoardingCounter
-                      keys={Object.keys(this.state.metrics)[2]}
-                      values={Object.values(this.state.metrics)[2]}
-                      increment={this.handlePortfolioIncrement}
-                    />
+                {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
+                  <WhiteBoardingCounter
+                  keys={Object.keys(this.state.metrics)[2]}
+                  values={Object.values(this.state.metrics)[2]}
+                  increment={this.handlePortfolioIncrement}
+                  />
                   )}
-                  {this.state.userGoalTitles[index] === "Breaks:" && (
-                    <BreakCounter
-                      keys={Object.keys(this.state.metrics)[4]}
-                      values={Object.values(this.state.metrics)[4]}
-                      increment={this.handleMetricIncrement}
-                    />
+                {this.state.userGoalTitles[index] === "Breaks:" && (
+                  <BreakCounter
+                  keys={Object.keys(this.state.metrics)[4]}
+                  values={Object.values(this.state.metrics)[4]}
+                  increment={this.handleMetricIncrement}
+                  />
                   )}
-                </Card>
-              </span>
+                  </Card>
+                </Col>
             ))}
-            <div>
-              <Button variant="warning" onClick={this.showGoalsModal}>
-                Change My Goals
+            </Row>
+          </Container>
+            {/* </div> */}
+        
+        <hr />
+        <div className="center margin">
+          <Button className="shadow" onClick={this.showModal}>Add a Job</Button>
+              <Button className="shadow" size="sm" variant="warning" onClick={this.showGoalsModal}>
+                Edit Goals
               </Button>
-            </div>
-          </div>
+          {this.state.showModal ? (
+            <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
+            ) : null}
+        </div>
           {this.state.showGoalsModal ? (
             <GoalSet
               updateUserGoals={this.updateUserGoals}
@@ -348,35 +367,16 @@ class Dashboard extends Component {
               userGoals={this.state.userGoals}
             />
           ) : null}
-          <div className="row">
-            {/* <div className="user-goals padding">
-          <h2 className="text-center margin padding">Your Daily Job Hunting Goals:</h2>
-          {Object.values(this.state.userGoals).map((goal, index) => (
-            <p key={index}>
-              {this.state.userGoalTitles[index]} {goal}
-            </p>
-          ))}
-          <div className="center margin">
-          </div>
-        </div> */}
-          </div>
-        </div>
-        <hr />
-        <div className="center margin">
-          <Button onClick={this.showModal}>Add a Job</Button>
-          {this.state.showModal ? (
-            <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
-          ) : null}
-        </div>
-        <div className="job-zone">
+        <Container fluid>
+        <Row>
           {this.state.statuses.map((status, index) => {
             return (
-              <div className="job-board" key={index}>
+              <Col sm="4" key={index}>
                 {/* <JobBoard jobData={this.jobStatusFilter()} /> */}
                 {/* <h2>{status}</h2> */}
 
                 <div>
-                  <Card>
+                  <Card className="margin-top shadow">
                     <Card.Header as="h5">{status}</Card.Header>
                     <Card.Body>
                       {/* <App/> */}
@@ -388,10 +388,11 @@ class Dashboard extends Component {
                     </Card.Body>
                   </Card>
                 </div>
-              </div>
+              </Col>
             );
           })}
-        </div>
+        </Row>
+        </Container>
         {/* <div>{this.state.showLogoutModal ? <Modal getUserMetrics={this.getUserMetrics}/> : null} */}
         {/* </div> */}
       </div>

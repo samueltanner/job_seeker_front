@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { Button } from "react-bootstrap";
+
 
 
 
@@ -47,7 +49,7 @@ class Modal extends Component {
             ))}
         </div>
         <div className="center">
-      <button onClick={ this.props.closeModal }> Close Modal </button>
+      <Button onClick={ this.props.closeModal }> Close Modal </Button>
       </div>
     </div>
     </div>
