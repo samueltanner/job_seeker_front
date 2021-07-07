@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { Component } from "react";
 import ContactShow from "./contactShow";
+import ContactCreate from "./contactCreate"
+import { Button, Table, InputGroup, FormControl } from "react-bootstrap";
 // import axios from "axios";
 
 class Contacts extends Component {
@@ -10,7 +12,7 @@ class Contacts extends Component {
       contacts: [],
       filtered: [],
       currentContact: {},
-      searchBar: "...Search",
+      searchBar: "",
     };
     this.indexContacts();
     this.handleChange = this.handleChange.bind(this);
@@ -65,6 +67,15 @@ class Contacts extends Component {
     console.log(contact);
   };
 
+  showAddContactModal = () => {
+    this.setState({ showAddContactModal: true });
+  };
+
+  closeAddContactModal = () => {
+    this.setState({ showAddContactModal: false });
+  };
+
+
   updateContactInfo = (contact) => {
     // let updatedContact = null;
     axios.patch("http://localhost:3000/api/contacts/" + contact.id, contact).then((res) => {
@@ -91,52 +102,71 @@ class Contacts extends Component {
 
   render() {
     return (
-      <div>
-        <h1> My Contacts:</h1>
-        <div>
-          <button>Add Contact</button>
-        </div>
-        <div>
-          <input type="text" placeholder={this.state.searchBar} onChange={this.handleChange} />
-        </div>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Company</th>
-                <th>More</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.values(this.state.filtered).map((contact, index) => (
-                <tr key={index}>
-                  <td>{contact.name}</td>
-                  <td>{contact.job_title} </td>
-                  <td>{contact.job}</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        this.setCurrentContact(contact);
-                        this.showContactModal();
-                      }}
-                    >
-                      ...
-                    </button>
-                  </td>
+      <div className="background">
+        <div className="wrapper">
+          <h1> My Contacts:</h1>
+          <div className="add-and-search-contact">
+            <span>
+              <Button variant="success" onClick={()=>this.showAddContactModal()}>Add Contact</Button>
+            </span>
+            <span>
+              <InputGroup className="mb-3 contact-search-bar">
+                <InputGroup.Text id="inputGroup-sizing-default">Search</InputGroup.Text>
+                <FormControl
+                  aria-label="Default"
+                  aria-describedby="inputGroup-sizing-default"
+                  placeholder={this.state.searchBar}
+                  onChange={this.handleChange}
+                />
+              </InputGroup>
+              {/* <input type="text" placeholder={this.state.searchBar} onChange={this.handleChange} /> */}
+            </span>
+          </div>
+          <div>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Company</th>
+                  <th>More</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {Object.values(this.state.filtered).map((contact, index) => (
+                  <tr key={index}>
+                    <td>{contact.name}</td>
+                    <td>{contact.job_title} </td>
+                    <td>{contact.job}</td>
+                    <td>
+                      <Button
+                        variant="light"
+                        onClick={() => {
+                          this.setCurrentContact(contact);
+                          this.showContactModal();
+                        }}
+                      >
+                        ...
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+          {this.state.showContactModal ? (
+            <ContactShow
+              closeContactModal={this.closeContactModal}
+              contact={this.state.currentContact}
+              updateContactInfo={this.updateContactInfo}
+            />
+          ) : null}
+          {this.state.showAddContactModal ? (
+            <ContactCreate
+              closeAddContactModal={this.closeAddContactModal}
+            />
+          ) : null}
         </div>
-        {this.state.showContactModal ? (
-          <ContactShow
-            closeContactModal={this.closeContactModal}
-            contact={this.state.currentContact}
-            updateContactInfo={this.updateContactInfo}
-          />
-        ) : null}
       </div>
     );
   }
