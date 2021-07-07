@@ -302,9 +302,10 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="background">
+      <div>
         <Form />
         {/* <div className="margin-top"> */}
+        <div className="background padding-bottom">
           <Container fluid>
             <Row className="center">
             {Object.values(this.state.userGoals).map((goal, index) => (
@@ -346,10 +347,9 @@ class Dashboard extends Component {
             ))}
             </Row>
           </Container>
+          </div>
             {/* </div> */}
-        
-        <hr />
-        <div className="center margin">
+                <div className="center margin">
           <Button className="shadow" onClick={this.showModal}>Add a Job</Button>
               <Button className="shadow" size="sm" variant="warning" onClick={this.showGoalsModal}>
                 Edit Goals
@@ -367,8 +367,8 @@ class Dashboard extends Component {
               userGoals={this.state.userGoals}
             />
           ) : null}
-        <Container fluid>
-        <Row>
+        <Container fluid className="background-two">
+        <Row className="padding">
           {this.state.statuses.map((status, index) => {
             return (
               <Col sm="4" key={index}>
@@ -376,7 +376,7 @@ class Dashboard extends Component {
                 {/* <h2>{status}</h2> */}
 
                 <div>
-                  <Card className="margin-top shadow">
+                  <Card className="margin-top margin-bottom shadow">
                     <Card.Header as="h5">{status}</Card.Header>
                     <Card.Body>
                       {/* <App/> */}
