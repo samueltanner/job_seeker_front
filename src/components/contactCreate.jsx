@@ -11,6 +11,9 @@ class ContactCreate extends Component {
     phone: null,
     date_contacted: null,
     jobs: [],
+    errors: [],
+    default: "--Select a Job--"
+
   };
 
   componentDidMount() {
@@ -22,8 +25,15 @@ class ContactCreate extends Component {
       [name]: value,
     });
   };
+  check
 
   render() {
+
+    const jobOptions = (options) => {
+      return options.map((job) => {
+        return <option>{job.name}</option>
+      })
+    }
     return (
       <div className="modal-custom">
         <div className="modal-content">
@@ -40,9 +50,13 @@ class ContactCreate extends Component {
             </InputGroup>
 
             <Form.Group>
-              <Form.Control as="select" id="job" name="job" placeholder="Select a Job" onChange={this.handleChange}>
+          
+              <Form.Control as="select" id="job" name="job" defaultValue={this.state.default} onChange={this.handleChange}>
+                <option hidden>--Select a Job--</option>
                 {this.props.userInfo.jobs.map((job, id) => (
-                  <option key={id} value={job.id}>{job.company_name}</option>
+                  <option key={id} value={job.id}>
+                    {job.company_name}
+                  </option>
                 ))}
               </Form.Control>
             </Form.Group>
@@ -81,6 +95,7 @@ class ContactCreate extends Component {
           <Button
             onClick={() => {
               this.props.createContact(this.state);
+              // this.props.closeAddContactModal();
             }}
             variant="success"
           >

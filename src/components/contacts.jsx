@@ -106,10 +106,15 @@ class Contacts extends Component {
       phone: contact.phone,
       date_contacted: contact.date_contacted,
     };
+
+    // console.log(params)
     // console.log("starting post request for contact");
     // console.log(contact);
     axios.post("http://localhost:3000/api/contacts/", params).then((res) =>{
       console.log(res.data)
+      this.closeAddContactModal()
+    }).catch((error) => {
+      console.log(error)
     });
   };
 

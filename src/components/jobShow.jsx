@@ -25,7 +25,6 @@ class JobShow extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.job)
     this.getJobContacts();
   }
 
@@ -222,10 +221,29 @@ class JobShow extends Component {
                 <label>Contacts:</label>
               </div>
               <div>
-                {this.state.contacts.map((contact,index)=> {
-                  return(
-                    <h3 key={index}>{contact.name}</h3>
-                  )
+                {this.state.contacts.map((contact, index) => {
+                  return (
+                    <div key={index} className="contact_button_area">
+                      <Button
+                        className="contact_button center"
+                        variant="light"
+                        
+                        onClick={() => {
+                          this.setCurrentContact(contact);
+                          this.showContactModal();
+                        }}
+                      >
+                        {contact.name}
+                      </Button>
+                      {this.state.showContactModal ? (
+                        <ContactShow
+                          closeContactModal={this.closeContactModal}
+                          contact={this.state.currentContact}
+                          updateContactInfo={this.updateContactInfo}
+                        />
+                      ) : null}
+                    </div>
+                  );
                 })}
               </div>
               {/* <div>
