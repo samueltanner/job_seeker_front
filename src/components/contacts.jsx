@@ -113,6 +113,7 @@ class Contacts extends Component {
     axios.post("http://localhost:3000/api/contacts/", params).then((res) =>{
       console.log(res.data)
       this.closeAddContactModal()
+      this.addContact(res.data)
     }).catch((error) => {
       console.log(error)
     });

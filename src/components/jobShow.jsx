@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import ContactShow from "./contactShow";
 import { Button, InputGroup, Form, FormControl } from "react-bootstrap";
+import ContactCreate from "./contactCreateFromJobShow";
 
 // import axios from 'axios';
 
@@ -106,6 +107,14 @@ class JobShow extends Component {
     this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
     // this.resetFilter()
     console.log(this.state.contacts);
+  };
+
+  showAddContactModal = () => {
+    this.setState({ showAddContactModal: true });
+  };
+
+  closeAddContactModal = () => {
+    this.setState({ showAddContactModal: false });
   };
   render() {
     // var contactList = this.state.contacts.map((contact) => <div>{contact.name}</div>);
@@ -221,13 +230,34 @@ class JobShow extends Component {
                 <label>Contacts:</label>
               </div>
               <div>
+                <Button
+                  variant="success"
+                  onClick={() => {
+                    this.showAddContactModal();
+                  }}
+                >
+                  Add Contact
+                </Button>
+              </div>
+              <div>
+                {this.state.showAddContactModal ? (
+                  <ContactCreate
+                    closeAddContactModal={this.closeAddContactModal}
+                    jobId={this.props.job.id}
+                    addContact={this.addContact}
+                    // createContact={this.createContact}
+                    // userInfo={this.state.userInfo}
+
+                  />
+                ) : null}
+              </div>
+              <div>
                 {this.state.contacts.map((contact, index) => {
                   return (
                     <div key={index} className="contact_button_area">
                       <Button
-                        className="contact_button center"
+                        className="contact_button"
                         variant="light"
-                        
                         onClick={() => {
                           this.setCurrentContact(contact);
                           this.showContactModal();
