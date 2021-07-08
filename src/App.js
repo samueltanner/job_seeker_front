@@ -11,7 +11,9 @@ import Contacts from "./components/contacts"
 import Logout from './components/logout'
 // import 'bootstrap/dist/css/bootstrap.css';
 
-
+const addContact = () => {
+  console.log("contact added")
+}
 
 const App = () => (
   <div className="app">

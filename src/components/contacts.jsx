@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
 import ContactShow from "./contactShow";
-import ContactCreate from "./contactCreate"
+import ContactCreate from "./contactCreate";
 import { Button, Table, InputGroup, FormControl } from "react-bootstrap";
+
 // import axios from "axios";
 
 class Contacts extends Component {
@@ -12,6 +13,7 @@ class Contacts extends Component {
       contacts: [],
       filtered: [],
       currentContact: {},
+      userInfo: {},
       searchBar: "",
     };
     this.indexContacts();
@@ -47,7 +49,8 @@ class Contacts extends Component {
     axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((res) => {
       this.setState({ contacts: res.data.contacts });
       this.setState({ filtered: res.data.contacts });
-      console.log(res.data);
+      this.setState({ userInfo: res.data });
+      // console.log(res.data);
     });
   };
   resetFilter = () => {
@@ -75,7 +78,6 @@ class Contacts extends Component {
     this.setState({ showAddContactModal: false });
   };
 
-
   updateContactInfo = (contact) => {
     // let updatedContact = null;
     axios.patch("http://localhost:3000/api/contacts/" + contact.id, contact).then((res) => {
@@ -93,11 +95,30 @@ class Contacts extends Component {
     this.setState({ filtered: this.state.filtered.filter((_, i) => i !== contactIndex) });
   }
 
+  createContact = (contact) => {
+    const params = {
+      name: contact.name,
+      email: contact.email,
+      user_id: localStorage.getItem("user_id"),
+      job_id: contact.job,
+      job_title: contact.job_title,
+      linkedin_url: contact.linkedin_url,
+      phone: contact.phone,
+      date_contacted: contact.date_contacted,
+    };
+    // console.log("starting post request for contact");
+    // console.log(contact);
+    axios.post("http://localhost:3000/api/contacts/", params).then((res) =>{
+      console.log(res.data)
+    });
+  };
+
   addContact = (contact) => {
     this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
     this.setState((prevState) => ({ filtered: [contact, ...prevState.filtered] }));
     // this.resetFilter()
     console.log(this.state.contacts);
+    console.log("contact was added!!!");
   };
 
   render() {
@@ -107,7 +128,9 @@ class Contacts extends Component {
           <h1> My Contacts:</h1>
           <div className="add-and-search-contact">
             <span>
-              <Button variant="success" onClick={()=>this.showAddContactModal()}>Add Contact</Button>
+              <Button variant="success" onClick={() => this.showAddContactModal()}>
+                Add Contact
+              </Button>
             </span>
             <span>
               <InputGroup className="mb-3 contact-search-bar">
@@ -164,6 +187,8 @@ class Contacts extends Component {
           {this.state.showAddContactModal ? (
             <ContactCreate
               closeAddContactModal={this.closeAddContactModal}
+              createContact={this.createContact}
+              userInfo={this.state.userInfo}
             />
           ) : null}
         </div>
