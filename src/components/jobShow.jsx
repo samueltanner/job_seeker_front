@@ -20,8 +20,12 @@ class JobShow extends Component {
       date_updated: this.props.job.date_updated,
       contacts: [],
       currentContact: {},
-      showContactModal: false
+      showContactModal: false,
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.job)
     this.getJobContacts();
   }
 
@@ -66,8 +70,8 @@ class JobShow extends Component {
       if (res.data.contacts.length === 0) {
       } else {
         this.setState({ contacts: res.data.contacts });
+        console.log(this.state.contacts);
       }
-      // console.log(res.data.contacts);
     });
   };
 
@@ -111,11 +115,13 @@ class JobShow extends Component {
       <div className="modal-custom">
         <div className="modal-content">
           {/* <div className="modal-header"> */}
-            <Button variant="light" className="close-modal-button" onClick={this.props.closeModal}>
-              X
-            </Button>
+          <Button variant="light" className="close-modal-button" onClick={this.props.closeModal}>
+            X
+          </Button>
           {/* </div> */}
-          <h5>{this.props.job.company_name} - {this.props.job.position}</h5>
+          <h5>
+            {this.props.job.company_name} - {this.props.job.position}
+          </h5>
           <div onSubmit={(e) => e.preventDefault()}>
             {/* <Form.Label htmlFor="basic-url">Your vanity URL</Form.Label> */}
             <InputGroup className="mb-3">
@@ -216,57 +222,75 @@ class JobShow extends Component {
                 <label>Contacts:</label>
               </div>
               <div>
+                {this.state.contacts.map((contact,index)=> {
+                  return(
+                    <h3 key={index}>{contact.name}</h3>
+                  )
+                })}
+              </div>
+              {/* <div>
                 {Object.values(this.state.contacts).map((contact, index) => {
                   return (
                     <div key={index} className="contact_buttons_area">
-                      <Button onClick={()=>{this.setCurrentContact(contact); this.showContactModal()}} className="contact_button center" variant="light">
+                      <Button
+                        onClick={() => {
+                          this.setCurrentContact(contact);
+                          this.showContactModal();
+                        }}
+                        className="contact_button center"
+                        variant="light"
+                      >
                         {contact.name} - {contact.job_title}
                       </Button>
-                      {this.state.showContactModal ? <ContactShow
-                        closeContactModal={this.closeContactModal}
-                        contact={this.state.currentContact}
-                        updateContactInfo={this.updateContactInfo}
-                      /> : null}
+                      {this.state.showContactModal ? (
+                        <ContactShow
+                          closeContactModal={this.closeContactModal}
+                          contact={this.state.currentContact}
+                          updateContactInfo={this.updateContactInfo}
+                        />
+                      ) : null}
                     </div>
                   );
                 })}
               </div>
-            </div>
-            <br />
-            <div className="center">
-              <Button
-                variant="success"
-                onClick={() => {
-                  this.handleSave();
-                  this.props.closeModal();
-                }}
-              >
-                Save Changes
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => {
-                  if (window.confirm("Are you sure you want to delete this job?")) this.props.deleteJob(this.state.id);
-                  // this.props.closeModal();
-                }}
-              >
-                Delete Job
-              </Button>
-            </div>
-            {/* {this.state.showContactModal ? (
+            </div> */}
+              <br />
+              <div className="center">
+                <Button
+                  variant="success"
+                  onClick={() => {
+                    this.handleSave();
+                    this.props.closeModal();
+                  }}
+                >
+                  Save Changes
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    if (window.confirm("Are you sure you want to delete this job?"))
+                      this.props.deleteJob(this.state.id);
+                    // this.props.closeModal();
+                  }}
+                >
+                  Delete Job
+                </Button>
+              </div>
+              {/* {this.state.showContactModal ? (
           <ContactShow
             closeContactModal={this.closeContactModal}
             contact={this.state.currentContact}
             updateContactInfo={this.updateContactInfo}
           />
         ) : null} */}
+            </div>
           </div>
-        </div>
-        {/* <ContactShowInJob
+          {/* <ContactShowInJob
       //     closeContactModalViaJobShow={this.closeContactModalViaJobShow}
       //     contact={this.state.currentContact}
       //     updateContactInfo={this.updateContactInfo}
       //   /> */}
+        </div>
       </div>
     );
   }
