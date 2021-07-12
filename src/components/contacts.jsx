@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { Component } from "react";
 import ContactShow from "./contactShow";
+import ContactCreate from "./contactCreate";
+import { Button, Table, InputGroup, FormControl } from "react-bootstrap";
+
 // import axios from "axios";
 
 class Contacts extends Component {
@@ -10,7 +13,8 @@ class Contacts extends Component {
       contacts: [],
       filtered: [],
       currentContact: {},
-      searchBar: "...Search",
+      userInfo: {},
+      searchBar: "",
     };
     this.indexContacts();
     this.handleChange = this.handleChange.bind(this);
@@ -45,7 +49,8 @@ class Contacts extends Component {
     axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((res) => {
       this.setState({ contacts: res.data.contacts });
       this.setState({ filtered: res.data.contacts });
-      console.log(res.data);
+      this.setState({ userInfo: res.data });
+      // console.log(res.data);
     });
   };
   resetFilter = () => {
@@ -65,6 +70,14 @@ class Contacts extends Component {
     console.log(contact);
   };
 
+  showAddContactModal = () => {
+    this.setState({ showAddContactModal: true });
+  };
+
+  closeAddContactModal = () => {
+    this.setState({ showAddContactModal: false });
+  };
+
   updateContactInfo = (contact) => {
     // let updatedContact = null;
     axios.patch("http://localhost:3000/api/contacts/" + contact.id, contact).then((res) => {
@@ -82,61 +95,109 @@ class Contacts extends Component {
     this.setState({ filtered: this.state.filtered.filter((_, i) => i !== contactIndex) });
   }
 
+  createContact = (contact) => {
+    const params = {
+      name: contact.name,
+      email: contact.email,
+      user_id: localStorage.getItem("user_id"),
+      job_id: contact.job,
+      job_title: contact.job_title,
+      linkedin_url: contact.linkedin_url,
+      phone: contact.phone,
+      date_contacted: contact.date_contacted,
+    };
+
+    // console.log(params)
+    // console.log("starting post request for contact");
+    // console.log(contact);
+    axios.post("http://localhost:3000/api/contacts/", params).then((res) =>{
+      console.log(res.data)
+      this.closeAddContactModal()
+      this.addContact(res.data)
+    }).catch((error) => {
+      console.log(error)
+    });
+  };
+
   addContact = (contact) => {
     this.setState((prevState) => ({ contacts: [contact, ...prevState.contacts] }));
     this.setState((prevState) => ({ filtered: [contact, ...prevState.filtered] }));
     // this.resetFilter()
     console.log(this.state.contacts);
+    console.log("contact was added!!!");
   };
 
   render() {
     return (
-      <div>
-        <h1> My Contacts:</h1>
-        <div>
-          <button>Add Contact</button>
-        </div>
-        <div>
-          <input type="text" placeholder={this.state.searchBar} onChange={this.handleChange} />
-        </div>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Company</th>
-                <th>More</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.values(this.state.filtered).map((contact, index) => (
-                <tr key={index}>
-                  <td>{contact.name}</td>
-                  <td>{contact.job_title} </td>
-                  <td>{contact.job}</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        this.setCurrentContact(contact);
-                        this.showContactModal();
-                      }}
-                    >
-                      ...
-                    </button>
-                  </td>
+      <div className="background">
+        <div className="wrapper">
+          <h1> My Contacts:</h1>
+          <div className="add-and-search-contact">
+            <span>
+              <Button variant="success" onClick={() => this.showAddContactModal()}>
+                Add Contact
+              </Button>
+            </span>
+            <span>
+              <InputGroup className="mb-3 contact-search-bar">
+                <InputGroup.Text id="inputGroup-sizing-default">Search</InputGroup.Text>
+                <FormControl
+                  aria-label="Default"
+                  aria-describedby="inputGroup-sizing-default"
+                  placeholder={this.state.searchBar}
+                  onChange={this.handleChange}
+                />
+              </InputGroup>
+              {/* <input type="text" placeholder={this.state.searchBar} onChange={this.handleChange} /> */}
+            </span>
+          </div>
+          <div>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Company</th>
+                  <th>More</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {Object.values(this.state.filtered).map((contact, index) => (
+                  <tr key={index}>
+                    <td>{contact.name}</td>
+                    <td>{contact.job_title} </td>
+                    <td>{contact.job}</td>
+                    <td>
+                      <Button
+                        variant="light"
+                        onClick={() => {
+                          this.setCurrentContact(contact);
+                          this.showContactModal();
+                        }}
+                      >
+                        ...
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+          {this.state.showContactModal ? (
+            <ContactShow
+              closeContactModal={this.closeContactModal}
+              contact={this.state.currentContact}
+              updateContactInfo={this.updateContactInfo}
+            />
+          ) : null}
+          {this.state.showAddContactModal ? (
+            <ContactCreate
+              closeAddContactModal={this.closeAddContactModal}
+              createContact={this.createContact}
+              userInfo={this.state.userInfo}
+            />
+          ) : null}
         </div>
-        {this.state.showContactModal ? (
-          <ContactShow
-            closeContactModal={this.closeContactModal}
-            contact={this.state.currentContact}
-            updateContactInfo={this.updateContactInfo}
-          />
-        ) : null}
       </div>
     );
   }

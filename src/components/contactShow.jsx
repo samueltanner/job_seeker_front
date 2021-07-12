@@ -75,17 +75,7 @@ class ContactShow extends Component {
               />
             </InputGroup>
           <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon3">LinkedIn</InputGroup.Text>
-              <FormControl
-                name="name"
-                type="text"
-                aria-describedby="basic-addon3"
-                onChange={this.handleChange}
-                defaultValue={this.props.contact.name}
-              />
-            </InputGroup>
-          <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon3">Contact Name</InputGroup.Text>
+              <InputGroup.Text id="basic-addon3">LinkedIn URL</InputGroup.Text>
               <FormControl
                 name="linkedin_url"
                 type="text"

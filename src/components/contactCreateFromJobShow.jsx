@@ -1,19 +1,18 @@
 import React, { Component } from "react";
 import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import axios from "axios";
 
 class ContactCreate extends Component {
   state = {
     name: null,
     email: null,
-    job: null,
     job_title: null,
     linkedin_url: null,
     phone: null,
     date_contacted: null,
     jobs: [],
     errors: [],
-    default: "--Select a Job--"
-
+    default: "--Select a Job--",
   };
 
   componentDidMount() {
@@ -25,15 +24,39 @@ class ContactCreate extends Component {
       [name]: value,
     });
   };
-  check
 
+  createContact = () => {
+    const params = {
+      name: this.state.name,
+      email: this.state.email,
+      user_id: localStorage.getItem("user_id"),
+      job_id: this.props.jobId,
+      job_title: this.state.job_title,
+      linkedin_url: this.state.linkedin_url,
+      phone: this.state.phone,
+      date_contacted: this.state.date_contacted,
+    };
+
+    // console.log(params)
+    // console.log("starting post request for contact");
+    // console.log(contact);
+    axios
+      .post("http://localhost:3000/api/contacts/", params)
+      .then((res) => {
+        console.log(res.data);
+        this.props.closeAddContactModal();
+        this.props.addContact(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   render() {
-
     const jobOptions = (options) => {
       return options.map((job) => {
-        return <option>{job.name}</option>
-      })
-    }
+        return <option>{job.name}</option>;
+      });
+    };
     return (
       <div className="modal-custom">
         <div className="modal-content">
@@ -48,19 +71,6 @@ class ContactCreate extends Component {
               <InputGroup.Text id="basic-addon3">Contact Name</InputGroup.Text>
               <FormControl name="name" type="text" aria-describedby="basic-addon3" onChange={this.handleChange} />
             </InputGroup>
-
-            <Form.Group>
-          
-              <Form.Control as="select" id="job" name="job" defaultValue={this.state.default} onChange={this.handleChange}>
-                <option hidden>--Select a Job--</option>
-                {this.props.userInfo.jobs.map((job, id) => (
-                  <option key={id} value={job.id}>
-                    {job.company_name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            <br />
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon3">Title/Position</InputGroup.Text>
               <FormControl name="job_title" type="text" aria-describedby="basic-addon3" onChange={this.handleChange} />
@@ -94,7 +104,7 @@ class ContactCreate extends Component {
           </div>
           <Button
             onClick={() => {
-              this.props.createContact(this.state);
+              this.createContact(this.state);
               // this.props.closeAddContactModal();
             }}
             variant="success"
