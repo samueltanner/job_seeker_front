@@ -29,11 +29,11 @@ class ContactCreate extends Component {
 
   render() {
 
-    const jobOptions = (options) => {
-      return options.map((job) => {
-        return <option>{job.name}</option>
-      })
-    }
+    // const jobOptions = (options) => {
+    //   return options.map((job) => {
+    //     return <option>{job.name}</option>
+    //   })
+    // }
     return (
       <div className="modal-custom">
         <div className="modal-content">

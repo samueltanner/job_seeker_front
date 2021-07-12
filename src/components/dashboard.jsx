@@ -92,6 +92,8 @@ class Dashboard extends Component {
       //   }
       // });
       this.setState({ appliedJobs: appliedJobs});
+      console.log(this.state.appliedJobs);
+
       // console.log(this.state.appliedJobs)
       // console.log(response.data.user_goals);
       // console.log(this.state.jobs);
@@ -160,31 +162,36 @@ class Dashboard extends Component {
 
   handleAddJob = (job) => {
     this.setState((state) => ({ jobs: [...state.jobs, job] }));
-    // console.log(job);
-    if (job.status === "Applied" && !this.state.appliedJobs.includes(job.id)) {
+        let applied = this.state.appliedJobs.map(job => job.id);
+        console.log(applied)
+    if (job.status === "Applied" && !applied.includes(job.id)) {
       this.handleMetricIncrement(Object.keys(this.state.metrics)[0], 0);
+      // console.log(this.state.appliedJobs);
+      
     }
-  
+    // console.log(applied)
+
+    // this.setState((state) => ({appliedJobs: [...state.appliedJobs, job]}))
   };
 
   handleUpdateJob = (job, job_id) => {
     // this.state.jobs.splice(this.state.jobs.indexOf(job_id), 1);
+    let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
     var jobIndex = this.state.jobs.findIndex((o) => o.id === job_id);
     this.removeJobFromState(jobIndex);
-    let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
-    // console.log(appliedJobs);
-    // console.log(this.state.appliedJobs);
-    this.setState({appliedJobs: appliedJobs});
-  if ((job.status === "Saved" || job.status === "Draft") && !this.state.appliedJobs.includes(job.id)) {
+    this.setState({appliedJobs: appliedJobs},
+      function () {
+      let applied = this.state.appliedJobs.map(job => job.id);
+      console.log(applied);
+
+  if ((job.status === "Saved" || job.status === "Draft") && applied.includes(job.id)) {
       this.handleMetricDecrement(Object.keys(this.state.metrics)[0], 0);
+      // this.setState((state) => ({appliedJobs: [...state.appliedJobs, job]}))
+      console.log(applied);
     }
-
+    console.log(this.state.appliedJobs);
     this.handleAddJob(job);
-
-    // console.log("This is the updated job:")
-    // console.log(job_id);
-    this.setState((state) => ({appliedJobs: [...state.appliedJobs, job.id]}))
-    // console.log(this.state.appliedJobs)
+  });
   };
 
   handleDestroyJob = (response) => {
