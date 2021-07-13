@@ -55,7 +55,7 @@ class GoalSet extends Component {
       breaks: this.state.breaks,
     };
     let currentUserId = localStorage.getItem("user_id");
-    axios.patch("http://localhost:3000/api/users/" + currentUserId, userGoals).then((res) => {
+    axios.patch("https://job-seeker5.herokuapp.com//api/users/" + currentUserId, userGoals).then((res) => {
       console.log(res.data);
       this.props.closeModal();
       this.props.history.push("/dashboard");
