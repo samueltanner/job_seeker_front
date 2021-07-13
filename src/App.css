@@ -2,7 +2,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
@@ -218,14 +220,17 @@ h1 {
   gap: 2%;
 }
 
-.background {
+.footer {
   /* background: url("coding.jpeg"); */
-  /* background-color: #bebebe; */
+  background-color: #343a40;
+  min-width: 100%;
+  min-height: 8vh;
+  color: white;
 }
 
 .background-two {
   /* background: url("coding.jpeg"); */
-  background-color: #5e5d5d;
+  background-color: #777575;
 }
 
 .shadow {
@@ -247,4 +252,8 @@ h1 {
 
 .padding-bottom {
   padding-bottom: 2%;
+}
+
+.main {
+  min-height: 92vh;
 }
