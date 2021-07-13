@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Navigation from "./components/navigation";
+import Footer from "./components/footer";
 import Home from "./components/home";
 import About from "./components/about";
 import Login from "./components/login";
@@ -15,8 +16,11 @@ import Logout from './components/logout'
 
 const App = () => (
   <div className="app">
+    <div className="main">
     <Navigation/>
     <Main />
+    </div>
+    <Footer />
   </div>
 );
 
