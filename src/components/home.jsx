@@ -17,7 +17,7 @@ class Home extends Component {
   };
 
   getUsers = () => {
-    axios.get("https://job-seeker5.herokuapp.com/api/users").then((response) => {
+    axios.get("http://localhost:3000/api/users").then((response) => {
       console.log(response.data);
     });
   };
@@ -37,7 +37,7 @@ class Home extends Component {
       password_confirmation: this.state.password_confirmation,
     };
     axios
-      .post("https://job-seeker5.herokuapp.com/api/users", user)
+      .post("http://localhost:3000/api/users", user)
       .then((res) => {
         console.log(res.data);
         // this.handleLogin(); erroneous????

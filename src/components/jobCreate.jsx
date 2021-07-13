@@ -52,7 +52,7 @@ class JobCreate extends Component {
       date_updated: this.state.date_updated,
     };
     axios
-      .post("https://job-seeker5.herokuapp.com/api/jobs", job)
+      .post("http://localhost:3000/api/jobs", job)
       .then((res) => {
         console.log(res.data);
         this.props.closeModal();
