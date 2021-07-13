@@ -27,7 +27,7 @@ class Navigation extends Component {
           <Container>
             <Navbar.Brand href="#">Job Seeker</Navbar.Brand>
             <Nav className="me-auto">
-              {/* <Nav.Link href="/">Home</Nav.Link> */}
+              <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/about">About</Nav.Link>
               {dashboard}
               {contacts}

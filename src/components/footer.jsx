@@ -10,7 +10,7 @@ class Footer extends Component {
       <div className="footer">
         
           <Container><br></br>
-            <p className="text-center">© Job Seeker 2021</p>
+            <p className="text-center">Copyright © 'JobSeeker' 2021</p>
            </Container>
       </div>
     );
